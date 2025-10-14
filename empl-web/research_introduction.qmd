@@ -1,0 +1,10 @@
+---
+title: "Research Introduction: AI vs. Non-AI Careers"
+author: "Team XYZ"
+date: tday
+format: 
+  html:
+    bibliography: references.bib
+    csl: csl/econometrica.csl
+    toc: true
+---
