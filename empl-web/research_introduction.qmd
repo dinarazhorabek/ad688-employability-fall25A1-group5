@@ -1,10 +1,20 @@
 ---
-title: "Research Introduction: AI vs. Non-AI Careers"
-author: "Team XYZ"
-date: tday
+title: "Gender Disparities in Hiring & Political Influence"
+authors: "Team 5: Hung Nguyen, Nhat Tran, Dinara Zhorabek"
+date: today
 format: 
   html:
     bibliography: references.bib
     csl: csl/econometrica.csl
     toc: true
 ---
+<!-- Importance of topic -->
+
+<!--  -->
+Hiring women into top leadership roles, like CEOs or board members, can change the way organizations talk about women [@Lawson2022hiring]. By analyzing over 43,000 company documents with advanced language tools, the researchers found that when women are appointed to senior positions, the language used by those organizations starts to describe women with more leadership-related traits such as confidence and decisiveness. Importantly, this shift doesn’t reduce how often women are described as kind or caring—it simply expands how they are portrayed. In other words, bringing women into leadership helps reshape how society links “being a woman” with “being a leader.”
+
+The research is based on the idea that women’s underrepresentation in leadership comes partly from language and stereotypes that associate men with power and women with warmth. Previous solutions like diversity training often have short-term results. This study suggests that a more lasting change can happen through representation itself: when women hold visible positions of power, they naturally help transform the language, attitudes, and stereotypes that have limited them in the first place.
+
+<!-- Specific case / Woman prime minister in Japan -->
+
+<!--  -->
