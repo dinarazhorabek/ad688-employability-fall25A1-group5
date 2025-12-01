@@ -98,7 +98,7 @@ fig.show()
 ```
 
 ```{python}
-# Chart: Unemployment Rate for Men vs Women
+# Chart 0: Unemployment Rate for Men vs Women
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=data["unemp_women"].index, y=data["unemp_women"], 
                         mode="lines", name="Women Unemployment Rate"))
@@ -139,12 +139,13 @@ fig.show()
 ```
 
 ```{python}
+# Chart 3: STEM SECTORS – Women Ratio Bar Chart (Sorted)
+
 # Get the latest information available from Fred
 def get_latest(series):
     s = series.dropna()
     return s.index[-1], s.iloc[-1]  # (date, value)
 
-# Chart 3: STEM SECTORS – Women Ratio Bar Chart (Sorted)
 stem_ratio_vars = {
     "Manufacturing": data["emp_manu_women_ratio"],
     "Information (Tech)": data["emp_info_women_ratio"],
@@ -165,7 +166,7 @@ fig_stem.add_trace(go.Bar(x=stem_sorted.index, y=stem_sorted.values,
                         text=[f"{v:.1f}%" for v in stem_sorted.values], textposition="outside"))
 
 fig_stem.update_layout(
-    title=f"Share of Women in STEM Sectors — Latest FRED Data ({stem_latest_date})",
+    title=f"Share of Women in STEM Sectors ({stem_latest_date})",
     yaxis_title="Women as % of Total Employment",
     xaxis_tickangle=30
 )
@@ -193,7 +194,7 @@ fig_nonstem.add_trace(go.Bar(x=nonstem_sorted.index, y=nonstem_sorted.values,
     text=[f"{v:.1f}%" for v in nonstem_sorted.values], textposition="outside", marker_color="indianred"))
 
 fig_nonstem.update_layout(
-    title=f"Share of Women in Non-STEM Sectors — Latest FRED Data ({nonstem_latest_date})",
+    title=f"Share of Women in Non-STEM Sectors ({nonstem_latest_date})",
     yaxis_title="Women as % of Total Employment",
     xaxis_tickangle=30
 )
