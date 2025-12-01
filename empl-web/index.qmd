@@ -1,7 +1,12 @@
 ---
-title: "Home Page"
+title: "Research Introduction: Gender Disparities in Hiring & Political Influence"
+bibliographystyle: reference.bib
 ---
 
-This is a Quarto website.
+## Introduction
+### About Us
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Literature Review
+
+
+# Analysis

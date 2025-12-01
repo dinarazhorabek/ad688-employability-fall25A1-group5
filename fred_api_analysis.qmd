@@ -1,0 +1,17 @@
+```{python}
+import os
+from dotenv import load_dotenv
+from fredapi import Fred
+import plotly.graph_objects as go
+
+# Load API key from .env
+load_dotenv()
+fred = Fred(api_key=os.getenv("FRED_API_KEY"))
+
+# List of series IDs
+series_ids=["UNRATE"]
+
+# Download data
+data = {sid: fred.get_series(sid) for sid in series_ids}
+print(data["UNRATE"].head())
+```
