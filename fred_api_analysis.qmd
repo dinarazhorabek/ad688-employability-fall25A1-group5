@@ -60,8 +60,9 @@ series_map = {
         
     # Non-STEM sectors: retail trade; leisure & hospitality; education & health services; financial activities; other services; government; trade, transportation & utilities (monthly, thousands of persons)
     # Retail Trade
-    "emp_retail_women": "CES4200000010", #non-SA
+    "emp_retail_women": "CES4200000010", #SA
     #"emp_retail_men": "CES4200000011",
+    "emp_retail_women_ratio": "CES4200000039", #SA, women-to-all-emp ratio
     # Leisure & Hospitality
     "emp_leisure_women": "CES7000000010", #SA
     #"emp_leisure_men": "CES7000000011",
@@ -180,7 +181,8 @@ nonstem_ratio_vars = {
     "Education & Health": data["emp_edhealth_women_ratio"],
     "Financial Activities": data["emp_finact_women_ratio"],
     "Other Services": data["emp_other_women_ratio"],
-    "Government": data["emp_gov_women_ratio"]
+    "Government": data["emp_gov_women_ratio"],
+    "Retail Trade": data["emp_retail_women_ratio"]
 }
 
 # Latest value for each sector then sort the sectors
