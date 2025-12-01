@@ -1,17 +1,201 @@
+---
+title: "FRED Analysis"
+format: html
+---
+
 ```{python}
 import os
 from dotenv import load_dotenv
 from fredapi import Fred
 import plotly.graph_objects as go
+import plotly.io as pio
+import pandas as pd
 
 # Load API key from .env
 load_dotenv()
 fred = Fred(api_key=os.getenv("FRED_API_KEY"))
 
-# List of series IDs
-series_ids=["UNRATE"]
+# List of series IDs and rename the variables (using data for women/men over 16)
+series_map = {
+    "unemp_total": "UNRATE", # Unemployment rate
+    # Participation rate
+    "part_women": "LNS11300002",
+    "part_men": "LNS11300001",
+    # Unemployment rate 
+    "unemp_women": "LNS14000002",
+    "unemp_men": "LNS14000001",
+    # Median weekly earnings/full-time salaries
+    "earn_women": "LEU0252882800A",
+    "earn_men": "LEU0252881900A",
+    # Total non-farm employees (seasonally adjusted, no data avalaible for men)
+    "emp_nonfarm_total" : "PAYEMS",
+    "emp_nonfarm_women" : "CES0000000010",
+    "emp_nonfarm_women_ratio" : "CES0000000039", # women-to-all-employees ratio
+    
+    # STEM-leaning sectors (by industry): manufacturing; information (tech/media/communications); professional, scientific & technical services; mining & logging; utilities monthly, thousands of persons)
+    # Manufacturing
+    "emp_manu_women" : "CES3000000010", #SA
+    #"emp_manu_men" : "CES3000000011",
+    "emp_manu_women_ratio" : "CES3000000039", #SA, women-to-all-emp ratio
+    # Information/Tech sector
+    "emp_info_women" : "CES5000000010", #SA
+    #"emp_info_men" : "CES5000000011",
+    "emp_info_women_ratio" : "CES5000000039", #SA, women-to-all-emp ratio
+    # Professional, scientific & technical services
+    "emp_buser_women" : "CES6000000010", #SA
+    #"emp_buser_men" : "CES6000000011",
+    "emp_buser_women_ratio" : "CES6000000039", #SA, women-to-all-emp ratio
+    # Construction
+    "emp_construct_women" : "CES2000000010", # SA
+    #"emp_construct_men" : "CES2000000011",
+    "emp_construct_women_ratio" : "CES2000000039", #SA, women-to-all-emp ratio
+    # Mining & Logging
+    "emp_mining_women" : "CES1000000010", #SA
+    #"emp_mining_men" : "CES1000000011",
+    "emp_mining_women_ratio" : "CES1000000039", #SA, women-to-all-emp ratio
+    # Utilities
+    "emp_utl_women" : "CES4422000010", #SA
+    #"emp_utl_men" : "CES4422000011",
+    "emp_utl_women_ratio" : "CES4422000039", #SA, women-to-all-emp ratio
+        
+    # Non-STEM sectors: retail trade; leisure & hospitality; education & health services; financial activities; other services; government; trade, transportation & utilities (monthly, thousands of persons)
+    # Retail Trade
+    "emp_retail_women": "CES4200000010", #non-SA
+    #"emp_retail_men": "CES4200000011",
+    # Leisure & Hospitality
+    "emp_leisure_women": "CES7000000010", #SA
+    #"emp_leisure_men": "CES7000000011",
+    "emp_leisure_women_ratio": "CES7000000039", #SA, women-to-all-emp ratio
+    # Education & Health Services
+    "emp_edhealth_women": "CES6500000010", #SA
+    #"emp_edhealth_men": "CES6500000011",
+    "emp_edhealth_women_ratio": "CES6500000039", #SA, women-to-all-emp ratio
+    # Financial Activities
+    "emp_finact_women": "CES5500000010",
+    #"emp_finact_men": "CES5500000011",
+    "emp_finact_women_ratio": "CES5500000039", #SA, women-to-all-emp ratio
+    # Other Services (Excluding Gov)
+    "emp_other_women": "CES8000000010",
+    #"emp_other_men": "CES8000000011",
+    "emp_other_women_ratio": "CES8000000039", #SA, women-to-all-emp ratio
+    # Government
+    "emp_gov_women": "CES9000000010",
+    "emp_gov_women_ratio": "CES9000000039" #SA, women-to-all-emp ratio
+}
 
 # Download data
-data = {sid: fred.get_series(sid) for sid in series_ids}
-print(data["UNRATE"].head())
+data = {label: fred.get_series(sid) for label, sid in series_map.items()}
+print(data["part_women"].head())
+```
+
+```{python}
+# Sample Unemployment Rate chart to view
+pio.renderers.default = "browser"
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=data["unemp_total"].index, y=data["unemp_total"], mode="lines", name="Unemployment Rate"))
+fig.update_layout(title="Unemployment Rate Over Time", xaxis_title="Date", yaxis_title="Rate (%)")
+fig.show()
+```
+
+```{python}
+# Chart: Unemployment Rate for Men vs Women
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=data["unemp_women"].index, y=data["unemp_women"], 
+                        mode="lines", name="Women Unemployment Rate"))
+fig.add_trace(go.Scatter(x=data["unemp_men"].index, y=data["unemp_men"], 
+                        mode="lines", name="Men Unemployment Rate"))
+fig.update_layout(
+    title="Unemployment Rate: Men vs Women",
+    xaxis_title="Date", yaxis_title="Rate (%)",
+    legend_title="Group"
+)
+fig.show()
+```
+
+```{python}
+# Chart 1: Gender Wage Gap Over Time (Median Weekly Earnings)
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=data["earn_women"].index, y=data["earn_women"], mode="lines", name="Women Earnings"))
+fig.add_trace(go.Scatter(x=data["earn_men"].index, y=data["earn_men"],  mode="lines", name="Men Earnings"))
+fig.update_layout(
+    title="Median Weekly Earnings: Men vs Women",
+    xaxis_title="Year", yaxis_title="USD"
+)
+fig.show()
+```
+
+```{python}
+# Chart 2: Labor Force Participation - Men vs Women (Monthly, SA)
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=data["part_women"].index, y=data["part_women"],
+                         mode="lines", name="Women Participation"))
+fig.add_trace(go.Scatter(x=data["part_men"].index, y=data["part_men"],
+                         mode="lines", name="Men Participation"))
+fig.update_layout(
+    title="Labor Force Participation: Men vs Women (Monthly, SA)",
+    xaxis_title="Year", yaxis_title="Percent (%)"
+)
+fig.show()
+```
+
+```{python}
+# Get the latest information available from Fred
+def get_latest(series):
+    s = series.dropna()
+    return s.index[-1], s.iloc[-1]  # (date, value)
+
+# Chart 3: STEM SECTORS – Women Ratio Bar Chart (Sorted)
+stem_ratio_vars = {
+    "Manufacturing": data["emp_manu_women_ratio"],
+    "Information (Tech)": data["emp_info_women_ratio"],
+    "Prof/Scientific/Tech": data["emp_buser_women_ratio"],
+    "Construction": data["emp_construct_women_ratio"],
+    "Mining & Logging": data["emp_mining_women_ratio"],
+    "Utilities": data["emp_utl_women_ratio"]
+}
+
+# Latest values + dates for each sector then sort the sectors
+stem_latest_data = {sector: get_latest(series) for sector, series in stem_ratio_vars.items()}
+stem_sorted = pd.Series({k: v[1] for k, v in stem_latest_data.items()}).sort_values(ascending=False)
+# Get most recent date across all STEM series
+stem_latest_date = max(v[0] for v in stem_latest_data.values()).strftime("%Y-%m")
+
+fig_stem = go.Figure()
+fig_stem.add_trace(go.Bar(x=stem_sorted.index, y=stem_sorted.values, 
+                        text=[f"{v:.1f}%" for v in stem_sorted.values], textposition="outside"))
+
+fig_stem.update_layout(
+    title=f"Share of Women in STEM Sectors — Latest FRED Data ({stem_latest_date})",
+    yaxis_title="Women as % of Total Employment",
+    xaxis_tickangle=30
+)
+fig_stem.show()
+```
+
+```{python}
+# Chart 4: NON-STEM SECTORS – Women Ratio Bar Chart (Sorted)
+nonstem_ratio_vars = {
+    "Leisure & Hospitality": data["emp_leisure_women_ratio"],
+    "Education & Health": data["emp_edhealth_women_ratio"],
+    "Financial Activities": data["emp_finact_women_ratio"],
+    "Other Services": data["emp_other_women_ratio"],
+    "Government": data["emp_gov_women_ratio"]
+}
+
+# Latest value for each sector then sort the sectors
+nonstem_latest_data = {sector: get_latest(series) for sector, series in nonstem_ratio_vars.items()}
+nonstem_sorted = pd.Series({k: v[1] for k, v in nonstem_latest_data.items()}).sort_values(ascending=False)
+# Get the most recent update date
+nonstem_latest_date = max(v[0] for v in nonstem_latest_data.values()).strftime("%Y-%m")
+
+fig_nonstem = go.Figure()
+fig_nonstem.add_trace(go.Bar(x=nonstem_sorted.index, y=nonstem_sorted.values,
+    text=[f"{v:.1f}%" for v in nonstem_sorted.values], textposition="outside", marker_color="indianred"))
+
+fig_nonstem.update_layout(
+    title=f"Share of Women in Non-STEM Sectors — Latest FRED Data ({nonstem_latest_date})",
+    yaxis_title="Women as % of Total Employment",
+    xaxis_tickangle=30
+)
+fig_nonstem.show()
 ```
