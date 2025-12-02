@@ -5,42 +5,42 @@ format:
     toc: true
 ---
 
-<div class="card">
+<div class="card reveal">
 
 # From Evidence to Action
 
-This strategy synthesizes our data findings into actionable recommendations for job seekers navigating the 2024 labor market.
+Brief explanation of how you converted analysis into a 3-step strategy.
 
 </div>
 
-<div class="card">
+<div class="card reveal">
 
 # Step 1 — Choose Sectors & Locations Strategically
 
-(Add your text.)
+<!-- Paste/refine your existing Step 1 text -->
 
 </div>
 
-<div class="card">
+<div class="card reveal">
 
 # Step 2 — Build High-Signal Skills
 
-(Add your text.)
+<!-- Paste/refine your existing Step 2 text -->
 
 </div>
 
-<div class="card">
+<div class="card reveal">
 
 # Step 3 — Signal Fit & Leadership Identity
 
-(Add your text.)
+<!-- Paste/refine your existing Step 3 text -->
 
 </div>
 
-<div class="card">
+<div class="card reveal">
 
 # Personal Next Steps (Team 5)
 
-(Add your text.)
+Outline what each of you plans to do next (skills, sectors, roles).
 
 </div>

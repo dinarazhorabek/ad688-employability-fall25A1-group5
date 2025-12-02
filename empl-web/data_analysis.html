@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -42,9 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d2f23db673ee7fc7960d53fa3811936.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-4ec65eef7376d9900dfbe979d3447d09.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-8d2f23db673ee7fc7960d53fa3811936.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f00960e773943f37952bf1a7765461ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-22c16021c7047464892fd022096a3829.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f00960e773943f37952bf1a7765461ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -248,6 +247,8 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./assets/logo.svg" alt="" class="navbar-logo light-content">
+    <img src="./assets/logo.svg" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Job Market Analysis 2024</span>
@@ -296,12 +297,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link active" data-scroll-target="#data-sources">Data Sources</a>
-  <ul class="collapse">
-  <li><a href="#lightcast-job-postings-2024" id="toc-lightcast-job-postings-2024" class="nav-link" data-scroll-target="#lightcast-job-postings-2024"><strong>1. Lightcast Job Postings (2024)</strong></a></li>
-  <li><a href="#fred-economic-indicators" id="toc-fred-economic-indicators" class="nav-link" data-scroll-target="#fred-economic-indicators"><strong>2. FRED Economic Indicators</strong></a></li>
-  </ul></li>
-  <li><a href="#data-cleaning-overview" id="toc-data-cleaning-overview" class="nav-link" data-scroll-target="#data-cleaning-overview">Data Cleaning Overview</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link active" data-scroll-target="#data-sources">Data Sources</a></li>
   </ul>
 </nav>
     </div>
@@ -312,7 +308,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Data Analysis</h1>
-<p class="subtitle lead">Cleaning, Exploration, and Interpretation of Job Market Patterns</p>
+<p class="subtitle lead">Cleaning, Exploration, and Patterns in the 2024 Job Market</p>
 </div>
 
 
@@ -329,37 +325,66 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="data-sources" class="level1 card">
+<section id="data-sources" class="level1 card reveal">
 <h1>Data Sources</h1>
-<section id="lightcast-job-postings-2024" class="level3">
-<h3 class="anchored" data-anchor-id="lightcast-job-postings-2024"><strong>1. Lightcast Job Postings (2024)</strong></h3>
-<p>Includes industry, occupation, salary, location, skills, and employer attributes.</p>
+<p>Explain Lightcast job postings and FRED series here.</p>
 </section>
-<section id="fred-economic-indicators" class="level3">
-<h3 class="anchored" data-anchor-id="fred-economic-indicators"><strong>2. FRED Economic Indicators</strong></h3>
-<p>Used to evaluate participation, unemployment, earnings, and gender trends across U.S. labor markets.</p>
+<div class="card reveal">
+<section id="cleaning-pipeline" class="level1">
+<h1>Cleaning Pipeline</h1>
 </section>
-</section>
-<section id="data-cleaning-overview" class="level1 card">
-<h1>Data Cleaning Overview</h1>
-<p>Key steps performed:</p>
-<ul>
-<li>Removed tracking columns (URLs, timestamps, duplicates)<br>
-</li>
-<li>Harmonized NAICS/SOC codes (kept 2022 NAICS + 2021 SOC)<br>
-</li>
-<li>Labeled missing values consistently<br>
-</li>
-<li>Standardized salary fields<br>
-</li>
-<li>Removed duplicate job postings</li>
-</ul>
-<p>df.printSchema() df.limit(5).toPandas()</p>
+<section id="your-existing-spark-pandas-cleaning-code-here" class="level1">
+<h1>your existing Spark / Pandas cleaning code here</h1>
 
 
 </section>
+</div>
 
 </main> <!-- /main -->
+<!-- footer.html -->
+
+<!-- Scroll-in animation script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+
+    reveals.forEach(el => observer.observe(el));
+  });
+</script>
+
+<!-- Lottie player for hero animation (optional) -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<footer>
+  <p>© 2024 Team 5 — AD 688 Web Analytics · Boston University</p>
+</footer>
+<style>
+  footer {
+    text-align: center;
+    padding: 1em 0;
+    font-size: 0.9em;
+    color: #666;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>    
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

@@ -7,55 +7,62 @@ format:
 
 <div class="hero">
 
-# Gender Disparities in Hiring & Political Influence  
-### A 2024 Job Market Analysis by Team 5
+<div class="hero-grid">
 
-We investigate how gender disparities intersect with industry, geography, and political context.  
-Our analysis blends Lightcast job postings, FRED macroeconomic indicators, and academic research to understand how the 2024 job market shapes real career outcomes.
+<div class="hero-text">
+
+# Gender Disparities in Hiring & Political Influence  
+### A Data-Driven 2024 Job Market Analysis
+
+We combine job posting data, macroeconomic indicators, and peer-reviewed research to understand how gender and political context shape career opportunities.  
+Explore our findings, visualizations, and a data-informed career strategy.
+
+[Explore Our Data](data_analysis.qmd){.button-animate}
 
 </div>
 
-<div class="card">
+<div class="hero-visual">
+
+<lottie-player src="https://assets4.lottiefiles.com/packages/lf20_q5pk6p1k.json"
+               background="transparent" speed="1"
+               style="width: 220px; height: 220px;" loop autoplay>
+</lottie-player>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card reveal">
 
 ## Why This Research Matters
 
-Gender inequality in hiring does not occur uniformly.  
-It varies by:
-
-- 🎯 **Industry** (STEM vs. non-STEM)  
-- 🗺️ **Region** (liberal vs. conservative states)  
-- 🧭 **Policies** (family leave, equal pay laws)  
-- 💼 **Role seniority** (representation drops at higher levels)
-
-Our goal is to translate these patterns into **practical insights for job seekers**.
+Gender inequality in hiring interacts with industry, policy, and geography.  
+Some states and sectors are closing gaps, while others remain sharply imbalanced.  
+Our goal is to translate these patterns into **practical insight** for job seekers.
 
 </div>
 
-<div class="card">
+<div class="card reveal">
 
-## What This Site Includes
+## Site Overview
 
-### **📖 Research Overview**  
-Foundational literature, theory, and context.
-
-### **📊 Data Analysis**  
-Visualizations and insights from Lightcast and FRED.
-
-### **🧭 Career Strategy**  
-A three-step, actionable plan informed by data.
-
-### **👥 About Us**  
-Who we are and what each team member contributed.
+- **Research** – Background, theory, and literature on gender disparities and political influence  
+- **Data Analysis** – Cleaning, feature engineering, and visualizations using Lightcast and FRED  
+- **Career Strategy** – A three-step, data-driven roadmap for navigating the current market  
+- **About Us** – Meet the team behind the analysis
 
 </div>
 
-<div class="card">
+<div class="divider"></div>
 
-## Tools We Used
+<div class="card reveal">
 
-- Python + PySpark  
-- Pandas, Plotly, Missingno  
-- FRED API  
-- Quarto + GitHub Pages  
+## Tools & Technologies
+
+- Python, PySpark, Pandas, Plotly  
+- FRED API & Lightcast job posting data  
+- Quarto, GitHub Pages, and custom CSS theme  
 
 </div>

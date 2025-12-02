@@ -5,8 +5,10 @@ project:
 website:
   title: "Job Market Analysis 2024"
   navbar:
-    background: "#ffffff"
+    pinned: true
+    background: "#ffffffcc"
     foreground: "#1F2937"
+    logo: assets/logo.svg
     left:
       - href: index.qmd
         text: "Home"
@@ -22,11 +24,15 @@ website:
 format:
   html:
     theme:
-      light: flatly     # CLEAN. MODERN. CORPORATE.
-      dark: quartz      # High-end dark mode
+      light: flatly
+      dark: quartz
     css: styles.css
     toc: true
     toc-depth: 3
-    code-fold: true
-    smooth-scroll: true
+    number-sections: false
     page-layout: full
+    smooth-scroll: true
+    code-fold: true
+
+include-after-body:
+  - footer.html
