@@ -1,0 +1,17 @@
+{
+  "index.qmd": {
+    "index.html": "b61b69b3"
+  },
+  "about.qmd": {
+    "about.html": "e726075c"
+  },
+  "career_plan.qmd": {
+    "career_plan.html": "d452dcf9"
+  },
+  "research_introduction.qmd": {
+    "research_introduction.html": "c9044cac"
+  },
+  "data_analysis.qmd": {
+    "data_analysis.html": "9d2bc844"
+  }
+}

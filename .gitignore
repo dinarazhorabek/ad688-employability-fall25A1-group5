@@ -3,3 +3,4 @@
 empl-web/_site
 /.quarto/
 **/*.quarto_ipynb
+.env
