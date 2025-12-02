@@ -1,12 +1,61 @@
 ---
-title: "Research Introduction: Gender Disparities in Hiring & Political Influence"
-bibliographystyle: reference.bib
+title: "Home"
+format:
+  html:
+    toc: false
 ---
 
-## Introduction
-### About Us
+<div class="hero">
 
-## Literature Review
+# Gender Disparities in Hiring & Political Influence  
+### A 2024 Job Market Analysis by Team 5
 
+We investigate how gender disparities intersect with industry, geography, and political context.  
+Our analysis blends Lightcast job postings, FRED macroeconomic indicators, and academic research to understand how the 2024 job market shapes real career outcomes.
 
-# Analysis
+</div>
+
+<div class="card">
+
+## Why This Research Matters
+
+Gender inequality in hiring does not occur uniformly.  
+It varies by:
+
+- 🎯 **Industry** (STEM vs. non-STEM)  
+- 🗺️ **Region** (liberal vs. conservative states)  
+- 🧭 **Policies** (family leave, equal pay laws)  
+- 💼 **Role seniority** (representation drops at higher levels)
+
+Our goal is to translate these patterns into **practical insights for job seekers**.
+
+</div>
+
+<div class="card">
+
+## What This Site Includes
+
+### **📖 Research Overview**  
+Foundational literature, theory, and context.
+
+### **📊 Data Analysis**  
+Visualizations and insights from Lightcast and FRED.
+
+### **🧭 Career Strategy**  
+A three-step, actionable plan informed by data.
+
+### **👥 About Us**  
+Who we are and what each team member contributed.
+
+</div>
+
+<div class="card">
+
+## Tools We Used
+
+- Python + PySpark  
+- Pandas, Plotly, Missingno  
+- FRED API  
+- Quarto + GitHub Pages  
+
+</div>

@@ -1,9 +1,12 @@
 project:
   type: website
+  output-dir: empl-web
 
 website:
   title: "Job Market Analysis 2024"
   navbar:
+    background: "#ffffff"
+    foreground: "#1F2937"
     left:
       - href: index.qmd
         text: "Home"
@@ -13,11 +16,17 @@ website:
         text: "Data Analysis"
       - href: career_plan.qmd
         text: "Career Strategy"
+      - href: about.qmd
+        text: "About Us"
+
 format:
   html:
-    theme: cosmo
+    theme:
+      light: flatly     # CLEAN. MODERN. CORPORATE.
+      dark: quartz      # High-end dark mode
+    css: styles.css
     toc: true
-execute:
-  echo: true
-  eval: true
-  code-fold: true
+    toc-depth: 3
+    code-fold: true
+    smooth-scroll: true
+    page-layout: full

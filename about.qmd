@@ -2,4 +2,36 @@
 title: "About Us"
 ---
 
-About this site
+<div class="card">
+
+# Team 5 – Gender Disparities in Hiring & Political Influence
+
+Graduate students in the Master of Applied Business Analytics program at Boston University.
+
+</div>
+
+<div class="card">
+
+# Team Members
+
+## Hung Nguyen  
+Data cleaning, Quarto system, analytical integration  
+
+## Nhat Tran  
+FRED analysis, visualization, narrative interpretation  
+
+## Dinara Zhorabek  
+Literature review, research framing, policy interpretation  
+
+</div>
+
+<div class="card">
+
+# Tools & Technologies
+
+- Python, PySpark  
+- Pandas, Plotly  
+- FRED API  
+- Quarto + GitHub Pages  
+
+</div>

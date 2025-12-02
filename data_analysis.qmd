@@ -1,25 +1,37 @@
 ---
 title: "Data Analysis"
-subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
-author:
-  - name: Norah Jones
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: John Hamm
-    affiliations:
-      - ref: bu
+subtitle: "Cleaning, Exploration, and Interpretation of Job Market Patterns"
 bibliography: references.bib
 csl: csl/econometrica.csl
-format: 
+format:
   html:
     toc: true
-    number-sections: true
-    df-print: paged
 ---
 
-This is a Quarto website.
+<div class="card">
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+# Data Sources
+
+### **1. Lightcast Job Postings (2024)**  
+Includes industry, occupation, salary, location, skills, and employer attributes.
+
+### **2. FRED Economic Indicators**  
+Used to evaluate participation, unemployment, earnings, and gender trends across U.S. labor markets.
+
+</div>
+
+<div class="card">
+
+# Data Cleaning Overview
+
+Key steps performed:
+
+- Removed tracking columns (URLs, timestamps, duplicates)  
+- Harmonized NAICS/SOC codes (kept 2022 NAICS + 2021 SOC)  
+- Labeled missing values consistently  
+- Standardized salary fields  
+- Removed duplicate job postings  
+
+```{python}
+df.printSchema()
+df.limit(5).toPandas()

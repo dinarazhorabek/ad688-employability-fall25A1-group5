@@ -1,0 +1,46 @@
+---
+title: "Career Strategy Plan"
+format:
+  html:
+    toc: true
+---
+
+<div class="card">
+
+# From Evidence to Action
+
+This strategy synthesizes our data findings into actionable recommendations for job seekers navigating the 2024 labor market.
+
+</div>
+
+<div class="card">
+
+# Step 1 — Choose Sectors & Locations Strategically
+
+(Add your text.)
+
+</div>
+
+<div class="card">
+
+# Step 2 — Build High-Signal Skills
+
+(Add your text.)
+
+</div>
+
+<div class="card">
+
+# Step 3 — Signal Fit & Leadership Identity
+
+(Add your text.)
+
+</div>
+
+<div class="card">
+
+# Personal Next Steps (Team 5)
+
+(Add your text.)
+
+</div>
