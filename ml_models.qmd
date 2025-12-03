@@ -44,7 +44,6 @@ for key, df in fred_dfs.items():
 fred_merged.head()
 ```
 
-
 ```{python}
 lightcast_jp = pd.read_csv("data/lightcast_job_postings.csv",low_memory=False)
 
@@ -85,7 +84,7 @@ state_unemp = state_unemp[["STATE_NAME", "month", "state_unemployment"]]
 
 # merge into Lightcast
 lc_merged = lc_merged.merge(
-    state_unemp_named,
+    state_unemp,
     on=["STATE_NAME", "month"],
     how="left"
 )
