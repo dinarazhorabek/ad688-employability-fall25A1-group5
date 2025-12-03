@@ -4,3 +4,4 @@ empl-web/
 /.quarto/
 **/*.quarto_ipynb
 .env
+data/lightcast_job_postings.csv

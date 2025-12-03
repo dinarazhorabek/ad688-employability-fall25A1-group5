@@ -22,3 +22,12 @@ Describe Lightcast + FRED here.
 
 ```{python}
 # Your cleaning code
+import pandas as pd
+
+lightcast_jp = pd.read_csv('data/lightcast_job_postings.csv')
+lightcast_jp.head()
+```
+
+```{python}
+
+```
