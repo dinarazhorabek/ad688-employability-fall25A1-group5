@@ -12,6 +12,12 @@ format:
 
 <div class="card reveal">
 
+The following section provides a research-based overview of gender disparities in hiring and leadership across academic, organizational, and political contexts. These insights serve as the conceptual foundation for our broader job-market analysis, helping us connect large-scale labor trends with the social and structural dynamics that influence real hiring outcomes. Without altering the original findings, this introduction contextualizes why an understanding of gendered patterns remains crucial for interpreting hiring behaviors and market inequalities in 2024.
+
+</div>
+
+<div class="card reveal">
+
 <!-- Importance of topic -->
 
 <!-- Gender disparity in academic positions and STEM discipline -->
@@ -36,7 +42,10 @@ Although gender representation in leadership has improved in recent decades, per
 
 This bias is not confined to the workplace but extends into politics and global governance. In 2025, Japan elected Sanae Takaichi as its first female prime minister, marking a historic moment for a country that has long struggled with gender equality in leadership. As reported by [@Time2025takaichi], public and media reactions reflected both celebration and hesitation, combining admiration for this milestone with ongoing scrutiny of her leadership style and decision-making approach. Commentators frequently described her potential leadership through gendered narratives, questioning whether she would govern with “feminine sensitivity” or “masculine toughness,” expressions rarely used to evaluate male leaders. This reaction illustrates how even moments of progress can be accompanied by persistent stereotypes that frame women’s authority through outdated cultural norms. Ultimately, addressing this issue requires more than improving access to leadership opportunities; it calls for a broader cultural shift in how societies define and value leadership, recognizing competence, vision, and authority as qualities that transcend gender.
 
-<!--  -->
-
 </div>
 
+<div class="card reveal">
+
+Together, these three perspectives highlight how gender disparities emerge and persist across multiple domains of public life. They demonstrate that inequality is reinforced not only by structural and economic barriers but also by cultural narratives and expectations that shape how leaders are perceived. This research background provides the conceptual framing that informs our later analysis of job-market data, helping us connect macro-level labor trends with the deeper social patterns that influence hiring, advancement, and representation in 2024.
+
+</div>
