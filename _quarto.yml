@@ -10,8 +10,10 @@ website:
     right:
       - text: "Home"
         href: index.qmd
-      - text: "Research Introduction"
-        href: research_introduction.qmd
+      - text: "Introduction"
+        href: introduction.qmd
+      - text: "Research Background"
+        href: research_background.qmd
       - text: "Data Analysis"
         href: data_analysis.qmd
       - text: "Career Strategy"

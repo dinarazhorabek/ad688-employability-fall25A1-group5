@@ -1,0 +1,89 @@
+---
+title: "Introduction"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+
+<div class="card reveal">
+
+# Overview
+
+This website presents a structured analysis of the 2024 U.S. job market using a combination of **Lightcast job postings**, **FRED macroeconomic indicators**, and insights from academic research. Our goal is to understand how economic conditions, skill demand, and organizational behavior shape opportunities for job seekers entering the market in 2024.
+
+The analysis integrates quantitative data (job postings, salaries, geographic distribution, required skills) with qualitative insights drawn from peer-reviewed literature on hiring dynamics, gender disparities, and political context. By combining these perspectives, we aim to provide a more holistic and actionable understanding of labor market patterns.
+
+</div>
+
+<div class="card reveal">
+
+# Data Sources
+
+Our project leverages two primary sources:
+
+### **1. Lightcast Job Postings (2024)**
+This dataset contains thousands of job postings across the United States, including:
+- job titles  
+- employer information  
+- required skills  
+- salaries where reported  
+- geographic location  
+- posting dates  
+
+After cleaning and standardization, this dataset forms the backbone of our empirical analysis. It enables us to explore trends in demand, wage patterns, and regional differences.
+
+### **2. FRED Macroeconomic Indicators**
+To contextualize shifts in hiring, we incorporate:
+- unemployment rates  
+- labor force participation  
+- CPI and inflation metrics  
+- sector-level economic activity  
+
+These indicators help explain why specific industries expand or contract in hiring over time.
+
+</div>
+
+<div class="card reveal">
+
+# Motivation
+
+Understanding the job market has become increasingly complicated for recent graduates and career-switchers. Economic volatility, rapid technological change, and evolving skill requirements mean that job seekers must navigate a landscape that shifts year to year.
+
+Three questions guided our analysis:
+
+1. **What skills are most in demand in 2024, and how have they changed over time?**  
+2. **How do geographic and sectoral variations influence job opportunities and salaries?**  
+3. **How do broader social factors—such as gender representation and organizational culture—shape hiring outcomes?**
+
+These questions connect quantitative job-posting analysis with deeper research on disparities and structural influences in hiring.
+
+</div>
+
+<div class="card reveal">
+
+# What This Website Includes
+
+This website synthesizes our findings across several analytical stages:
+
+- **Data Cleaning & Preparation**  
+  How Lightcast and FRED data were standardized for analysis.
+
+- **Exploratory Data Analysis (EDA)**  
+  Trends in job volume, salary distributions, geographic patterns, and skill frequencies.
+
+- **Skill Gap Analysis**  
+  A comparison of team capabilities with the skills most demanded in the market.
+
+- **Machine Learning Methods**  
+  Employers and roles grouped using k-means clustering for pattern discovery.
+
+- **NLP Methods**  
+  Extracting meaningful signals from job descriptions, including skills, keywords, and sentiment.
+
+- **Research Background**  
+  A curated review of social science research on hiring behavior, including gender disparities and political influences.
+
+Together, these components offer a comprehensive picture of the labor market and provide evidence-based insights for job seekers navigating 2024.
+
+</div>
