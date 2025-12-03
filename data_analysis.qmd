@@ -25,9 +25,132 @@ Describe Lightcast + FRED here.
 import pandas as pd
 
 lightcast_jp = pd.read_csv('data/lightcast_job_postings.csv')
-lightcast_jp.head()
+print(lightcast_jp.columns)
+```
+<!-- 'SKILLS', 'SKILLS_NAME', 'SPECIALIZED_SKILLS', 'SPECIALIZED_SKILLS_NAME', 'COMMON_SKILLS', 'COMMON_SKILLS_NAME', 'SOFTWARE_SKILLS', 'SOFTWARE_SKILLS_NAME' -->
+```{python}
+team_members = ["Alice", "Bob", "Charlie", "David"]
+skills = [
+    "SQL (Programming Language)",
+    "Python (Programming Language)",
+    "Tableau (Business Intelligence Software)",
+    "Power BI",
+    "Microsoft Excel",
+    "R (Programming Language)",
+    "Amazon Web Services",
+    "Microsoft Azure",
+]
+df_skills = pd.DataFrame(
+    {
+        "Name": team_members,
+        "SQL (Programming Language)": [5, 3, 4, 2],
+        "Python (Programming Language)": [4, 3, 5, 2],
+        "Tableau (Business Intelligence Software)": [3, 4, 2, 1],
+        "Power BI": [2, 5, 3, 2],
+        "Microsoft Excel": [5, 4, 4, 3],
+        "R (Programming Language)": [2, 1, 3, 1],
+        "Amazon Web Services": [1, 2, 3, 1],
+        "Microsoft Azure": [1, 1, 2, 1],
+    }
+).set_index("Name")
+df_skills
+```
+
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(df_skills, annot=True, cmap="coolwarm", linewidths=0.5)
+plt.title("Team Skill Levels Heatmap")
+plt.show()
+```
+
+
+
+```{python}
+naics_data_industries = [51, 52, 54]
+df_data_industry = lightcast_jp[ lightcast_jp["NAICS2"].astype(float).isin(naics_data_industries) ]
+
+data_keywords = ["data", "analytics", "analysis", "machine learning", "ml", "ai", 
+                 "business intelligence", "cloud", "sql", "python"]
+df_data_roles = lightcast_jp[
+    lightcast_jp["TITLE_NAME"].str.lower().str.contains('|'.join(data_keywords), na=False)
+]
+# merge of two tables -> industry + title
+df_filtered = df_data_industry[
+    df_data_industry["TITLE_NAME"].str.lower().str.contains('|'.join(data_keywords))
+]
+```
+
+
+```{python}
+import re
+
+# Extract everything between quotes
+df_filtered["SW_LIST"] = (
+    df_filtered["SOFTWARE_SKILLS_NAME"]
+        .fillna("")                     # remove NaN
+        .str.replace("\n", "")          # remove newlines
+        .apply(lambda x: re.findall(r'"(.*?)"', x))
+)
+df_sw_exploded = (
+    df_filtered
+        .explode("SW_LIST")
+        .dropna(subset=["SW_LIST"])
+)
+# count demand per skill
+industry_skill_counts = (
+    df_sw_exploded["SW_LIST"]
+        .value_counts()
+        .to_frame(name="Demand_Count")
+)
+industry_skill_counts.head(20)
 ```
 
 ```{python}
+# 1) Average team level per skill
+team_avg = df_skills.mean().to_frame(name="Team_Level")
+
+# 2) Align with industry_skill_counts (which came from your Lightcast skills)
+industry = industry_skill_counts.rename_axis("Skill")
+industry = industry.loc[skills]          # keep only the same 8 skills
+industry = industry.rename(columns={"Demand_Count": "Demand_Count"})
+
+# 3) Merge
+gap_df = team_avg.join(industry, how="left")
+
+# 4) Normalize industry demand to 1–5 scale
+max_demand = gap_df["Demand_Count"].max()
+gap_df["Industry_Score"] = (gap_df["Demand_Count"] / max_demand) * 5
+
+# 5) Gap = industry need – team level
+gap_df["Gap"] = gap_df["Industry_Score"] - gap_df["Team_Level"]
+
+gap_df
+
+```
+
+
+```{python}
+import numpy as np
+# Sort by biggest positive gap
+plot_df = gap_df.sort_values("Gap", ascending=True)
+skills_order = plot_df.index
+
+y = np.arange(len(skills_order))
+bar_w = 0.4
+
+plt.figure(figsize=(10, 6))
+plt.barh(y - bar_w/2, plot_df.loc[skills_order, "Team_Level"],     height=bar_w, label="Team Level")
+plt.barh(y + bar_w/2, plot_df.loc[skills_order, "Industry_Score"], height=bar_w, label="Industry Score")
+
+plt.yticks(y, skills_order)
+plt.xlabel("Score (1–5)")
+plt.title("Skill Gap Analysis: Team vs. Industry Demand")
+plt.legend()
+plt.tight_layout()
+plt.show()
 
 ```
