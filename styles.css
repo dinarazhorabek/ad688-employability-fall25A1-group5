@@ -282,7 +282,7 @@ footer {
    SCROLL REVEAL UTILITY
 ========================================================= */
 .reveal {
-  opacity: 0;
+  /* opacity: 0; */
   transform: translateY(18px);
   transition: opacity 0.55s ease, transform 0.55s ease;
 }

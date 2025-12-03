@@ -6,6 +6,8 @@ csl: csl/econometrica.csl
 format:
   html:
     toc: true
+    code-fold: true
+    code-tools: true
 ---
 
 <div class="card reveal">
@@ -21,14 +23,23 @@ Describe Lightcast + FRED here.
 ## Cleaning Pipeline
 
 ```{python}
-# Your cleaning code
+#| output: false
 import pandas as pd
+import re
+
+import plotly.express as px
+import plotly.graph_objects as go
+```
+```{python}
+#| warning: false
+# Your cleaning code
 
 lightcast_jp = pd.read_csv('data/lightcast_job_postings.csv')
 ```
-<!-- </div> -->
+</div>
 
-<!-- <div class="card reveal"> -->
+<div class="card reveal">
+
 ## Skill Gap Analysis
 
 ```{python}
@@ -54,20 +65,23 @@ df_skills = pd.DataFrame(
         "Amazon Web Services": [4, 4, 4],
     }
 ).set_index("Name")
-print(df_skills)
 ```
 
 
 ```{python}
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(8, 6))
-sns.heatmap(df_skills, annot=True, cmap="coolwarm", linewidths=0.5)
-plt.title("Team Skill Levels Heatmap")
-plt.show()
+fig_heat = px.imshow(
+    df_skills,
+    text_auto=True,
+    aspect="auto",
+    color_continuous_scale="Blues",
+    labels=dict(color="Skill Level"),
+    title="Team Skill Matrix"
+)
+fig_heat.update_yaxes(title="Team Member")
+fig_heat
 ```
 
+### Gaps Between Team Strengths and Industry Demand
 
 ```{python}
 naics_data_industries = [51, 52, 54]
@@ -84,11 +98,10 @@ df_filtered = df_data_industry[
 ]
 ```
 
-
 ```{python}
-import re
 # Extract everything between quotes
-df_filtered["SW_LIST"] = (
+df_filtered = df_filtered.copy()
+df_filtered["software_skill"] = (
     df_filtered["SOFTWARE_SKILLS_NAME"]
         .fillna("")                     # remove NaN
         .str.replace("\n", "")          # remove newlines
@@ -96,14 +109,14 @@ df_filtered["SW_LIST"] = (
 )
 df_sw_exploded = (
     df_filtered
-        .explode("SW_LIST")
-        .dropna(subset=["SW_LIST"])
+        .explode("software_skill")
+        .dropna(subset=["software_skill"])
 )
 # count demand per skill
 industry_skill_counts = (
-    df_sw_exploded["SW_LIST"]
+    df_sw_exploded["software_skill"]
         .value_counts()
-        .to_frame(name="Demand_Count")
+        .to_frame(name="count")
 )
 industry_skill_counts.head()
 ```
@@ -117,18 +130,16 @@ ind_skills = ind_skills.loc[skills]
 gap_df = team_avg.join(ind_skills, how="left")
 
 # normalize industry demand to 1–5 scale
-max_demand = gap_df["Demand_Count"].max()
-gap_df["Industry_Score"] = (gap_df["Demand_Count"] / max_demand) * 5
+max_demand = gap_df["count"].max()
+gap_df["Industry_Score"] = (gap_df["count"] / max_demand) * 5
 
 # gap = industry need – team level
 gap_df["Gap"] = gap_df["Industry_Score"] - gap_df["Team_Level"]
-print(gap_df)
+gap_df
 ```
 
 
 ```{python}
-import plotly.express as px
-
 gap_long = (
     gap_df[["Team_Level", "Industry_Score"]]
     .reset_index(names="Skill")
@@ -148,23 +159,55 @@ fig_gap.update_layout(
     legend_title_text="",
     xaxis=dict(range=[0, 5]),
 )
+fig_gap.update_layout(
+    legend=dict(
+        orientation="v",
+        yanchor="top",
+        y=1,
+        xanchor="left",
+        x=0.75
+    )
+)
 fig_gap
 ```
 
 
 ```{python}
-import plotly.express as px
+skills_list = gap_df.index.tolist()
+team_values = gap_df["Team_Level"].tolist()
+industry_values = gap_df["Industry_Score"].tolist()
 
-fig_heat = px.imshow(
-    df_skills,
-    text_auto=True,
-    aspect="auto",
-    color_continuous_scale="Blues",
-    labels=dict(color="Skill Level"),
-    title="Team Skill Matrix (Top Industry Skills)"
+skills_list += [skills_list[0]]
+team_values += [team_values[0]]
+industry_values += [industry_values[0]]
+
+fig = go.Figure()
+fig.add_trace(go.Scatterpolar(
+    r=team_values,
+    theta=skills_list,
+    fill='toself',
+    name='Team Level',
+    line=dict(color='rgba(44, 127, 184, 0.9)', width=3),
+    fillcolor='rgba(44, 127, 184, 0.3)'
+))
+fig.add_trace(go.Scatterpolar(
+    r=industry_values,
+    theta=skills_list,
+    fill='toself',
+    name='Industry Demand',
+    line=dict(color='rgba(255, 127, 14, 0.9)', width=3),
+    fillcolor='rgba(255, 127, 14, 0.3)'
+))
+
+fig.update_layout(
+    title="Skill Gap Analysis",
+    polar=dict(
+        radialaxis=dict(visible=True, range=[0, 5]),
+    ),
+    showlegend=True,
+    legend=dict(orientation="h", y=-0.2)
 )
-fig_heat.update_yaxes(title="Team Member")
-fig_heat
+fig.show()
 ```
 
-<!-- </div> -->
+</div>
