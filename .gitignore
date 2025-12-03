@@ -1,6 +1,6 @@
 .DS-Store
 .venv
-empl-web/_site
+empl-web/
 /.quarto/
 **/*.quarto_ipynb
 .env
