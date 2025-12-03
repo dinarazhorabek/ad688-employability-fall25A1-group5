@@ -12,7 +12,7 @@ format:
 
 # Data Sources
 
-Explain Lightcast job postings and FRED series here.
+Describe Lightcast + FRED here.
 
 </div>
 
@@ -21,4 +21,4 @@ Explain Lightcast job postings and FRED series here.
 # Cleaning Pipeline
 
 ```{python}
-# your existing Spark / Pandas cleaning code here
+# Your cleaning code

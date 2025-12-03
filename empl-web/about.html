@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -130,12 +129,6 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#team-5-gender-disparities-in-hiring-political-influence" id="toc-team-5-gender-disparities-in-hiring-political-influence" class="nav-link active" data-scroll-target="#team-5-gender-disparities-in-hiring-political-influence">Team 5 – Gender Disparities in Hiring &amp; Political Influence</a></li>
-  <li><a href="#team-members" id="toc-team-members" class="nav-link" data-scroll-target="#team-members">Team Members</a>
-  <ul class="collapse">
-  <li><a href="#hung-nguyen" id="toc-hung-nguyen" class="nav-link" data-scroll-target="#hung-nguyen">Hung Nguyen</a></li>
-  <li><a href="#nhat-tran" id="toc-nhat-tran" class="nav-link" data-scroll-target="#nhat-tran">Nhat Tran</a></li>
-  <li><a href="#dinara-zhorabek" id="toc-dinara-zhorabek" class="nav-link" data-scroll-target="#dinara-zhorabek">Dinara Zhorabek</a></li>
-  </ul></li>
   <li><a href="#tools-stack" id="toc-tools-stack" class="nav-link" data-scroll-target="#tools-stack">Tools &amp; Stack</a></li>
   </ul>
 </nav>
@@ -164,32 +157,35 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="team-5-gender-disparities-in-hiring-political-influence" class="level1 card reveal">
 <h1>Team 5 – Gender Disparities in Hiring &amp; Political Influence</h1>
-<p>We are graduate students in the Master of Applied Business Analytics program at Boston University.<br>
-This project was completed for <strong>AD 688 – Web Analytics</strong>, supervised by Prof.&nbsp;Nakul Padalkar.</p>
+<p>Graduate students in the Master of Applied Business Analytics program at Boston University,<br>
+completing this project for <strong>AD 688 – Web Analytics</strong>.</p>
 </section>
-<section id="team-members" class="level2 card reveal">
-<h2 class="anchored" data-anchor-id="team-members">Team Members</h2>
-<section id="hung-nguyen" class="level3">
-<h3 class="anchored" data-anchor-id="hung-nguyen">Hung Nguyen</h3>
-<p>Data wrangling, Quarto architecture, integration of macro/micro insights.</p>
-</section>
-<section id="nhat-tran" class="level3">
-<h3 class="anchored" data-anchor-id="nhat-tran">Nhat Tran</h3>
-<p>FRED API integration, time-series visualization, macro interpretation.</p>
-</section>
-<section id="dinara-zhorabek" class="level3">
-<h3 class="anchored" data-anchor-id="dinara-zhorabek">Dinara Zhorabek</h3>
-<p>Research framing, literature review, policy/gender analysis.</p>
-</section>
-</section>
-<section id="tools-stack" class="level2 card reveal">
-<h2 class="anchored" data-anchor-id="tools-stack">Tools &amp; Stack</h2>
+<div class="card reveal avatar-row">
+<div class="avatar-card">
+<div>
+<pre><code>&lt;strong&gt;Hung Nguyen&lt;/strong&gt;&lt;br&gt;
+Data wrangling, Quarto architecture, integration of macro/micro insights.</code></pre>
+</div>
+</div>
+<div class="avatar-card">
+<div>
+<pre><code>&lt;strong&gt;Nhat Tran&lt;/strong&gt;&lt;br&gt;
+FRED API integration, time-series visualization, macro interpretation.</code></pre>
+</div>
+</div>
+<div class="avatar-card">
+<div>
+<pre><code>&lt;strong&gt;Dinara Zhorabek&lt;/strong&gt;&lt;br&gt;
+Research framing, literature review, policy/gender analysis.</code></pre>
+</div>
+</div>
+</div>
+<section id="tools-stack" class="level1 card reveal">
+<h1>Tools &amp; Stack</h1>
 <ul>
-<li>Python, PySpark<br>
+<li>Python / PySpark / Pandas / Plotly<br>
 </li>
-<li>Pandas, Plotly<br>
-</li>
-<li>FRED API<br>
+<li>FRED API &amp; Lightcast job postings<br>
 </li>
 <li>Quarto + GitHub Pages</li>
 </ul>
@@ -198,33 +194,32 @@ This project was completed for <strong>AD 688 – Web Analytics</strong>, superv
 
 
 </main> <!-- /main -->
-<!-- Progress bar -->
-<div id="progress-bar"></div>
+<!-- footer.html -->
+
+<!-- Scroll-in animation script -->
 <script>
-  window.addEventListener("scroll", () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (scrollTop / height) * 100;
-    document.getElementById("progress-bar").style.width = progress + "%";
+  document.addEventListener("DOMContentLoaded", function () {
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+
+    reveals.forEach(el => observer.observe(el));
   });
 </script>
 
-<!-- Back to top button -->
-<button id="backToTop" title="Back to top">↑</button>
-<script>
-  const btn = document.getElementById("backToTop");
-  window.addEventListener("scroll", () => {
-    btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
-  });
-  btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-</script>
+<!-- Lottie player for hero animation (optional) -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <footer>
-    <p>© 2025 · AD 688 Web Analytics · Boston University</p>
-    <p>Team 5</p>
+  <p> Team 5 · AD 688 Web Analytics · Boston University</p>
+  <p>© 2025</p>
 </footer>
-
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

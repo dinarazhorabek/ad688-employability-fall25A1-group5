@@ -5,6 +5,7 @@ project:
 website:
   title: "Job Market Analysis 2024"
   navbar:
+    pinned: true
     left:
       - text: "Home"
         href: index.qmd
@@ -24,6 +25,5 @@ format:
     toc: true
     smooth-scroll: true
     page-layout: full
-
 include-after-body:
   - footer.html

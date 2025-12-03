@@ -8,7 +8,6 @@ format:
 <div class="card reveal">
 
 # From Evidence to Action
-
 Brief explanation of how we converted analysis into a 3-step strategy.
 
 </div>
@@ -16,31 +15,27 @@ Brief explanation of how we converted analysis into a 3-step strategy.
 <div class="card reveal">
 
 # Step 1 · Choose Sectors & Locations Strategically
-
-<!-- Paste/refine our existing Step 1 text -->
+(Your Step 1 content…)
 
 </div>
 
 <div class="card reveal">
 
 # Step 2 · Build High-Signal Skills
-
-<!-- Paste/refine our existing Step 2 text -->
+(Your Step 2 content…)
 
 </div>
 
 <div class="card reveal">
 
 # Step 3 · Signal Fit & Leadership Identity
-
-<!-- Paste/refine our existing Step 3 text -->
+(Your Step 3 content…)
 
 </div>
 
 <div class="card reveal">
 
 # Personal Next Steps (Team 5)
-
-Outline what each of our plans to do next (skills, sectors, roles).
+(Your next-steps content…)
 
 </div>

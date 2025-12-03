@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -124,19 +123,9 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#gender-disparities-in-hiring-political-influence" id="toc-gender-disparities-in-hiring-political-influence" class="nav-link active" data-scroll-target="#gender-disparities-in-hiring-political-influence">Gender Disparities in Hiring &amp; Political Influence</a></li>
-  <li><a href="#why-this-research-matters" id="toc-why-this-research-matters" class="nav-link" data-scroll-target="#why-this-research-matters">Why This Research Matters</a></li>
-  <li><a href="#what-this-site-includes" id="toc-what-this-site-includes" class="nav-link" data-scroll-target="#what-this-site-includes">What This Site Includes</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -145,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -157,59 +146,83 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="gender-disparities-in-hiring-political-influence" class="level1 hero reveal">
+<div class="hero">
+<div class="hero-grid">
+<section id="gender-disparities-in-hiring-political-influence" class="level1 hero-text">
 <h1>Gender Disparities in Hiring &amp; Political Influence</h1>
-<p>A Data-Driven 2024 Job Market Analysis</p>
-<p>Our project explores how gender, political context, and industry trends interact to shape opportunities in the modern U.S. job market.<br>
-Using Lightcast job postings, FRED economic indicators, and academic research, we provide a comprehensive analytical perspective.</p>
+<section id="a-data-driven-2024-job-market-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="a-data-driven-2024-job-market-analysis">A Data-Driven 2024 Job Market Analysis</h3>
+<p>We combine job posting data, macroeconomic indicators, and peer-reviewed research to understand how gender and political context shape career opportunities.<br>
+Explore our findings, visualizations, and a data-informed career strategy.</p>
+<p><a href="./data_analysis.html" class="button-animate">Explore Our Data</a></p>
 </section>
-<section id="why-this-research-matters" class="level3 card reveal">
-<h3 class="anchored" data-anchor-id="why-this-research-matters">Why This Research Matters</h3>
-<p>Gender inequality interacts with policy, culture, and sector-specific trends that influencing hiring, retention, and advancement.</p>
 </section>
-<section id="what-this-site-includes" class="level3 card reveal">
-<h3 class="anchored" data-anchor-id="what-this-site-includes">What This Site Includes</h3>
+<div class="hero-visual">
+<p><lottie-player src="https://assets4.lottiefiles.com/packages/lf20_q5pk6p1k.json" background="transparent" speed="1" style="width: 220px; height: 220px;" loop="" autoplay=""> </lottie-player></p>
+</div>
+</div>
+</div>
+<section id="why-this-research-matters" class="level2 card reveal">
+<h2 class="anchored" data-anchor-id="why-this-research-matters">Why This Research Matters</h2>
+<p>Gender inequality in hiring interacts with industry, policy, and geography.<br>
+Some states and sectors are closing gaps, while others remain sharply imbalanced.<br>
+Our goal is to translate these patterns into <strong>practical insight</strong> for job seekers.</p>
+</section>
+<section id="site-overview" class="level2 card reveal">
+<h2 class="anchored" data-anchor-id="site-overview">Site Overview</h2>
 <ul>
-<li>Research Overview<br>
+<li><strong>Research</strong> – Background, theory, and literature on gender disparities and political influence<br>
 </li>
-<li>Data Analysis<br>
+<li><strong>Data Analysis</strong> – Cleaning, feature engineering, and visualizations using Lightcast and FRED<br>
 </li>
-<li>Career Strategy<br>
+<li><strong>Career Strategy</strong> – A three-step, data-driven roadmap for navigating the current market<br>
 </li>
-<li>Team Profiles</li>
+<li><strong>About Us</strong> – Meet the team behind the analysis</li>
+</ul>
+</section>
+<div class="divider">
+
+</div>
+<section id="tools-technologies" class="level2 card reveal">
+<h2 class="anchored" data-anchor-id="tools-technologies">Tools &amp; Technologies</h2>
+<ul>
+<li>Python, PySpark, Pandas, Plotly<br>
+</li>
+<li>FRED API &amp; Lightcast job posting data<br>
+</li>
+<li>Quarto, GitHub Pages, and custom CSS theme</li>
 </ul>
 </section>
 
 
 
 </main> <!-- /main -->
-<!-- Progress bar -->
-<div id="progress-bar"></div>
+<!-- footer.html -->
+
+<!-- Scroll-in animation script -->
 <script>
-  window.addEventListener("scroll", () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (scrollTop / height) * 100;
-    document.getElementById("progress-bar").style.width = progress + "%";
+  document.addEventListener("DOMContentLoaded", function () {
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+
+    reveals.forEach(el => observer.observe(el));
   });
 </script>
 
-<!-- Back to top button -->
-<button id="backToTop" title="Back to top">↑</button>
-<script>
-  const btn = document.getElementById("backToTop");
-  window.addEventListener("scroll", () => {
-    btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
-  });
-  btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-</script>
+<!-- Lottie player for hero animation (optional) -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <footer>
-    <p>© 2025 · AD 688 Web Analytics · Boston University</p>
-    <p>Team 5</p>
+  <p> Team 5 · AD 688 Web Analytics · Boston University</p>
+  <p>© 2025</p>
 </footer>
-
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -158,47 +157,46 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="data-sources" class="level1 card reveal">
 <h1>Data Sources</h1>
-<p>Explain Lightcast job postings and FRED series here.</p>
+<p>Describe Lightcast + FRED here.</p>
 </section>
 <div class="card reveal">
 <section id="cleaning-pipeline" class="level1">
 <h1>Cleaning Pipeline</h1>
 </section>
-<section id="your-existing-spark-pandas-cleaning-code-here" class="level1">
-<h1>your existing Spark / Pandas cleaning code here</h1>
+<section id="your-cleaning-code" class="level1">
+<h1>Your cleaning code</h1>
 
 
 </section>
 </div>
 
 </main> <!-- /main -->
-<!-- Progress bar -->
-<div id="progress-bar"></div>
+<!-- footer.html -->
+
+<!-- Scroll-in animation script -->
 <script>
-  window.addEventListener("scroll", () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (scrollTop / height) * 100;
-    document.getElementById("progress-bar").style.width = progress + "%";
+  document.addEventListener("DOMContentLoaded", function () {
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+
+    reveals.forEach(el => observer.observe(el));
   });
 </script>
 
-<!-- Back to top button -->
-<button id="backToTop" title="Back to top">↑</button>
-<script>
-  const btn = document.getElementById("backToTop");
-  window.addEventListener("scroll", () => {
-    btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
-  });
-  btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-</script>
+<!-- Lottie player for hero animation (optional) -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <footer>
-    <p>© 2025 · AD 688 Web Analytics · Boston University</p>
-    <p>Team 5</p>
+  <p> Team 5 · AD 688 Web Analytics · Boston University</p>
+  <p>© 2025</p>
 </footer>
-
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -4,14 +4,14 @@
     "href": "data_analysis.html",
     "title": "Data Analysis",
     "section": "",
-    "text": "Data Sources\nExplain Lightcast job postings and FRED series here.\n\n\n\nCleaning Pipeline\n\n\nyour existing Spark / Pandas cleaning code here"
+    "text": "Data Sources\nDescribe Lightcast + FRED here.\n\n\n\nCleaning Pipeline\n\n\nYour cleaning code"
   },
   {
     "objectID": "career_plan.html",
     "href": "career_plan.html",
     "title": "Career Strategy Plan",
     "section": "",
-    "text": "From Evidence to Action\nBrief explanation of how we converted analysis into a 3-step strategy.\n\n\nStep 1 · Choose Sectors & Locations Strategically\n\n\n\nStep 2 · Build High-Signal Skills\n\n\n\nStep 3 · Signal Fit & Leadership Identity\n\n\n\nPersonal Next Steps (Team 5)\nOutline what each of our plans to do next (skills, sectors, roles)."
+    "text": "From Evidence to Action\nBrief explanation of how we converted analysis into a 3-step strategy.\n\n\nStep 1 · Choose Sectors & Locations Strategically\n(Your Step 1 content…)\n\n\nStep 2 · Build High-Signal Skills\n(Your Step 2 content…)\n\n\nStep 3 · Signal Fit & Leadership Identity\n(Your Step 3 content…)\n\n\nPersonal Next Steps (Team 5)\n(Your next-steps content…)"
   },
   {
     "objectID": "fred_api_analysis.html",
@@ -25,28 +25,35 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "Gender Disparities in Hiring & Political Influence\nA Data-Driven 2024 Job Market Analysis\nOur project explores how gender, political context, and industry trends interact to shape opportunities in the modern U.S. job market.\nUsing Lightcast job postings, FRED economic indicators, and academic research, we provide a comprehensive analytical perspective.\n\n\nWhy This Research Matters\nGender inequality interacts with policy, culture, and sector-specific trends that influencing hiring, retention, and advancement.\n\n\nWhat This Site Includes\n\nResearch Overview\n\nData Analysis\n\nCareer Strategy\n\nTeam Profiles"
+    "text": "We combine job posting data, macroeconomic indicators, and peer-reviewed research to understand how gender and political context shape career opportunities.\nExplore our findings, visualizations, and a data-informed career strategy.\nExplore Our Data"
+  },
+  {
+    "objectID": "index.html#why-this-research-matters",
+    "href": "index.html#why-this-research-matters",
+    "title": "Home",
+    "section": "Why This Research Matters",
+    "text": "Why This Research Matters\nGender inequality in hiring interacts with industry, policy, and geography.\nSome states and sectors are closing gaps, while others remain sharply imbalanced.\nOur goal is to translate these patterns into practical insight for job seekers."
+  },
+  {
+    "objectID": "index.html#site-overview",
+    "href": "index.html#site-overview",
+    "title": "Home",
+    "section": "Site Overview",
+    "text": "Site Overview\n\nResearch – Background, theory, and literature on gender disparities and political influence\n\nData Analysis – Cleaning, feature engineering, and visualizations using Lightcast and FRED\n\nCareer Strategy – A three-step, data-driven roadmap for navigating the current market\n\nAbout Us – Meet the team behind the analysis"
+  },
+  {
+    "objectID": "index.html#tools-technologies",
+    "href": "index.html#tools-technologies",
+    "title": "Home",
+    "section": "Tools & Technologies",
+    "text": "Tools & Technologies\n\nPython, PySpark, Pandas, Plotly\n\nFRED API & Lightcast job posting data\n\nQuarto, GitHub Pages, and custom CSS theme"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About Us",
     "section": "",
-    "text": "We are graduate students in the Master of Applied Business Analytics program at Boston University.\nThis project was completed for AD 688 – Web Analytics, supervised by Prof. Nakul Padalkar."
-  },
-  {
-    "objectID": "about.html#team-members",
-    "href": "about.html#team-members",
-    "title": "About Us",
-    "section": "Team Members",
-    "text": "Team Members\n\nHung Nguyen\nData wrangling, Quarto architecture, integration of macro/micro insights.\n\n\nNhat Tran\nFRED API integration, time-series visualization, macro interpretation.\n\n\nDinara Zhorabek\nResearch framing, literature review, policy/gender analysis."
-  },
-  {
-    "objectID": "about.html#tools-stack",
-    "href": "about.html#tools-stack",
-    "title": "About Us",
-    "section": "Tools & Stack",
-    "text": "Tools & Stack\n\nPython, PySpark\n\nPandas, Plotly\n\nFRED API\n\nQuarto + GitHub Pages"
+    "text": "Team 5 – Gender Disparities in Hiring & Political Influence\nGraduate students in the Master of Applied Business Analytics program at Boston University,\ncompleting this project for AD 688 – Web Analytics.\n\n\n\n\n&lt;strong&gt;Hung Nguyen&lt;/strong&gt;&lt;br&gt;\nData wrangling, Quarto architecture, integration of macro/micro insights.\n\n\n\n\n&lt;strong&gt;Nhat Tran&lt;/strong&gt;&lt;br&gt;\nFRED API integration, time-series visualization, macro interpretation.\n\n\n\n\n&lt;strong&gt;Dinara Zhorabek&lt;/strong&gt;&lt;br&gt;\nResearch framing, literature review, policy/gender analysis.\n\n\n\n\nTools & Stack\n\nPython / PySpark / Pandas / Plotly\n\nFRED API & Lightcast job postings\n\nQuarto + GitHub Pages"
   },
   {
     "objectID": "research_introduction.html",

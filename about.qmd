@@ -6,33 +6,42 @@ title: "About Us"
 
 # Team 5 – Gender Disparities in Hiring & Political Influence
 
-We are graduate students in the Master of Applied Business Analytics program at Boston University.  
-This project was completed for **AD 688 – Web Analytics**, supervised by Prof. Nakul Padalkar.
+Graduate students in the Master of Applied Business Analytics program at Boston University,  
+completing this project for **AD 688 – Web Analytics**.
+
+</div>
+
+<div class="card reveal avatar-row">
+
+<div class="avatar-card">
+  <div>
+    <strong>Hung Nguyen</strong><br>
+    Data wrangling, Quarto architecture, integration of macro/micro insights.
+  </div>
+</div>
+
+<div class="avatar-card">
+  <div>
+    <strong>Nhat Tran</strong><br>
+    FRED API integration, time-series visualization, macro interpretation.
+  </div>
+</div>
+
+<div class="avatar-card">
+  <div>
+    <strong>Dinara Zhorabek</strong><br>
+    Research framing, literature review, policy/gender analysis.
+  </div>
+</div>
 
 </div>
 
 <div class="card reveal">
 
-## Team Members
+# Tools & Stack
 
-### Hung Nguyen  
-Data wrangling, Quarto architecture, integration of macro/micro insights.
-
-### Nhat Tran  
-FRED API integration, time-series visualization, macro interpretation.
-
-### Dinara Zhorabek  
-Research framing, literature review, policy/gender analysis.
-
-</div>
-
-<div class="card reveal">
-
-## Tools & Stack
-
-- Python, PySpark  
-- Pandas, Plotly  
-- FRED API  
+- Python / PySpark / Pandas / Plotly  
+- FRED API & Lightcast job postings  
 - Quarto + GitHub Pages  
 
 </div>
