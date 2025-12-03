@@ -1,44 +1,27 @@
-<!-- footer.html -->
-
-<!-- Scroll-in animation -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const els = document.querySelectorAll(".reveal");
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        obs.unobserve(entry.target);
-      }
-    });
-  }, {threshold: 0.12});
-  els.forEach(el => obs.observe(el));
-});
-</script>
-
 <!-- Progress bar -->
 <div id="progress-bar"></div>
 <script>
-window.addEventListener('scroll', () => {
-  const scrollTop = document.documentElement.scrollTop;
-  const height = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = (scrollTop / height) * 100;
-  document.getElementById("progress-bar").style.width = progress + "%";
-});
+  window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / height) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
+  });
 </script>
 
 <!-- Back to top button -->
 <button id="backToTop" title="Back to top">↑</button>
 <script>
-const btn = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
-});
-btn.onclick = () => window.scrollTo({top: 0, behavior: "smooth"});
+  const btn = document.getElementById("backToTop");
+  window.addEventListener("scroll", () => {
+    btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
+  });
+  btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 </script>
 
 <footer>
-  <p>© 2025 · AD 688 Web Analytics · Boston University</p>
-  <p style="opacity:0.7;"> Team 5 </p>
+    <p>© 2025 · AD 688 Web Analytics · Boston University</p>
+    <p>Team 5</p>
 </footer>
+
 

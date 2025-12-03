@@ -24,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -39,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-97b49c0ceb8fba4d7f2792d03a70abb8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-80f6653e4bad1240590acd7234152a3f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -81,8 +82,6 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/logo.svg" alt="" class="navbar-logo light-content">
-    <img src="./assets/logo.svg" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Job Market Analysis 2024</span>
@@ -100,7 +99,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./research_introduction.html"> 
-<span class="menu-text">Research</span></a>
+<span class="menu-text">Research Introduction</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./data_analysis.html"> 
@@ -138,49 +137,32 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<!-- footer.html -->
-
-<!-- Scroll-in animation -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const els = document.querySelectorAll(".reveal");
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        obs.unobserve(entry.target);
-      }
-    });
-  }, {threshold: 0.12});
-  els.forEach(el => obs.observe(el));
-});
-</script>
-
 <!-- Progress bar -->
 <div id="progress-bar"></div>
 <script>
-window.addEventListener('scroll', () => {
-  const scrollTop = document.documentElement.scrollTop;
-  const height = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = (scrollTop / height) * 100;
-  document.getElementById("progress-bar").style.width = progress + "%";
-});
+  window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / height) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
+  });
 </script>
 
 <!-- Back to top button -->
 <button id="backToTop" title="Back to top">↑</button>
 <script>
-const btn = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
-});
-btn.onclick = () => window.scrollTo({top: 0, behavior: "smooth"});
+  const btn = document.getElementById("backToTop");
+  window.addEventListener("scroll", () => {
+    btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
+  });
+  btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 </script>
 
 <footer>
-  <p>© 2025 · AD 688 Web Analytics · Boston University</p>
-  <p style="opacity:0.7;"> Team 5 </p>
+    <p>© 2025 · AD 688 Web Analytics · Boston University</p>
+    <p>Team 5</p>
 </footer>
+
 
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

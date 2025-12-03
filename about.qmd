@@ -4,48 +4,35 @@ title: "About Us"
 
 <div class="card reveal">
 
-# Team 5 · Gender Disparities in Hiring & Political Influence
+# Team 5 – Gender Disparities in Hiring & Political Influence
 
-Graduate students in the Master of Applied Business Analytics program at Boston University,  
-completing this project for **AD 688 – Web Analytics**.
-
-</div>
-
-<div class="card reveal avatar-row">
-
-<div class="avatar-card">
-  <img src="assets/hung.png" alt="Hung Nguyen" class="avatar-img">
-  <div>
-    **Hung Nguyen**  
-    Data wrangling, Quarto architecture, integration of macro/micro insights.
-  </div>
-</div>
-
-<div class="avatar-card">
-  <img src="assets/nhat.png" alt="Nhat Tran" class="avatar-img">
-  <div>
-    **Nhat Tran**  
-    FRED API integration, time-series visualization, macro interpretation.
-  </div>
-</div>
-
-<div class="avatar-card">
-  <img src="assets/dinara.png" alt="Dinara Zhorabek" class="avatar-img">
-  <div>
-    **Dinara Zhorabek**  
-    Research framing, literature review, policy/gender analysis.
-  </div>
-</div>
+We are graduate students in the Master of Applied Business Analytics program at Boston University.  
+This project was completed for **AD 688 – Web Analytics**, supervised by Prof. Nakul Padalkar.
 
 </div>
 
 <div class="card reveal">
 
-# Tools & Stack
+## Team Members
 
-- Python / PySpark / Pandas / Plotly  
-- FRED API & Lightcast job postings  
+### Hung Nguyen  
+Data wrangling, Quarto architecture, integration of macro/micro insights.
+
+### Nhat Tran  
+FRED API integration, time-series visualization, macro interpretation.
+
+### Dinara Zhorabek  
+Research framing, literature review, policy/gender analysis.
+
+</div>
+
+<div class="card reveal">
+
+## Tools & Stack
+
+- Python, PySpark  
+- Pandas, Plotly  
+- FRED API  
 - Quarto + GitHub Pages  
-- Custom CSS theme
 
 </div>

@@ -1,9 +1,14 @@
+/* ------------------------------------------------------
+   FINAL SUPER-COLORFUL PREMIUM BACKGROUND THEME
+   Futuristic Mesh + Aurora Lights + Modern Cards
+   Always-on color, no dark mode.
+--------------------------------------------------------- */
 
-/* IMPORT FONTS */
+/* FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
 
 /* ------------------------------------------------------
-   BACKGROUND — FULL COLORFUL GRADIENT MESH + AURORA
+   BACKGROUND — COLORFUL GRADIENT MESH + AURORA
 --------------------------------------------------------- */
 body {
   font-family: "Inter", sans-serif;
@@ -22,7 +27,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Micro-texture layer */
+/* Micro-texture */
 body::after {
   content: "";
   position: fixed;
@@ -53,42 +58,36 @@ body::before {
   z-index: 0;
 }
 
-/* Aurora motion animation */
 @keyframes auroraMove {
   0%   { transform: translateX(-12%) translateY(-4%); }
   50%  { transform: translateX(14%) translateY(6%); }
   100% { transform: translateX(-10%) translateY(-3%); }
 }
 
-/* Fade in */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
 /* ------------------------------------------------------
-   COLOR PALETTE
---------------------------------------------------------- */
-:root {
-  --accent-blue: #4A90E2;
-  --accent-teal: #3A6F7D;
-  --accent-purple: #7F5BFF;
-  --border-soft: #D4DDE7;
-}
-
-/* ------------------------------------------------------
-   TYPOGRAPHY & LINKS
+   BASIC TYPOGRAPHY & LINKS
 --------------------------------------------------------- */
 h1, h2, h3 {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 600;
-  color: #1E293B;
+  color: #111827;
   letter-spacing: -0.3px;
+}
+
+p {
+  font-size: 1.02rem;
+  margin-bottom: 1.1rem;
 }
 
 a {
   color: #3A6F7D;
   font-weight: 500;
+  text-decoration: none;
 }
 
 a:hover {
@@ -137,8 +136,8 @@ a:hover {
   background: #FFFFFF;
   border-radius: 18px;
   padding: 2rem;
-  border: 1px solid var(--border-soft);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  border: 1px solid #D8E1EB;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.06);
   margin-bottom: 2.4rem;
   transition: 0.28s ease;
   position: relative;
@@ -160,18 +159,16 @@ a:hover {
   width: 100%;
   height: 4px;
   background: linear-gradient(90deg,
-    #4A90E2 0%, 
-    #00DBDE 40%, 
-    #EC4899 70%, 
+    #4A90E2 0%,
+    #00DBDE 40%,
+    #EC4899 70%,
     #7F5BFF 100%
   );
   opacity: 0.40;
   border-radius: 18px 18px 0 0;
 }
 
-/* ------------------------------------------------------
-   SECTION TITLE
---------------------------------------------------------- */
+/* SECTION TITLE */
 .section-title {
   display: flex;
   align-items: center;
@@ -273,7 +270,7 @@ footer {
 }
 
 /* ------------------------------------------------------
-   TOP PROGRESS BAR
+   PROGRESS BAR
 --------------------------------------------------------- */
 #progress-bar {
   position: fixed;
@@ -284,55 +281,3 @@ footer {
   background: #4A90E2;
   z-index: 9999;
 }
-
-/* ------------------------------------------------------
-   GLOBAL LAYOUT SPACING FIX
-   Ensures perfect alignment & consistent spacing
---------------------------------------------------------- */
-
-/* Reduce Quarto’s default giant top padding */
-main.content {
-  padding-top: 2rem !important;
-  padding-bottom: 4rem !important;
-}
-
-/* Remove extra top margin Quarto adds to first h1 */
-main.content h1:first-of-type {
-  margin-top: 0rem !important;
-  padding-top: 0rem !important;
-}
-
-/* Add a clean gap below the page title */
-.page-title, h1 {
-  margin-bottom: 1.8rem !important;
-}
-
-/* Normalize spacing under hero block */
-.hero {
-  margin-bottom: 2.5rem !important;
-}
-
-/* Normalize spacing between all cards */
-.card {
-  margin-top: 1.8rem !important;
-  margin-bottom: 2rem !important;
-}
-
-/* Reduce card-to-card gap on homepage */
-.card:first-of-type {
-  margin-top: 1.2rem !important;
-}
-
-/* Ensure footer doesn’t float too close */
-footer {
-  margin-top: 3.5rem !important;
-  padding-top: 1.5rem !important;
-}
-
-/* Optional: Align all homepage sections nicely on a vertical grid */
-.section-block {
-  margin-top: 2.2rem !important;
-  margin-bottom: 2.2rem !important;
-}
-
-/* End of styles.css */

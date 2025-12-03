@@ -5,33 +5,25 @@ project:
 website:
   title: "Job Market Analysis 2024"
   navbar:
-    pinned: true
-    background: "#ffffff"
-    foreground: "#1E293B"
-    logo: assets/logo.svg
     left:
-      - href: index.qmd
-        text: "Home"
-      - href: research_introduction.qmd
-        text: "Research"
-      - href: data_analysis.qmd
-        text: "Data Analysis"
-      - href: career_plan.qmd
-        text: "Career Strategy"
-      - href: about.qmd
-        text: "About Us"
+      - text: "Home"
+        href: index.qmd
+      - text: "Research Introduction"
+        href: research_introduction.qmd
+      - text: "Data Analysis"
+        href: data_analysis.qmd
+      - text: "Career Strategy"
+        href: career_plan.qmd
+      - text: "About Us"
+        href: about.qmd
 
 format:
   html:
-    theme:
-      light: sandstone      # ONLY LIGHT THEME (no dark)
+    theme: sandstone
     css: styles.css
     toc: true
-    toc-depth: 3
     smooth-scroll: true
     page-layout: full
-    code-fold: true
 
 include-after-body:
   - footer.html
-

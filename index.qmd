@@ -1,30 +1,33 @@
 ---
 title: "Home"
-format:
-  html:
-    toc: false
 ---
 
 <div class="hero reveal">
 
-# Gender Disparities in Hiring & Political Influence  
-### A Data-Driven 2024 Job Market Analysis
+# Gender Disparities in Hiring & Political Influence
+
+A Data-Driven 2024 Job Market Analysis  
 
 Our project explores how gender, political context, and industry trends interact to shape opportunities in the modern U.S. job market.  
-Integrating Lightcast job postings, FRED economic indicators, and academic research, we provide a comprehensive analytical perspective.
+Using Lightcast job postings, FRED economic indicators, and academic research, we provide a comprehensive analytical perspective.
 
 </div>
 
 <div class="card reveal">
-<div class="section-title">Why This Research Matters</div>
-Gender inequality interacts with policy, culture, and sector-specific trends · influencing hiring, retention, and advancement.
+
+### Why This Research Matters
+
+Gender inequality interacts with policy, culture, and sector-specific trends that influencing hiring, retention, and advancement.
+
 </div>
 
 <div class="card reveal">
-<div class="section-title">What This Site Includes</div>
+
+### What This Site Includes
 
 - Research Overview  
 - Data Analysis  
 - Career Strategy  
 - Team Profiles  
+
 </div>
