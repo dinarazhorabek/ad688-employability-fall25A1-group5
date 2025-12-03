@@ -4,10 +4,10 @@ project:
 
 website:
   title: "Job Market Analysis 2024"
+  search: true
   navbar:
     pinned: true
-    active: hover
-    left:
+    right:
       - text: "Home"
         href: index.qmd
       - text: "Research Introduction"
@@ -21,13 +21,15 @@ website:
 
 format:
   html:
-    theme: sandstone
+    theme:
+      light: flatly
+      dark: quartz
     css: styles.css
     toc: true
     toc-depth: 3
+    number-sections: false
     smooth-scroll: true
     page-layout: full
 
 include-after-body:
   - footer.html
-

@@ -1,36 +1,47 @@
-<!-- Progress Bar -->
-<div id="progress-bar"></div>
+<!-- Scroll-in animation script -->
 <script>
-  window.addEventListener("scroll", () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (scrollTop / height) * 100;
-    document.getElementById("progress-bar").style.width = progress + "%";
-  });
-</script>
-
-<!-- Back to Top Button -->
-<button id="backToTop" title="Back to top">↑</button>
-<script>
-  const btn = document.getElementById("backToTop");
-  window.addEventListener("scroll", () => {
-    btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
-  });
-  btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-</script>
-
-<!-- Premium Navbar Shrink Effect -->
-<script>
-document.addEventListener("scroll", () => {
-  const navbar = document.querySelector(".navbar");
-  if (navbar) {
-    if (window.scrollY > 40) {
-      navbar.classList.add("shrink");
-    } else {
-      navbar.classList.remove("shrink");
+  document.addEventListener("DOMContentLoaded", function () {
+    const reveals = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      reveals.forEach(el => el.classList.add("visible"));
+      return;
     }
-  }
-});
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  });
+</script>
+
+<!-- Back to top + progress bar script -->
+<div id="progress-bar"></div>
+<button id="backToTop" title="Back to top">↑</button>
+
+<script>
+  const backBtn = document.getElementById("backToTop");
+  const progressBar = document.getElementById("progress-bar");
+
+  window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = height > 0 ? (scrollTop / height) * 100 : 0;
+    progressBar.style.width = progress + "%";
+
+    if (scrollTop > 260) {
+      backBtn.style.display = "block";
+    } else {
+      backBtn.style.display = "none";
+    }
+  });
+
+  backBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 </script>
 
 <footer>
