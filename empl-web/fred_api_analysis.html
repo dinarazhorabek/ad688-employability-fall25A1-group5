@@ -183,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="aae5d31b" class="cell" data-execution_count="1">
+<div id="3c9b88eb" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fredapi <span class="im">import</span> Fred</span>
@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="64cfbc57" class="cell" data-execution_count="2">
+<div id="cc8e80e4" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample Unemployment Rate chart to view</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pio.renderers.default <span class="op">=</span> <span class="st">"browser"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
@@ -284,7 +284,7 @@ dtype: float64</code></pre>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title<span class="op">=</span><span class="st">"Unemployment Rate Over Time"</span>, xaxis_title<span class="op">=</span><span class="st">"Date"</span>, yaxis_title<span class="op">=</span><span class="st">"Rate (%)"</span>)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="7d21e68d" class="cell" data-execution_count="3">
+<div id="88fefc5d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chart 0: Unemployment Rate for Men vs Women</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Scatter(x<span class="op">=</span>data[<span class="st">"unemp_women"</span>].index, y<span class="op">=</span>data[<span class="st">"unemp_women"</span>], </span>
@@ -298,7 +298,7 @@ dtype: float64</code></pre>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="0792dbc1" class="cell" data-execution_count="4">
+<div id="118c789e" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chart 1: Gender Wage Gap Over Time (Median Weekly Earnings)</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Scatter(x<span class="op">=</span>data[<span class="st">"earn_women"</span>].index, y<span class="op">=</span>data[<span class="st">"earn_women"</span>], mode<span class="op">=</span><span class="st">"lines"</span>, name<span class="op">=</span><span class="st">"Women Earnings"</span>))</span>
@@ -309,7 +309,7 @@ dtype: float64</code></pre>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="58b644a2" class="cell" data-execution_count="5">
+<div id="9783edb4" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chart 2: Labor Force Participation - Men vs Women (Monthly, SA)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Scatter(x<span class="op">=</span>data[<span class="st">"part_women"</span>].index, y<span class="op">=</span>data[<span class="st">"part_women"</span>],</span>
@@ -322,7 +322,7 @@ dtype: float64</code></pre>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="02d929f4" class="cell" data-execution_count="6">
+<div id="dcf7a6aa" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chart 3: STEM SECTORS – Women Ratio Bar Chart (Sorted)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the latest information available from Fred</span></span>
@@ -356,7 +356,7 @@ dtype: float64</code></pre>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>fig_stem.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="ae211f4e" class="cell" data-execution_count="7">
+<div id="a99cabc1" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chart 4: NON-STEM SECTORS – Women Ratio Bar Chart (Sorted)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>nonstem_ratio_vars <span class="op">=</span> {</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Leisure &amp; Hospitality"</span>: data[<span class="st">"emp_leisure_women_ratio"</span>],</span>
@@ -388,42 +388,38 @@ dtype: float64</code></pre>
 
 
 </main> <!-- /main -->
-<!-- Scroll reveal animation -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const reveals = document.querySelectorAll(".reveal");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  reveals.forEach(el => observer.observe(el));
-});
-</script>
-
-<!-- Back to top -->
-<button id="backToTop" title="Back to top">↑</button>
-<script>
-const btn = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
-});
-btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-</script>
-
-<!-- Progress bar -->
+<!-- Progress Bar -->
 <div id="progress-bar"></div>
 <script>
-window.addEventListener("scroll", () => {
-  const scrollTop = document.documentElement.scrollTop;
-  const height = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = (scrollTop / height) * 100;
-  document.getElementById("progress-bar").style.width = progress + "%";
+  window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / height) * 100;
+    document.getElementById("progress-bar").style.width = progress + "%";
+  });
+</script>
+
+<!-- Back to Top Button -->
+<button id="backToTop" title="Back to top">↑</button>
+<script>
+  const btn = document.getElementById("backToTop");
+  window.addEventListener("scroll", () => {
+    btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
+  });
+  btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+</script>
+
+<!-- Premium Navbar Shrink Effect -->
+<script>
+document.addEventListener("scroll", () => {
+  const navbar = document.querySelector(".navbar");
+  if (navbar) {
+    if (window.scrollY > 40) {
+      navbar.classList.add("shrink");
+    } else {
+      navbar.classList.remove("shrink");
+    }
+  }
 });
 </script>
 
