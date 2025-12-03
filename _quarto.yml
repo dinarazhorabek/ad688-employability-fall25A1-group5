@@ -6,8 +6,8 @@ website:
   title: "Job Market Analysis 2024"
   navbar:
     pinned: true
-    background: "#ffffffcc"
-    foreground: "#1F2937"
+    background: "#ffffff"
+    foreground: "#1E293B"
     logo: assets/logo.svg
     left:
       - href: index.qmd
@@ -24,15 +24,14 @@ website:
 format:
   html:
     theme:
-      light: flatly
-      dark: quartz
+      light: sandstone      # ONLY LIGHT THEME (no dark)
     css: styles.css
     toc: true
     toc-depth: 3
-    number-sections: false
-    page-layout: full
     smooth-scroll: true
+    page-layout: full
     code-fold: true
 
 include-after-body:
   - footer.html
+

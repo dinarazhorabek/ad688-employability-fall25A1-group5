@@ -1,206 +1,338 @@
+
+/* IMPORT FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
 /* ------------------------------------------------------
-   PREMIUM ANALYTICS UI — TEAL/AQUA + ANIMATIONS
+   BACKGROUND — FULL COLORFUL GRADIENT MESH + AURORA
 --------------------------------------------------------- */
-
-/* FONTS */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
-/* GLOBAL BACKGROUND (animated teal/aqua) */
 body {
   font-family: "Inter", sans-serif;
-  background: linear-gradient(135deg, #e8fffb, #f4fcff, #f1fffa);
-  background-size: 300% 300%;
-  animation: ambientGradient 18s ease infinite;
-  margin: 0;
-  color: #1F2937;
+  background:
+    radial-gradient(1600px at 15% 20%, rgba(94,129,255,0.38), transparent 70%),
+    radial-gradient(1400px at 85% 15%, rgba(0,219,222,0.30), transparent 70%),
+    radial-gradient(1300px at 50% 100%, rgba(168,201,255,0.28), transparent 75%),
+    radial-gradient(1200px at 30% 80%, rgba(255,146,209,0.25), transparent 75%),
+    linear-gradient(180deg, #dbe8ff 0%, #d9e8f3 40%, #d7e6f2 80%, #e1efff 100%);
+  background-attachment: fixed;
+  color: #1E293B;
   line-height: 1.75;
+  margin: 0;
+  animation: fadeIn 0.45s ease-out;
+  position: relative;
+  overflow-x: hidden;
 }
 
-@keyframes ambientGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Micro-texture layer */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+  opacity: 0.020;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* HEADINGS */
+/* Aurora light streaks */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -200px 0 0 0;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0) 0%,
+    rgba(120,180,255,0.22) 25%,
+    rgba(0,219,222,0.16) 45%,
+    rgba(236,72,153,0.18) 65%,
+    rgba(255,255,255,0) 100%
+  );
+  filter: blur(90px);
+  opacity: 0.65;
+  animation: auroraMove 22s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Aurora motion animation */
+@keyframes auroraMove {
+  0%   { transform: translateX(-12%) translateY(-4%); }
+  50%  { transform: translateX(14%) translateY(6%); }
+  100% { transform: translateX(-10%) translateY(-3%); }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ------------------------------------------------------
+   COLOR PALETTE
+--------------------------------------------------------- */
+:root {
+  --accent-blue: #4A90E2;
+  --accent-teal: #3A6F7D;
+  --accent-purple: #7F5BFF;
+  --border-soft: #D4DDE7;
+}
+
+/* ------------------------------------------------------
+   TYPOGRAPHY & LINKS
+--------------------------------------------------------- */
 h1, h2, h3 {
   font-family: "Plus Jakarta Sans", sans-serif;
-  color: #134E4A;
-  font-weight: 700;
+  font-weight: 600;
+  color: #1E293B;
   letter-spacing: -0.3px;
 }
 
-h1 { font-size: 2.6rem; }
-h2 { font-size: 2rem; margin-top: 2rem; }
-h3 { font-size: 1.4rem; margin-top: 1.4rem; }
+a {
+  color: #3A6F7D;
+  font-weight: 500;
+}
 
-/* NAVBAR (glass) */
+a:hover {
+  color: #4A90E2;
+}
+
+/* ------------------------------------------------------
+   NAVBAR
+--------------------------------------------------------- */
 .navbar {
-  background: rgba(255,255,255,0.9) !important;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #d8e6e3;
+  background: rgba(255,255,255,0.92) !important;
+  border-bottom: 1px solid #C9D6E4;
+  backdrop-filter: blur(14px);
   padding: 0.8rem 1rem !important;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.05);
+  box-shadow: 0 3px 16px rgba(0,0,0,0.08);
+  z-index: 10;
 }
 
-.navbar a {
-  font-weight: 500 !important;
-}
-
-.navbar a:hover {
-  color: #0EA5A8 !important;
-  transform: translateY(-1px);
-  transition: 0.18s ease;
-}
-
-/* HERO SECTION */
+/* ------------------------------------------------------
+   HERO
+--------------------------------------------------------- */
 .hero {
-  background: linear-gradient(135deg, #0EA5E9, #14B8A6);
-  background-size: 200% 200%;
-  animation: heroShift 7s ease-in-out infinite;
-  padding: 3.2rem 2.4rem;
+  background: #FFFFFF;
   border-radius: 22px;
-  color: white;
-  margin-bottom: 3rem;
-  box-shadow: 0 18px 45px rgba(20,184,166,0.35);
+  padding: 3rem 2rem;
+  border: 1px solid #E0E7EF;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 1;
 }
 
-@keyframes heroShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Soft hero glow */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: -50px;
+  background: radial-gradient(circle at 20% 0%, rgba(120,180,255,0.28), transparent 55%);
+  opacity: 0.45;
+  z-index: -1;
 }
 
-.hero-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  align-items: center;
-}
-
-.hero-text {
-  flex: 1 1 260px;
-}
-
-.hero-visual {
-  flex: 0 0 260px;
-  text-align: center;
-}
-
-/* CARDS */
+/* ------------------------------------------------------
+   CARDS
+--------------------------------------------------------- */
 .card {
-  background: #ffffffee;
-  backdrop-filter: blur(4px);
-  padding: 2rem 2.2rem;
+  background: #FFFFFF;
   border-radius: 18px;
-  border: 1px solid #E1F1EE;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
-  margin-bottom: 2.6rem;
-  transform: translateY(0);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2rem;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  margin-bottom: 2.4rem;
+  transition: 0.28s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(0,0,0,0.10);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+  border-color: #A9C9F5;
 }
 
-/* SCROLL-IN ANIMATION */
+/* accent top bar */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg,
+    #4A90E2 0%, 
+    #00DBDE 40%, 
+    #EC4899 70%, 
+    #7F5BFF 100%
+  );
+  opacity: 0.40;
+  border-radius: 18px 18px 0 0;
+}
+
+/* ------------------------------------------------------
+   SECTION TITLE
+--------------------------------------------------------- */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+  color: #3A6F7D;
+}
+
+.section-title::before {
+  content: "📊";
+  font-size: 1.2rem;
+}
+
+/* ------------------------------------------------------
+   SCROLL REVEAL
+--------------------------------------------------------- */
 .reveal {
   opacity: 0;
-  transform: translateY(25px);
+  transform: translateY(18px);
+  transition: 0.6s ease;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.7s ease;
 }
 
-/* WAVY SECTION DIVIDER */
+/* ------------------------------------------------------
+   DIVIDER
+--------------------------------------------------------- */
 .divider {
-  background: url('https://raw.githubusercontent.com/equinusocio/material-theme/master/res/waves.svg');
+  height: 60px;
+  background: url("https://raw.githubusercontent.com/kamranahmedse/driver.js/master/demo/images/waves.svg");
+  opacity: 0.15;
   background-size: cover;
-  height: 80px;
-  margin: 32px 0;
-  opacity: 0.8;
+  margin: 2rem 0;
 }
 
-/* BUTTONS */
-.button-animate {
-  padding: 12px 22px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #0EA5E9, #14B8A6);
-  color: white;
-  font-weight: 600;
-  display: inline-block;
-  transition: 0.2s ease;
-}
-
-.button-animate:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(14,165,233,0.3);
-}
-
-/* TABLES */
+/* ------------------------------------------------------
+   TABLES
+--------------------------------------------------------- */
 table {
   border-radius: 12px;
+  border: 1px solid #D3DFEA;
   overflow: hidden;
-  border: 1px solid #d5ece9;
 }
 
-/* BLOCKQUOTE */
+thead tr {
+  background: #EDF2F7;
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background: #FAFCFE;
+}
+
+/* ------------------------------------------------------
+   BLOCKQUOTES
+--------------------------------------------------------- */
 blockquote {
-  padding: 1.2rem 1.5rem;
-  background: #ECFFFB;
-  border-left: 6px solid #14B8A6;
-  border-radius: 12px;
-  font-style: italic;
+  background: #F2F6FA;
+  border-left: 5px solid #A9C9F5;
+  padding: 1.2rem 1.4rem;
+  border-radius: 10px;
 }
 
-/* ABOUT PAGE AVATARS (if you add images) */
-.avatar-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.8rem;
-}
-
-.avatar-card {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.avatar-img {
-  width: 56px;
-  height: 56px;
-  border-radius: 999px;
-  object-fit: cover;
-  border: 2px solid #0EA5E9;
-}
-
-/* FOOTER */
+/* ------------------------------------------------------
+   FOOTER
+--------------------------------------------------------- */
 footer {
+  color: #6B7280;
   text-align: center;
-  font-size: 0.9rem;
-  color: #64748B;
-  margin-top: 4rem;
   padding: 1.2rem 0;
 }
 
-/* DARK MODE TWEAKS */
-.quarto-dark body {
-  background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+/* ------------------------------------------------------
+   BACK TO TOP BUTTON
+--------------------------------------------------------- */
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #3A6F7D;
+  color: white;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0px 4px 14px rgba(0,0,0,0.20);
+  transition: 0.2s ease;
+  z-index: 999;
 }
 
-.quarto-dark .card {
-  background: rgba(15,23,42,0.9);
-  border-color: #0F766E;
+#backToTop:hover {
+  background: #4A90E2;
 }
 
-.quarto-dark .hero {
-  box-shadow: 0 20px 55px rgba(8,145,178,0.55);
+/* ------------------------------------------------------
+   TOP PROGRESS BAR
+--------------------------------------------------------- */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: #4A90E2;
+  z-index: 9999;
 }
-.quarto-dark h1, .quarto-dark h2, .quarto-dark h3 {
-  color: #81E6D9;
-} 
+
+/* ------------------------------------------------------
+   GLOBAL LAYOUT SPACING FIX
+   Ensures perfect alignment & consistent spacing
+--------------------------------------------------------- */
+
+/* Reduce Quarto’s default giant top padding */
+main.content {
+  padding-top: 2rem !important;
+  padding-bottom: 4rem !important;
+}
+
+/* Remove extra top margin Quarto adds to first h1 */
+main.content h1:first-of-type {
+  margin-top: 0rem !important;
+  padding-top: 0rem !important;
+}
+
+/* Add a clean gap below the page title */
+.page-title, h1 {
+  margin-bottom: 1.8rem !important;
+}
+
+/* Normalize spacing under hero block */
+.hero {
+  margin-bottom: 2.5rem !important;
+}
+
+/* Normalize spacing between all cards */
+.card {
+  margin-top: 1.8rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Reduce card-to-card gap on homepage */
+.card:first-of-type {
+  margin-top: 1.2rem !important;
+}
+
+/* Ensure footer doesn’t float too close */
+footer {
+  margin-top: 3.5rem !important;
+  padding-top: 1.5rem !important;
+}
+
+/* Optional: Align all homepage sections nicely on a vertical grid */
+.section-block {
+  margin-top: 2.2rem !important;
+  margin-bottom: 2.2rem !important;
+}
+
+/* End of styles.css */

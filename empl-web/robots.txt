@@ -1,1 +1,0 @@
-Sitemap: https://<your_github_username>.github.io/ad688-employability-fall25A1-group5/sitemap.xml

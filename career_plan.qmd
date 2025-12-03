@@ -9,31 +9,31 @@ format:
 
 # From Evidence to Action
 
-Brief explanation of how you converted analysis into a 3-step strategy.
+Brief explanation of how we converted analysis into a 3-step strategy.
 
 </div>
 
 <div class="card reveal">
 
-# Step 1 — Choose Sectors & Locations Strategically
+# Step 1 · Choose Sectors & Locations Strategically
 
-<!-- Paste/refine your existing Step 1 text -->
-
-</div>
-
-<div class="card reveal">
-
-# Step 2 — Build High-Signal Skills
-
-<!-- Paste/refine your existing Step 2 text -->
+<!-- Paste/refine our existing Step 1 text -->
 
 </div>
 
 <div class="card reveal">
 
-# Step 3 — Signal Fit & Leadership Identity
+# Step 2 · Build High-Signal Skills
 
-<!-- Paste/refine your existing Step 3 text -->
+<!-- Paste/refine our existing Step 2 text -->
+
+</div>
+
+<div class="card reveal">
+
+# Step 3 · Signal Fit & Leadership Identity
+
+<!-- Paste/refine our existing Step 3 text -->
 
 </div>
 
@@ -41,6 +41,6 @@ Brief explanation of how you converted analysis into a 3-step strategy.
 
 # Personal Next Steps (Team 5)
 
-Outline what each of you plans to do next (skills, sectors, roles).
+Outline what each of our plans to do next (skills, sectors, roles).
 
 </div>
