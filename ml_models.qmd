@@ -1,0 +1,118 @@
+---
+title: "Data Analysis"
+subtitle: "Cleaning, Exploration, and Patterns in the 2024 Job Market"
+bibliography: references.bib
+csl: csl/econometrica.csl
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-tools: true
+---
+
+<div class="card reveal">
+
+## Data Sources
+
+Some comments ...
+
+```{python}
+import glob
+import pandas as pd
+
+state_unemp = pd.read_csv("data/fred_state_unemp.csv", parse_dates=["date"])
+state_unemp["month"] = state_unemp["date"].dt.to_period("M").astype(str)
+state_unemp.rename(columns={"value": "state_unemployment"}, inplace=True)
+
+
+fred_files = glob.glob("data/fred_*.csv")
+fred_dfs = {}
+for file in fred_files:
+    key = file.split("/")[-1].replace("fred_", "").replace(".csv", "")
+    df = pd.read_csv(file, parse_dates=["date"])
+    df["month"] = df["date"].dt.to_period("M").astype(str)
+    fred_dfs[key] = df[["month", "value"]].rename(columns={"value": key})
+
+# fred_dfs.keys()
+fred_merged = None
+for key, df in fred_dfs.items():
+    if fred_merged is None:
+        fred_merged = df
+    else:
+        fred_merged = fred_merged.merge(df, on="month", how="outer")
+
+fred_merged.head()
+```
+
+
+```{python}
+lightcast_jp = pd.read_csv("data/lightcast_job_postings.csv",low_memory=False)
+
+lightcast_jp["POSTED"] = pd.to_datetime(lightcast_jp["POSTED"], errors="coerce")
+lightcast_jp["month"] = lightcast_jp["POSTED"].dt.to_period("M").astype(str)
+```
+
+```{python}
+lc_merged = lightcast_jp.merge(fred_merged, on="month", how="left")
+```
+
+```{python}
+state_abbrevs = [
+    "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
+    "HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
+    "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+    "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC",
+    "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
+    "DC",
+]
+
+state_names = [
+    "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia",
+    "Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland",
+    "Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey",
+    "New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina",
+    "South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming",
+    "District of Columbia",
+]
+
+state_map = pd.DataFrame({
+    "state": state_abbrevs,
+    "STATE_NAME": state_names,
+})
+# add full state name to FRED table
+state_unemp = state_unemp.merge(state_map, on="state", how="left")
+state_unemp = state_unemp[["STATE_NAME", "month", "state_unemployment"]]
+
+# merge into Lightcast
+lc_merged = lc_merged.merge(
+    state_unemp_named,
+    on=["STATE_NAME", "month"],
+    how="left"
+)
+
+lc_merged[["STATE_NAME", "month", "state_unemployment"]].head()
+```
+
+```{python}
+lc = lc_merged.copy()
+# Gender ratio (proxy for dominance)
+lc["gender_ratio"] = lc["emp_pop_ratio_women"] / (
+    lc["emp_pop_ratio_women"] + lc["emp_pop_ratio_men"]
+)
+
+def classify(r):
+    if pd.isna(r):
+        return None
+    if r > 0.55:
+        return "Female_Dominated"
+    elif r < 0.45:
+        return "Male_Dominated"
+    else:
+        return "Balanced"
+
+lc["gender_label"] = lc["gender_ratio"].apply(classify)
+lc["gender_label"].value_counts(dropna=False)
+```
+
+
+</div>
