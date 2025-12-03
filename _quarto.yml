@@ -23,7 +23,9 @@ format:
     theme: sandstone
     css: styles.css
     toc: true
+    toc-depth: 3
     smooth-scroll: true
     page-layout: full
+
 include-after-body:
   - footer.html

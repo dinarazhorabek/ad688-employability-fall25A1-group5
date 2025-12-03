@@ -14,31 +14,25 @@ completing this project for **AD 688 – Web Analytics**.
 <div class="card reveal avatar-row">
 
 <div class="avatar-card">
-  <div>
-    <strong>Hung Nguyen</strong><br>
-    Data wrangling, Quarto architecture, integration of macro/micro insights.
-  </div>
+<strong>Hung Nguyen</strong><br>
+Data wrangling, Quarto architecture, integration of macro/micro insights.
 </div>
 
 <div class="avatar-card">
-  <div>
-    <strong>Nhat Tran</strong><br>
-    FRED API integration, time-series visualization, macro interpretation.
-  </div>
+<strong>Nhat Tran</strong><br>
+FRED API integration, time-series visualization, macro interpretation.
 </div>
 
 <div class="avatar-card">
-  <div>
-    <strong>Dinara Zhorabek</strong><br>
-    Research framing, literature review, policy/gender analysis.
-  </div>
+<strong>Dinara Zhorabek</strong><br>
+Research framing, literature review, policy/gender analysis.
 </div>
 
 </div>
 
 <div class="card reveal">
 
-# Tools & Stack
+## Tools & Stack
 
 - Python / PySpark / Pandas / Plotly  
 - FRED API & Lightcast job postings  

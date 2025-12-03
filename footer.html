@@ -1,26 +1,43 @@
-<!-- footer.html -->
-
-<!-- Scroll-in animation script -->
+<!-- Scroll reveal animation -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {threshold: 0.12});
+document.addEventListener("DOMContentLoaded", () => {
+  const reveals = document.querySelectorAll(".reveal");
 
-    reveals.forEach(el => observer.observe(el));
-  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+});
 </script>
 
-<!-- Lottie player for hero animation (optional) -->
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<!-- Back to top -->
+<button id="backToTop" title="Back to top">↑</button>
+<script>
+const btn = document.getElementById("backToTop");
+window.addEventListener("scroll", () => {
+  btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
+});
+btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+</script>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+<script>
+window.addEventListener("scroll", () => {
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / height) * 100;
+  document.getElementById("progress-bar").style.width = progress + "%";
+});
+</script>
 
 <footer>
-  <p> Team 5 · AD 688 Web Analytics · Boston University</p>
-  <p>© 2025</p>
+  <p>© 2025 · AD 688 Web Analytics · Boston University</p>
+  <p>Team 5</p>
 </footer>

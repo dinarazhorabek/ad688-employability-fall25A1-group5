@@ -10,7 +10,7 @@ format:
 
 <div class="card reveal">
 
-# Data Sources
+## Data Sources
 
 Describe Lightcast + FRED here.
 
@@ -18,7 +18,7 @@ Describe Lightcast + FRED here.
 
 <div class="card reveal">
 
-# Cleaning Pipeline
+## Cleaning Pipeline
 
 ```{python}
 # Your cleaning code

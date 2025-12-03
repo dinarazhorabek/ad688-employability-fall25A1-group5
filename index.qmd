@@ -5,64 +5,35 @@ format:
     toc: false
 ---
 
-<div class="hero">
+<div class="hero reveal">
 
-<div class="hero-grid">
-
-<div class="hero-text">
-
-# Gender Disparities in Hiring & Political Influence  
+# Gender Disparities in Hiring & Political Influence
 ### A Data-Driven 2024 Job Market Analysis
 
-We combine job posting data, macroeconomic indicators, and peer-reviewed research to understand how gender and political context shape career opportunities.  
-Explore our findings, visualizations, and a data-informed career strategy.
+We combine job posting data, macroeconomic indicators, and peer-reviewed research to understand how gender and political context shape career opportunities.
 
-[Explore Our Data](data_analysis.qmd){.button-animate}
-
-</div>
-
-<div class="hero-visual">
-
-<lottie-player src="https://assets4.lottiefiles.com/packages/lf20_q5pk6p1k.json"
-               background="transparent" speed="1"
-               style="width: 220px; height: 220px;" loop autoplay>
-</lottie-player>
-
-</div>
-
-</div>
+Explore our findings and insights below.
 
 </div>
 
 <div class="card reveal">
 
-## Why This Research Matters
+### Why This Research Matters
 
-Gender inequality in hiring interacts with industry, policy, and geography.  
-Some states and sectors are closing gaps, while others remain sharply imbalanced.  
-Our goal is to translate these patterns into **practical insight** for job seekers.
+Gender inequality interacts with industry, policy, and geography.  
+Some states and sectors are closing gaps, while others remain sharply imbalanced.
+
+Our goal is to translate these patterns into **practical insights** for job seekers.
 
 </div>
 
 <div class="card reveal">
 
-## Site Overview
+### What This Site Includes
 
-- **Research** – Background, theory, and literature on gender disparities and political influence  
-- **Data Analysis** – Cleaning, feature engineering, and visualizations using Lightcast and FRED  
-- **Career Strategy** – A three-step, data-driven roadmap for navigating the current market  
-- **About Us** – Meet the team behind the analysis
-
-</div>
-
-<div class="divider"></div>
-
-<div class="card reveal">
-
-## Tools & Technologies
-
-- Python, PySpark, Pandas, Plotly  
-- FRED API & Lightcast job posting data  
-- Quarto, GitHub Pages, and custom CSS theme  
+- Research Overview  
+- Data Analysis  
+- Career Strategy  
+- Team Profiles  
 
 </div>

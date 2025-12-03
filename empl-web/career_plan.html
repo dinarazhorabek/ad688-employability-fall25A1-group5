@@ -162,51 +162,68 @@ ul.task-list li input[type="checkbox"] {
 <h1>From Evidence to Action</h1>
 <p>Brief explanation of how we converted analysis into a 3-step strategy.</p>
 </section>
-<section id="step-1-choose-sectors-locations-strategically" class="level1 card reveal">
-<h1>Step 1 · Choose Sectors &amp; Locations Strategically</h1>
-<p>(Your Step 1 content…)</p>
+<section id="step-1-choose-sectors-locations-strategically" class="level2 card reveal">
+<h2 class="anchored" data-anchor-id="step-1-choose-sectors-locations-strategically">Step 1 · Choose Sectors &amp; Locations Strategically</h2>
+<p>(Your Step 1 content.)</p>
 </section>
-<section id="step-2-build-high-signal-skills" class="level1 card reveal">
-<h1>Step 2 · Build High-Signal Skills</h1>
-<p>(Your Step 2 content…)</p>
+<section id="step-2-build-high-signal-skills" class="level2 card reveal">
+<h2 class="anchored" data-anchor-id="step-2-build-high-signal-skills">Step 2 · Build High-Signal Skills</h2>
+<p>(Your Step 2 content.)</p>
 </section>
-<section id="step-3-signal-fit-leadership-identity" class="level1 card reveal">
-<h1>Step 3 · Signal Fit &amp; Leadership Identity</h1>
-<p>(Your Step 3 content…)</p>
+<section id="step-3-signal-fit-leadership-identity" class="level2 card reveal">
+<h2 class="anchored" data-anchor-id="step-3-signal-fit-leadership-identity">Step 3 · Signal Fit &amp; Leadership Identity</h2>
+<p>(Your Step 3 content.)</p>
 </section>
-<section id="personal-next-steps-team-5" class="level1 card reveal">
-<h1>Personal Next Steps (Team 5)</h1>
-<p>(Your next-steps content…)</p>
+<section id="personal-next-steps-team-5" class="level2 card reveal">
+<h2 class="anchored" data-anchor-id="personal-next-steps-team-5">Personal Next Steps (Team 5)</h2>
+<p>(Your individual next steps.)</p>
 </section>
 
 
 
 </main> <!-- /main -->
-<!-- footer.html -->
-
-<!-- Scroll-in animation script -->
+<!-- Scroll reveal animation -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {threshold: 0.12});
+document.addEventListener("DOMContentLoaded", () => {
+  const reveals = document.querySelectorAll(".reveal");
 
-    reveals.forEach(el => observer.observe(el));
-  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+});
 </script>
 
-<!-- Lottie player for hero animation (optional) -->
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<!-- Back to top -->
+<button id="backToTop" title="Back to top">↑</button>
+<script>
+const btn = document.getElementById("backToTop");
+window.addEventListener("scroll", () => {
+  btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
+});
+btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+</script>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+<script>
+window.addEventListener("scroll", () => {
+  const scrollTop = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / height) * 100;
+  document.getElementById("progress-bar").style.width = progress + "%";
+});
+</script>
 
 <footer>
-  <p> Team 5 · AD 688 Web Analytics · Boston University</p>
-  <p>© 2025</p>
+  <p>© 2025 · AD 688 Web Analytics · Boston University</p>
+  <p>Team 5</p>
 </footer>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
