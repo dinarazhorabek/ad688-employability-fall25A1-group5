@@ -1,5 +1,5 @@
 ---
-title: "Data Analysis"
+title: "Data Analysis Overview"
 subtitle: "Cleaning, Exploration, and Patterns in the 2024 Job Market"
 bibliography: references.bib
 csl: csl/econometrica.csl
@@ -12,15 +12,15 @@ format:
 
 <div class="card reveal">
 
-## Data Sources
+## Overview
 
-Describe Lightcast + FRED here.
+This page provides a high-level overview of our analytical workflow, linking data cleaning, exploratory data analysis, skill gap analysis, and modeling. Detailed code and visualizations for each stage are also available in the dedicated pages under the **Analysis** menu.
 
 </div>
 
 <div class="card reveal">
 
-## Cleaning Pipeline
+## Cleaning Pipeline (Setup)
 
 ```{python}
 #| output: false
@@ -30,17 +30,17 @@ import re
 import plotly.express as px
 import plotly.graph_objects as go
 ```
-```{python}
-#| warning: false
-# Your cleaning code
 
+```{python}
+# warning: false
 lightcast_jp = pd.read_csv('data/lightcast_job_postings.csv')
 ```
+
 </div>
 
 <div class="card reveal">
 
-## Skill Gap Analysis
+## Skill Gap Analysis — Team Skill Matrix
 
 ```{python}
 team_members = ["Dinara", "Nhat", "Leo"]
@@ -53,6 +53,7 @@ skills = [
     "R (Programming Language)",
     "Amazon Web Services",
 ]
+
 df_skills = pd.DataFrame(
     {
         "Name": team_members,
@@ -67,7 +68,6 @@ df_skills = pd.DataFrame(
 ).set_index("Name")
 ```
 
-
 ```{python}
 fig_heat = px.imshow(
     df_skills,
@@ -81,63 +81,90 @@ fig_heat.update_yaxes(title="Team Member")
 fig_heat
 ```
 
-### Gaps Between Team Strengths and Industry Demand
+</div>
+
+<div class="card reveal">
+
+## Skill Gap Analysis — Extracting Industry Demand
 
 ```{python}
 naics_data_industries = [51, 52, 54]
-df_data_industry = lightcast_jp[ lightcast_jp["NAICS2"].astype(float).isin(naics_data_industries) ]
+df_data_industry = lightcast_jp[
+    lightcast_jp["NAICS2"].astype(float).isin(naics_data_industries)
+]
 
-data_keywords = ["data", "analytics", "analysis", "machine learning", "ml", "ai", 
-                 "business intelligence", "cloud", "sql", "python"]
+data_keywords = [
+    "data", "analytics", "analysis",
+    "machine learning", "ml", "ai",
+    "business intelligence", "cloud",
+    "sql", "python"
+]
+
 df_data_roles = lightcast_jp[
     lightcast_jp["TITLE_NAME"].str.lower().str.contains('|'.join(data_keywords), na=False)
 ]
-# merge of two tables -> industry + title
+
 df_filtered = df_data_industry[
     df_data_industry["TITLE_NAME"].str.lower().str.contains('|'.join(data_keywords))
 ]
 ```
 
+</div>
+
+<div class="card reveal">
+
+## Skill Gap Analysis — Software Skill Extraction
+
 ```{python}
-# Extract everything between quotes
 df_filtered = df_filtered.copy()
 df_filtered["software_skill"] = (
     df_filtered["SOFTWARE_SKILLS_NAME"]
-        .fillna("")                     # remove NaN
-        .str.replace("\n", "")          # remove newlines
+        .fillna("")
+        .str.replace("\n", "")
         .apply(lambda x: re.findall(r'"(.*?)"', x))
 )
+
 df_sw_exploded = (
     df_filtered
         .explode("software_skill")
         .dropna(subset=["software_skill"])
 )
-# count demand per skill
+
 industry_skill_counts = (
     df_sw_exploded["software_skill"]
         .value_counts()
         .to_frame(name="count")
 )
+
 industry_skill_counts.head()
 ```
 
+</div>
+
+<div class="card reveal">
+
+## Skill Gap Analysis — Gap Calculation
+
 ```{python}
-# average team level per skill
 team_avg = df_skills.mean().to_frame(name="Team_Level")
+
 ind_skills = industry_skill_counts.rename_axis("Skill")
 ind_skills = ind_skills.loc[skills]
 
 gap_df = team_avg.join(ind_skills, how="left")
 
-# normalize industry demand to 1–5 scale
 max_demand = gap_df["count"].max()
 gap_df["Industry_Score"] = (gap_df["count"] / max_demand) * 5
 
-# gap = industry need – team level
 gap_df["Gap"] = gap_df["Industry_Score"] - gap_df["Team_Level"]
 gap_df
 ```
 
+</div>
+
+<div class="card reveal">
+
+## Skill Gap Visualization — Bar Chart
 
 ```{python}
 gap_long = (
@@ -145,6 +172,7 @@ gap_long = (
     .reset_index(names="Skill")
     .melt(id_vars="Skill", var_name="Source", value_name="Score")
 )
+
 fig_gap = px.bar(
     gap_long,
     x="Score",
@@ -155,22 +183,21 @@ fig_gap = px.bar(
     title="Skills Gap Analysis",
     labels={"Score": "Score (1–5)", "Skill": "", "Source": ""}
 )
+
 fig_gap.update_layout(
     legend_title_text="",
     xaxis=dict(range=[0, 5]),
+    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=0.75)
 )
-fig_gap.update_layout(
-    legend=dict(
-        orientation="v",
-        yanchor="top",
-        y=1,
-        xanchor="left",
-        x=0.75
-    )
-)
+
 fig_gap
 ```
 
+</div>
+
+<div class="card reveal">
+
+## Skill Gap Visualization — Radar Chart
 
 ```{python}
 skills_list = gap_df.index.tolist()
@@ -182,6 +209,7 @@ team_values += [team_values[0]]
 industry_values += [industry_values[0]]
 
 fig = go.Figure()
+
 fig.add_trace(go.Scatterpolar(
     r=team_values,
     theta=skills_list,
@@ -190,6 +218,7 @@ fig.add_trace(go.Scatterpolar(
     line=dict(color='rgba(44, 127, 184, 0.9)', width=3),
     fillcolor='rgba(44, 127, 184, 0.3)'
 ))
+
 fig.add_trace(go.Scatterpolar(
     r=industry_values,
     theta=skills_list,
@@ -201,12 +230,11 @@ fig.add_trace(go.Scatterpolar(
 
 fig.update_layout(
     title="Skill Gap Analysis",
-    polar=dict(
-        radialaxis=dict(visible=True, range=[0, 5]),
-    ),
+    polar=dict(radialaxis=dict(visible=True, range=[0, 5])),
     showlegend=True,
     legend=dict(orientation="h", y=-0.2)
 )
+
 fig.show()
 ```
 

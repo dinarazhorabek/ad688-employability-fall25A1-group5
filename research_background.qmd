@@ -10,6 +10,18 @@ format:
     toc-depth: 3
 ---
 
+---
+title: "Gender Disparities in Hiring & Political Influence"
+authors: "Team 5: Hung Nguyen, Nhat Tran, Dinara Zhorabek"
+date: today
+bibliography: references.bib
+csl: csl/econometrica.csl
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+
 <div class="card reveal">
 
 The following section provides a research-based overview of gender disparities in hiring and leadership across academic, organizational, and political contexts. These insights serve as the conceptual foundation for our broader job-market analysis, helping us connect large-scale labor trends with the social and structural dynamics that influence real hiring outcomes. Without altering the original findings, this introduction contextualizes why an understanding of gendered patterns remains crucial for interpreting hiring behaviors and market inequalities in 2024.
@@ -24,6 +36,7 @@ The following section provides a research-based overview of gender disparities i
 Gender disparities go beyond who holds positions of power, raising deeper questions about the value and compensation assigned to women’s work. In academic STEM disciplines, these pay inequalities occur alongside ongoing underrepresentation, which becomes more pronounced at senior levels. According to the research conducted by [@Galvin2024plosone], of over 20,000 faculty positions across 127 universities revealed that while women constitute approximately 50% of assistant professors in STEM fields, their representation declines significantly to 45.4% at the associate level and just 32.8% among full professors. Geographic variations are noticeable: though the Pacific and East North Central regions show the highest levels of gender representation, yet women in these areas account for only about 25% of tenure-track positions. Whereas mountain region showed visibly lower levels at just 19%. These regional differences seem to reflect the influence of state-level policies such as equal pay laws and paid family leave, as well as local cultural norms and institutional support systems.
 
 These inequality patterns closely tied to the “leaky pipeline” effect, whereas women are more likely to leave STEM careers over time as barriers and disadvantages accumulate throughout their career path. When women are hired into STEM positions, they often receive smaller initial packages than male colleagues, placing them at an immediate disadvantage in launching their researches. Once employed, women often take on a heavier load of mentoring and service work without extra pay, tedious and repetitive tasks that are frequently overlooked in tenure evaluations. This imbalance may persist because women are often viewed as “caretakers,” while men are seen as more “task-driven.” Particularly, states with stronger equal pay laws and better comprehensive family-leave policies, including California, Massachusetts, Oregon, and Washington, illustrate smaller gaps in both representation and compensation. Understanding how wage disparities intersect with structural barriers and cultural perceptions is essential for addressing why qualified women continue to face obstacles in attaining leadership roles and receive recognition that matches their contributions.
+
 </div>
 
 <div class="card reveal">

@@ -1,0 +1,139 @@
+---
+title: "Data Cleaning & Exploration"
+subtitle: "Preparing Lightcast Job Postings and FRED Data for Analysis"
+bibliography: references.bib
+csl: csl/econometrica.csl
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-tools: true
+---
+
+<div class="card reveal">
+
+## Objective
+
+This page describes how we cleaned and prepared the Lightcast job postings and FRED macroeconomic datasets for analysis. Following the project instructions, our goals are to:
+
+- inspect the raw dataset structure,
+- identify and remove redundant or outdated columns,
+- handle missing values using appropriate strategies,
+- eliminate duplicate job postings,
+- prepare the data for deeper analysis such as EDA, skill analysis, and modeling.
+
+</div>
+
+<div class="card reveal">
+
+## 1. Initial Dataset Overview
+
+Before performing any cleaning, we begin by loading and inspecting the dataset structure. This allows us to understand column types, detect redundancies, and evaluate missingness.
+
+```{python}
+import pandas as pd
+
+lightcast_jp = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
+
+# Preview first few rows
+lightcast_jp.head()
+
+# Dataset structure and column types
+lightcast_jp.info()
+
+# Display list of all columns
+list(lightcast_jp.columns)
+```
+
+</div>
+
+<div class="card reveal">
+
+## 2. Dropping Unnecessary Columns
+
+Redundant metadata fields (e.g., URL tracking, system timestamps), multiple hierarchy versions of NAICS/SOC codes, and duplicate classification structures add noise and complexity. As recommended in the professor’s rubric, we keep only the most recent and relevant classification levels.
+
+```{python}
+columns_to_drop = [
+    "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
+    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
+    "SOC_2", "SOC_3", "SOC_5"
+]
+
+lightcast_jp.drop(columns=columns_to_drop, inplace=True, errors="ignore")
+lightcast_jp.head()
+```
+
+</div>
+
+<div class="card reveal">
+
+## 3. Handling Missing Values
+
+We analyze missingness using a heatmap, then apply targeted strategies:
+
+- Drop columns with more than **50% missing values** (Professor requirement)
+- Fill numeric fields with **median**
+- Replace missing categorical fields with **"Unknown"**
+
+```{python}
+import missingno as msno
+import matplotlib.pyplot as plt
+
+# Visualize missing data patterns
+msno.heatmap(lightcast_jp)
+plt.title("Missing Values Heatmap")
+plt.show()
+
+# Drop columns with >50% missing values
+lightcast_jp.dropna(thresh=len(lightcast_jp) * 0.5, axis=1, inplace=True)
+
+# Fill missing values
+if "SALARY_FROM" in lightcast_jp.columns:
+    lightcast_jp["SALARY_FROM"].fillna(lightcast_jp["SALARY_FROM"].median(), inplace=True)
+
+if "INDUSTRY_NAME" in lightcast_jp.columns:
+    lightcast_jp["INDUSTRY_NAME"].fillna("Unknown", inplace=True)
+```
+
+</div>
+
+<div class="card reveal">
+
+## 4. Removing Duplicate Job Postings
+
+To ensure each job posting appears only once, we remove duplicates based on:
+
+- job title  
+- company  
+- location  
+- posting date  
+
+```{python}
+subset_cols = [c for c in ["TITLE_NAME", "COMPANY_NAME", "LOCATION", "POSTED"]
+               if c in lightcast_jp.columns]
+
+if subset_cols:
+    lightcast_jp = lightcast_jp.drop_duplicates(subset=subset_cols, keep="first")
+
+lightcast_jp.shape
+```
+
+</div>
+
+<div class="card reveal">
+
+## 5. Cleaned Dataset Summary
+
+The dataset is now ready for:
+
+- Exploratory Data Analysis (EDA)  
+- Skill demand extraction  
+- Statistical modeling (ML Methods)  
+- NLP analysis of job descriptions  
+
+```{python}
+lightcast_jp.describe(include="all")
+```
+
+</div>

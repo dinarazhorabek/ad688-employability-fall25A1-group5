@@ -14,8 +14,20 @@ website:
         href: introduction.qmd
       - text: "Research Background"
         href: research_background.qmd
-      - text: "Data Analysis"
-        href: data_analysis.qmd
+      - text: "Analysis"
+        menu:
+          - text: "Overview & Pipeline"
+            href: data_analysis.qmd
+          - text: "Data Cleaning & Exploration"
+            href: data_cleaning.qmd
+          - text: "Exploratory Data Analysis"
+            href: eda.qmd
+          - text: "Skill Gap Analysis"
+            href: skill_gap_analysis.qmd
+          - text: "ML Methods"
+            href: ml_methods.qmd
+          - text: "NLP Methods"
+            href: nlp_methods.qmd
       - text: "Career Strategy"
         href: career_plan.qmd
       - text: "About Us"
@@ -35,4 +47,3 @@ format:
 
 include-after-body:
   - footer.html
-
