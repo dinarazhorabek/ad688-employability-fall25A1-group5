@@ -30,7 +30,7 @@ body {
 main.content {
   max-width: 980px;
   margin: 2.75rem auto 4rem;
-  padding: 0 1.5rem 0 1.5rem;
+  padding: 0 1.5rem;
 }
 
 /* Improve default headings */
@@ -81,7 +81,7 @@ pre {
 }
 
 /* =========================================================
-   PREMIUM NAVBAR (Chris-style, but upgraded)
+   PREMIUM NAVBAR
 ========================================================= */
 .navbar {
   background: rgba(255,255,255,0.96) !important;
@@ -92,7 +92,7 @@ pre {
 }
 
 .navbar-brand {
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans";
   font-weight: 600;
   font-size: 1.02rem;
   letter-spacing: 0.06em;
@@ -110,14 +110,12 @@ pre {
   padding: 0.6rem 0.95rem !important;
 }
 
-/* Hover / active state */
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link:focus,
 .navbar .navbar-nav .nav-link.active {
   color: #111827 !important;
 }
 
-/* Underline animation */
 .navbar .navbar-nav .nav-link::after {
   content: "";
   position: absolute;
@@ -132,12 +130,10 @@ pre {
 }
 
 .navbar .navbar-nav .nav-link:hover::after,
-.navbar .navbar-nav .nav-link:focus::after,
 .navbar .navbar-nav .nav-link.active::after {
   transform: scaleX(1);
 }
 
-/* Search icon alignment */
 .navbar .quarto-search-button {
   margin-left: 0.5rem;
 }
@@ -145,8 +141,6 @@ pre {
 /* =========================================================
    HERO + CARDS
 ========================================================= */
-
-/* Top hero block on Home (if you use .hero) */
 .hero {
   background: #ffffff;
   border-radius: 20px;
@@ -156,11 +150,10 @@ pre {
   margin-bottom: 2rem;
 }
 
-/* Generic card block – used on all pages */
 .card {
   position: relative;
   background: #ffffff;
-  padding: 1.8rem 1.8rem;
+  padding: 1.8rem;
   border-radius: 14px;
   border: 1px solid rgba(148,163,184,0.35);
   box-shadow: 0 10px 28px rgba(15,23,42,0.05);
@@ -174,7 +167,6 @@ pre {
   border-color: rgba(59,130,246,0.6);
 }
 
-/* Subtle gradient bar at top of card */
 .card::before {
   content: "";
   position: absolute;
@@ -187,39 +179,50 @@ pre {
   opacity: 0.75;
 }
 
-/* Remove bar if you add .card-plain */
-.card.card-plain::before {
-  display: none;
-}
+.card.card-plain::before { display: none; }
 
-/* Card headings */
 .card h2,
 .card h3 {
   margin-top: 0.4rem;
 }
 
 /* =========================================================
-   SIDEBAR TOC (On this page)
+   SIDEBAR TOC — FIXED POSITION 
 ========================================================= */
+
+#quarto-margin-sidebar {
+  position: fixed !important;
+  top: 120px !important;
+  right: 26px !important;      
+  
+  max-width: 240px !important;
+  z-index: 1 !important;
+  
+  background: transparent !important;
+  pointer-events: auto !important;
+}
+
+/* Internal sidebar styling */
 .sidebar.margin-sidebar {
-  padding-top: 1.9rem;
+  padding-top: 1.9rem !important;
 }
 
 .sidebar.margin-sidebar .nav-link {
-  font-size: 0.8rem;
-  color: #6B7280;
-  padding: 0.2rem 0;
+  font-size: 0.8rem !important;
+  color: #6B7280 !important;
+  padding: 0.25rem 0 !important;
 }
 
 .sidebar.margin-sidebar .nav-link.active {
-  color: #111827;
-  font-weight: 600;
-  border-left: 2px solid var(--leo-accent);
-  padding-left: 0.45rem;
+  color: #111827 !important;
+  font-weight: 600 !important;
+
+  border-left: 2px solid var(--leo-accent) !important;
+  padding-left: 0.45rem !important;
 }
 
 /* =========================================================
-   AVATAR / TEAM TEXT ROW (About page)
+   AVATAR ROW (About Page)
 ========================================================= */
 .avatar-row {
   display: flex;
@@ -244,7 +247,7 @@ footer {
 }
 
 /* =========================================================
-   BACK TO TOP BUTTON + PROGRESS BAR
+   BACK TO TOP + PROGRESS BAR
 ========================================================= */
 #backToTop {
   display: none;
@@ -259,14 +262,11 @@ footer {
   background: #111827;
   color: #ffffff;
   font-size: 20px;
-  line-height: 1;
   box-shadow: 0 12px 30px rgba(15,23,42,0.35);
   z-index: 999;
 }
 
-#backToTop:hover {
-  background: #1F2937;
-}
+#backToTop:hover { background: #1F2937; }
 
 #progress-bar {
   position: fixed;
@@ -279,14 +279,12 @@ footer {
 }
 
 /* =========================================================
-   SCROLL REVEAL UTILITY
+   SCROLL REVEAL
 ========================================================= */
 .reveal {
-  /* opacity: 0; */
   transform: translateY(18px);
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
-
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
@@ -296,6 +294,9 @@ footer {
    RESPONSIVE TWEAKS
 ========================================================= */
 @media (max-width: 992px) {
+  #quarto-margin-sidebar {
+    display: none !important; /* hide sidebar on smaller screens */
+  }
   .navbar {
     padding: 0.45rem 1.25rem !important;
   }
@@ -306,10 +307,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 1.8rem 1.5rem;
-  }
-  .card {
-    padding: 1.6rem 1.4rem;
-  }
+  .hero { padding: 1.8rem 1.5rem; }
+  .card { padding: 1.6rem 1.4rem; }
 }
