@@ -54,7 +54,7 @@ Three questions guided our analysis:
 
 1. **What skills are most in demand in 2024, and how have they changed over time?**  
 2. **How do geographic and sectoral variations influence job opportunities and salaries?**  
-3. **How do broader social factors—such as gender representation and organizational culture—shape hiring outcomes?**
+3. **How do broader social factors such as gender representation and organizational culture shape hiring outcomes?**
 
 These questions connect quantitative job-posting analysis with deeper research on disparities and structural influences in hiring.
 
