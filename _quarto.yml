@@ -18,7 +18,7 @@ website:
         menu:
           - text: "Overview & Pipeline"
             href: data_analysis.qmd
-          - text: "Data Cleaning & Exploration"
+          - text: "Data Cleaning & Preprocessing"
             href: data_cleaning.qmd
           - text: "Exploratory Data Analysis"
             href: eda.qmd
