@@ -1,6 +1,6 @@
 ---
-title: "Data Cleaning & Exploration"
-subtitle: "Preparing Lightcast Job Postings and FRED Data for Analysis"
+title: "Data Cleaning & Pre-Processing"
+subtitle: "Preparing and Standardizing Lightcast Job Postings Data for Analysis"
 bibliography: references.bib
 csl: csl/econometrica.csl
 format:
@@ -14,126 +14,235 @@ format:
 
 ## Objective
 
-This page describes how we cleaned and prepared the Lightcast job postings and FRED macroeconomic datasets for analysis. Following the project instructions, our goals are to:
+Data cleaning is the most critical phase in any analytics workflow.
+Following the AD688 project requirements, our goals for this section are to:
 
 - inspect the raw dataset structure,
 - identify and remove redundant or outdated columns,
-- handle missing values using appropriate strategies,
-- eliminate duplicate job postings,
-- prepare the data for deeper analysis such as EDA, skill analysis, and modeling.
+- fix inconsistent formatting (e.g., stringified list fields),
+- standardize datetime fields and create analysis-ready variables,
+- handle missing values using appropriate statistical strategies,
+- remove duplicate job postings,
+- export a clean, consistent dataset used across EDA, ML, and NLP sections.
+
+This ensures accuracy, reproducibility, and coherence across the entire site.
 
 </div>
 
+---
+
 <div class="card reveal">
 
-## 1. Initial Dataset Overview
-
-Before performing any cleaning, we begin by loading and inspecting the dataset structure. This allows us to understand column types, detect redundancies, and evaluate missingness.
+### Initial Dataset Overview
 
 ```{python}
 import pandas as pd
 
-lightcast_jp = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
+df = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
 
-# Preview first few rows
-lightcast_jp.head()
+df.head()
+```
 
-# Dataset structure and column types
-lightcast_jp.info()
+```{python}
+# Dataset structure
+df.info()
+```
 
-# Display list of all columns
-list(lightcast_jp.columns)
+```{python}
+# List all column names
+list(df.columns)
 ```
 
 </div>
 
+---
+
 <div class="card reveal">
 
-## 2. Dropping Unnecessary Columns
+### Dropping Redundant or Outdated Columns
 
-Redundant metadata fields (e.g., URL tracking, system timestamps), multiple hierarchy versions of NAICS/SOC codes, and duplicate classification structures add noise and complexity. As recommended in the professor’s rubric, we keep only the most recent and relevant classification levels.
+Lightcast contains multiple versions of NAICS/SOC classifications, plus metadata fields (tracking URLs, flags, timestamps).
+Thus, we remove irrelevant or outdated fields.
 
 ```{python}
 columns_to_drop = [
     "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
-    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
-    "SOC_2", "SOC_3", "SOC_5"
+    "NAICS2","NAICS3","NAICS4","NAICS5","NAICS6",
+    "SOC_2","SOC_3","SOC_5"
 ]
 
-lightcast_jp.drop(columns=columns_to_drop, inplace=True, errors="ignore")
-lightcast_jp.head()
+df.drop(columns=columns_to_drop, inplace=True, errors="ignore")
+df.head()
 ```
 
 </div>
 
+---
+
 <div class="card reveal">
 
-## 3. Handling Missing Values
+### Cleaning Messy List-Type Columns
 
-We analyze missingness using a heatmap, then apply targeted strategies:
+Many Lightcast columns store lists as text such as:
 
-- Drop columns with more than **50% missing values** (Professor requirement)
-- Fill numeric fields with **median**
-- Replace missing categorical fields with **"Unknown"**
+["Job Board"]
+["disabledperson.com", "dejobs.org"]
+
+So, we convert these into clean comma-separated strings.
 
 ```{python}
-import missingno as msno
-import matplotlib.pyplot as plt
+import ast, re
 
-# Visualize missing data patterns
-msno.heatmap(lightcast_jp)
-plt.title("Missing Values Heatmap")
-plt.show()
+def clean_list(x):
+    if pd.isna(x):
+        return ""
+    x = x.replace("\n"," ").strip()
+    try:
+        obj = ast.literal_eval(x)
+        if isinstance(obj, list):
+            return ", ".join(str(i).strip() for i in obj)
+    except:
+        pass
+    return re.sub(r'[$begin:math:display$$end:math:display$\"]',"",x).strip()
 
-# Drop columns with >50% missing values
-lightcast_jp.dropna(thresh=len(lightcast_jp) * 0.5, axis=1, inplace=True)
+list_cols = [
+    "SOURCE_TYPES","SOURCES","SKILLS_NAME","SPECIALIZED_SKILLS_NAME",
+    "COMMON_SKILLS_NAME","SOFTWARE_SKILLS_NAME","CERTIFICATIONS_NAME"
+]
 
-# Fill missing values
-if "SALARY_FROM" in lightcast_jp.columns:
-    lightcast_jp["SALARY_FROM"].fillna(lightcast_jp["SALARY_FROM"].median(), inplace=True)
-
-if "INDUSTRY_NAME" in lightcast_jp.columns:
-    lightcast_jp["INDUSTRY_NAME"].fillna("Unknown", inplace=True)
+for col in list_cols:
+    if col in df.columns:
+        df[col] = df[col].apply(clean_list)
 ```
 
 </div>
 
+---
+
 <div class="card reveal">
 
-## 4. Removing Duplicate Job Postings
+### Handling Missing Values
 
-To ensure each job posting appears only once, we remove duplicates based on:
+<div class="card reveal">
+
+Understanding missingness is important for determining how to impute values and whether key fields are usable.
+
+We focus only on essential analytical fields:
+
+- Salary fields  
+- Experience requirements  
+- Location fields  
+- Duration  
+
+We compute missingness correlations **only for columns that still exist after cleaning.**
+
+```{python}
+# Identify most-missing columns (overview)
+missing_summary = df.isna().mean().sort_values(ascending=False).head(15)
+missing_summary
+```
+
+```{python}
+# Drop columns with more than 50% missing values
+df.dropna(thresh=len(df) * 0.5, axis=1, inplace=True)
+
+# Fill numeric values with median
+num_cols = df.select_dtypes(include=["float","int"]).columns
+df[num_cols] = df[num_cols].fillna(df[num_cols].median())
+
+# Fill categorical values with "Unknown"
+cat_cols = df.select_dtypes(include="object").columns
+df[cat_cols] = df[cat_cols].fillna("Unknown")
+```
+
+```{python}
+print("Shape:", df.shape)
+display(df.head())
+df.info()
+```
+
+</div>
+
+---
+
+<div class="card reveal">
+
+### Standardizing the POSTED Date and Creating a Month Column
+
+Datetime consistency is essential for trend analysis and for joining with FRED macroeconomic indicators.
+
+```{python}
+df["POSTED"] = pd.to_datetime(df["POSTED"], errors="coerce")
+df["month"] = df["POSTED"].dt.to_period("M").astype(str)
+
+df[["POSTED", "month"]].head()
+```
+
+</div>
+
+---
+
+<div class="card reveal">
+
+### Removing Duplicate Job Postings
+
+Duplicate postings can overcount job demand and distort salary statistics.
+We remove duplicates based on:
 
 - job title  
 - company  
 - location  
-- posting date  
+- original posting date  
 
 ```{python}
 subset_cols = [c for c in ["TITLE_NAME", "COMPANY_NAME", "LOCATION", "POSTED"]
-               if c in lightcast_jp.columns]
+               if c in df.columns]
 
 if subset_cols:
-    lightcast_jp = lightcast_jp.drop_duplicates(subset=subset_cols, keep="first")
+    df = df.drop_duplicates(subset=subset_cols, keep="first")
 
-lightcast_jp.shape
+df.shape
 ```
 
 </div>
 
+---
+
 <div class="card reveal">
 
-## 5. Cleaned Dataset Summary
+### Exporting the Final Cleaned Dataset
 
-The dataset is now ready for:
+This cleaned dataset will be used consistently across:
 
-- Exploratory Data Analysis (EDA)  
-- Skill demand extraction  
-- Statistical modeling (ML Methods)  
-- NLP analysis of job descriptions  
+- EDA  
+- Skill Gap Analysis  
+- ML Methods  
+- NLP Methods  
+
+Exporting ensures team alignment and prevents inconsistent results.
 
 ```{python}
-lightcast_jp.describe(include="all")
+df.to_csv("data/lightcast_cleaned.csv", index=False)
+
+df.head(), df.shape
 ```
+
+</div>
+
+---
+
+<div class="card reveal">
+
+## Summary
+
+This cleaned dataset establishes the foundation for all downstream analysis.
+By standardizing the cleaning workflow and exporting a unified dataset, we ensure:
+
+- accuracy and reproducibility,  
+- consistent modeling results,  
+- reduced rendering load for GitHub Pages,  
+- smooth integration with the ML and NLP pipelines.
+
+This completes the **Data Cleaning & Exploration** phase.
 
 </div>
