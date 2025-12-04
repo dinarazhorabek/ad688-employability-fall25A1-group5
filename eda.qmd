@@ -6,170 +6,326 @@ csl: csl/econometrica.csl
 format:
   html:
     toc: true
+    toc-depth: 3
     code-fold: true
     code-tools: true
 ---
 
 <div class="card reveal">
 
-## EDA Overview
+### EDA Overview
 
-This page explores job demand, salary distributions, geographic variation, and remote work patterns using the cleaned Lightcast dataset.  
-Each visualization includes an explanation of why it was chosen and what insights it provides, aligning with the project rubric.
+This page explores hiring trends, salary patterns, geographic variation, remote work availability, and software skill demands using the **cleaned Lightcast dataset** produced earlier.
+
+Each visualization is selected to answer job seeker–focused questions:
+
+- **Which industries are hiring the most?**  
+- **How do salaries vary across sectors?**  
+- **How common are remote roles?**  
+- **How has demand changed over time?**  
+- **Which software skills are most requested?**
 
 </div>
 
+---
+
 <div class="card reveal">
 
-## Job Postings by Industry
-
-Understanding industry-level hiring patterns helps identify which sectors create the most opportunities for job seekers.  
-This also provides context for later skill analysis and modeling.
+### Load the Cleaned Dataset
 
 ```{python}
-import plotly.express as px
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
+import re
 
-lightcast_jp = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
+df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
+df.head()
+```
 
-if "INDUSTRY_NAME" in lightcast_jp.columns:
+```{python}
+# Quick structure check
+df.info()
+```
+
+```{python}
+# List all column names
+list(df.columns)
+```
+
+</div>
+
+---
+
+<div class="card reveal">
+
+### Job Postings by Industry (Top Sectors Hiring)
+
+```{python}
+industry_candidates = ["NAICS_2022_2_NAME", "INDUSTRY_NAME", "NAICS_2022_3_NAME"]
+industry_col = next((c for c in industry_candidates if c in df.columns), None)
+industry_col
+```
+
+```{python}
+if industry_col:
     industry_counts = (
-        lightcast_jp["INDUSTRY_NAME"]
+        df[industry_col]
         .value_counts()
+        .head(15)
         .reset_index()
-        .rename(columns={"index": "Industry", "INDUSTRY_NAME": "Postings"})
     )
+    industry_counts.columns = ["Industry", "Postings"]
 
     fig = px.bar(
         industry_counts,
-        x="Industry",
-        y="Postings",
-        title="Job Postings by Industry",
+        x="Postings",
+        y="Industry",
+        orientation="h",
+        title=f"Top 15 Industries by Job Postings ({industry_col})",
         color="Postings",
-        color_continuous_scale="Blues"
+        color_continuous_scale=px.colors.sequential.Blues_r,
+        height=650
     )
-    fig.update_layout(xaxis_tickangle=-45)
-    fig
+    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    fig.show()
+else:
+    print("No industry column found.")
 ```
 
+
 **Insight:**  
-Industries with the highest job posting volume typically reflect strong hiring demand and labor shortages, making them attractive for new graduates and career changers.
+Professional, Scientific & Technical Services and Administrative & Support Services dominate hiring, indicating strong demand for analytical, operational, and business-support roles.
+Industries with the highest posting counts typically experience continuous hiring cycles due to ongoing service needs, expansion, and higher turnover.
+This pattern signals promising entry points for job seekers aiming for rapid placement or diverse role availability.
 
 </div>
 
+---
+
 <div class="card reveal">
 
-## Salary Distribution by Industry
+### Salary Distribution by Industry
 
-Salary variation across industries provides insight into compensation inequality and which fields reward skills more strongly.
+Salary variation across industries answers: “Which sectors pay more, and how unequal are wages within each industry?”
+We use SALARY_FROM when present (cleaned numeric salary), otherwise fall back to any available salary column.
 
 ```{python}
-if {"INDUSTRY_NAME", "SALARY_FROM"}.issubset(lightcast_jp.columns):
-    fig = px.box(
-        lightcast_jp,
-        x="INDUSTRY_NAME",
-        y="SALARY_FROM",
-        title="Salary Distribution by Industry",
-        color="INDUSTRY_NAME"
-    )
-    fig.update_layout(xaxis_tickangle=-45, showlegend=False)
-    fig
+salary_col = next(
+    (c for c in df.columns if ("SALARY" in c.upper()) and df[c].dtype in ["int64","float64"]),
+    None
+)
+salary_col
+```
+
+```{python}
+if industry_col and salary_col:
+    df_salary = df[[industry_col, salary_col]].dropna()
+
+    if not df_salary.empty:
+        fig = px.box(
+            df_salary,
+            y=industry_col,
+            x=salary_col,
+            color=industry_col,
+            title=f"Salary Distribution by Industry ({salary_col})",
+            color_discrete_sequence=px.colors.qualitative.Safe,
+            height=700
+        )
+        fig.update_layout(showlegend=False)
+        fig.show()
+    else:
+        print("No usable salary values in dataset.")
+else:
+    print("Salary chart not generated: industry or numeric salary column missing.")
 ```
 
 **Insight:**  
-Boxplots reveal which industries pay consistently higher wages, and which have wider salary ranges — often associated with specialized roles or greater inequality in pay structures.
+Significant salary variation exists across industries, with sectors like Finance, Tech, and Healthcare offering consistently higher compensation ranges.
+Wide salary spreads within these industries suggest differentiated pay based on experience, certifications, and job specialization.
+These patterns help job seekers identify industries where upskilling yields stronger financial returns.
 
 </div>
 
 <div class="card reveal">
 
-## Remote vs. On-Site Job Patterns
+### Remote vs. On-Site Job Patterns
 
 Remote work availability is a crucial factor for job seekers.  
 This chart shows whether industries lean toward remote, hybrid, or in-person work.
 
 ```{python}
-if "REMOTE_TYPE_NAME" in lightcast_jp.columns:
+remote_candidates = ["REMOTE_TYPE_NAME", "REMOTE_TYPE"]
+remote_col = next((c for c in remote_candidates if c in df.columns), None)
+```
+
+```{python}
+if remote_col:
+    remote_counts = df[remote_col].value_counts().reset_index()
+    remote_counts.columns = ["Work Arrangement", "Postings"]
+
     fig = px.pie(
-        lightcast_jp,
-        names="REMOTE_TYPE_NAME",
-        title="Remote vs. On-Site Jobs",
+        remote_counts,
+        names="Work Arrangement",
+        values="Postings",
+        title="Remote vs On-Site Job Postings",
+        color="Work Arrangement",
         color_discrete_sequence=px.colors.qualitative.Set2
     )
-    fig
+    fig.show()
+else:
+    print("Remote work field not found.")
 ```
 
 **Insight:**  
-Higher proportions of remote roles typically appear in tech, analytics, and consulting jobs — reflecting digital transformation and post-pandemic workforce changes.
+The majority of job postings remain in on-site formats, highlighting employers’ preference for in-person work arrangements in 2024.
+Remote and hybrid roles, though smaller in share, are concentrated in data, IT, and knowledge-based fields, areas where digital workflows allow greater flexibility.
+Job seekers targeting remote opportunities will benefit from focusing on tech-aligned roles.
 
 </div>
 
 <div class="card reveal">
 
-## Job Postings Over Time (Optional but Recommended)
+### Job Postings Over Time
 
-If the Lightcast dataset includes posting dates, this visualization helps identify hiring cycles.
+Seasonal and macroeconomic patterns show up in how postings evolve over time.
+We aggregate job postings by month using the standardized POSTED date.
 
 ```{python}
-if "POSTED" in lightcast_jp.columns:
-    lightcast_jp["POSTED"] = pd.to_datetime(lightcast_jp["POSTED"], errors="coerce")
-    monthly_counts = (
-        lightcast_jp
-        .groupby(lightcast_jp["POSTED"].dt.to_period("M"))
+if "POSTED" in df.columns:
+    df["POSTED"] = pd.to_datetime(df["POSTED"], errors="coerce")
+
+    monthly = (
+        df.groupby(df["POSTED"].dt.to_period("M"))
         .size()
         .reset_index(name="Postings")
     )
-    monthly_counts["POSTED"] = monthly_counts["POSTED"].astype(str)
+    monthly["Month"] = monthly["POSTED"].astype(str)
+else:
+    monthly = pd.DataFrame()
 
+if not monthly.empty:
     fig = px.line(
-        monthly_counts,
-        x="POSTED",
+        monthly,
+        x="Month",
         y="Postings",
-        title="Job Postings Over Time",
+        title="Monthly Job Posting Trends",
+        markers=True,
+        color_discrete_sequence=["#2C3E50"],
+        height=450
     )
-    fig.update_layout(xaxis_tickangle=-45)
-    fig
+    fig.update_traces(line_width=3)
+    fig.update_layout(xaxis_tickangle=45)
+    fig.show()
+else:
+    print("No valid POSTED dates available.")
 ```
 
 **Insight:**  
-Patterns across months reveal seasonal hiring surges — typically early-year recruitment and late-year budget cycle hiring.
+Job postings display a clear mid-year dip followed by a sharp rebound, mirroring traditional hiring slowdowns in June and accelerated recruitment in late summer.
+These timing patterns provide job seekers with practical cues on when to intensify applications for better response rates.
+Hiring volatility also reflects broader economic cycles and seasonal business needs.
 
 </div>
 
 <div class="card reveal">
 
-## Top Software Skills in Job Postings (Optional but Highly Valuable)
+### Geographic Distribution of Jobs (by State)
 
-This adds depth to your skill gap analysis by revealing what employers request most frequently.
+Geographic EDA answers: “Which states have the most job opportunities?”
+We use STATE_NAME (cleaned) to compute the total number of postings per state.
 
 ```{python}
-if "SOFTWARE_SKILLS_NAME" in lightcast_jp.columns:
-    import re
-
-    df_skills = (
-        lightcast_jp["SOFTWARE_SKILLS_NAME"]
-        .fillna("")
-        .str.replace("\n", "")
-        .apply(lambda x: re.findall(r'"(.*?)"', x))
-        .explode()
-    )
-
-    skill_counts = df_skills.value_counts().head(15)
+if "STATE_NAME" in df.columns:
+    state_counts = df["STATE_NAME"].value_counts().head(25).reset_index()
+    state_counts.columns = ["State", "Postings"]
 
     fig = px.bar(
-        skill_counts,
-        x=skill_counts.values,
-        y=skill_counts.index,
+        state_counts,
+        x="Postings",
+        y="State",
         orientation="h",
-        title="Top Software Skills Requested (Top 15)",
-        color=skill_counts.values,
-        color_continuous_scale="Blues"
+        title="Top 25 U.S. States by Job Postings",
+        color="Postings",
+        color_continuous_scale=px.colors.sequential.Viridis,
+        height=700
     )
-    fig.update_layout(yaxis_title="Skill", xaxis_title="Frequency")
-    fig
+    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    fig.show()
+else:
+    print("STATE_NAME missing.")
 ```
 
 **Insight:**  
-This highlights which tools and technologies job seekers must prioritize to stay competitive — commonly SQL, Python, AWS, Tableau, or Excel.
+Texas, California, and Florida emerge as national hiring hubs, driven by their diverse industries, large populations, and strong business ecosystems.
+Higher-opportunity states tend to experience sustained economic growth and attract employers seeking larger talent pools.
+This distribution helps job seekers target geographic markets aligned with stronger job availability.
 
 </div>
+
+<div class="card reveal">
+
+### Top Software Skills in Job Postings
+
+To support the Skill Gap Analysis page, we identify which software tools are requested most often.
+This uses the cleaned SOFTWARE_SKILLS_NAME column produced in the Data Cleaning step.
+
+```{python}
+if "SOFTWARE_SKILLS_NAME" in df.columns:
+    skills = (
+        df["SOFTWARE_SKILLS_NAME"]
+        .astype(str)
+        .str.split(",")
+        .explode()
+        .str.strip()
+    )
+    skills = skills[(skills != "") & (skills != "nan")]
+
+    top_skills = skills.value_counts().head(15).reset_index()
+    top_skills.columns = ["Skill","Postings"]
+
+    fig = px.bar(
+        top_skills,
+        x="Postings",
+        y="Skill",
+        orientation="h",
+        title="Top 15 Software Skills Requested",
+        color="Postings",
+        color_continuous_scale=px.colors.sequential.Plasma,
+        height=600
+    )
+    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    fig.show()
+else:
+    print("Software skills column not available.")
+```
+
+**Insight:**
+SQL, Python, and Excel remain foundational tools across business and analytical roles, making them priority competencies for job seekers.
+Demand for Tableau, Power BI, and cloud platforms (AWS, Azure) confirms employers’ shift toward data-driven decision making and scalable cloud ecosystems.
+These skill patterns guide students in prioritizing certifications and upskilling paths.
+
+</div>
+
+---
+
+<div class="card reveal">
+
+### EDA Summary
+
+Key patterns from the 2024 job market include:
+
+- Industry concentration: A handful of industries namely Professional Services, Admin/Support, Retail that generate the largest share of postings.
+- Compensation differences: Salary ranges vary sharply across industries, especially in Tech, Finance, and Healthcare.
+- Remote work: Remote and hybrid roles are still limited but strong in digital-centric fields.
+- Seasonality: Posting activity dips mid-summer and rebounds significantly afterward.
+- Skill demand: SQL, Python, Excel, and BI/cloud tools dominate employer requirements.
+
+These insights directly inform:
+
+Skill Gap Analysis → ML Methods → NLP Methods → Career Strategy, creating an end-to-end understanding of where opportunities exist and how to compete effectively in the 2024 labor market.
+
+</div>
+
+
