@@ -113,5 +113,4 @@ lc["gender_label"] = lc["gender_ratio"].apply(classify)
 lc["gender_label"].value_counts(dropna=False)
 ```
 
-
 </div>
