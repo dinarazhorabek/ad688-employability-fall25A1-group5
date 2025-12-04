@@ -40,17 +40,17 @@ import pandas as pd
 
 df = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
 
-df.head()
+# df.head()
 ```
 
 ```{python}
 # Dataset structure
-df.info()
+# df.info()
 ```
 
 ```{python}
 # List all column names
-list(df.columns)
+# list(df.columns)
 ```
 
 </div>
