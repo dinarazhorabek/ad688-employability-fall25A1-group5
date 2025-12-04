@@ -10,3 +10,258 @@ format:
     code-tools: true
 ---
 
+<div class="card reveal">
+
+## Objective
+
+This section evaluates how our team’s current technical capabilities compare to the skills most frequently demanded in the job market for Data & Analytics roles.  
+
+Using Lightcast job postings, we extracted software and technical skills commonly requested by employers. We then compared these industry requirements to the team’s self-assessed proficiency levels across key tools such as SQL, Python, Tableau, Power BI, R, and AWS.
+
+The goal is to identify strengths, highlight capability gaps, and provide insights that can guide learning plans and role alignment within the team.
+
+```{python}
+#| echo: false
+#| output: false
+import pandas as pd
+import re
+
+import plotly.express as px
+import plotly.graph_objects as go
+```
+
+```{python}
+#| echo: false
+# warning: false
+lightcast_jp = pd.read_csv('data/lightcast_cleaned.csv')
+lightcast_jp.head()
+```
+
+</div>
+
+---
+
+<div class="card reveal">
+
+## Team Skill Matrix
+
+The heatmap below shows each team member’s self-assessed proficiency (1–5) across selected analytics and data engineering skills.
+
+Darker shades indicate higher proficiency. 
+
+```{python}
+team_members = ["Dinara", "Nhat", "Leo"]
+skills = [
+    "SQL (Programming Language)",
+    "Python (Programming Language)",
+    "Tableau (Business Intelligence Software)",
+    "Power BI",
+    "Microsoft Excel",
+    "R (Programming Language)",
+    "Amazon Web Services",
+]
+
+df_skills = pd.DataFrame(
+    {
+        "Name": team_members,
+        "SQL (Programming Language)": [5, 3, 4],
+        "Python (Programming Language)": [4, 3, 5],
+        "Tableau (Business Intelligence Software)": [3, 4, 2],
+        "Power BI": [2, 5, 3],
+        "Microsoft Excel": [5, 4, 4],
+        "R (Programming Language)": [2, 1, 3],
+        "Amazon Web Services": [4, 4, 4],
+    }
+).set_index("Name")
+```
+
+```{python}
+fig_heat = px.imshow(
+    df_skills,
+    text_auto=True,
+    aspect="auto",
+    color_continuous_scale="Blues",
+    labels=dict(color="Skill Level"),
+    title="Team Skill Matrix"
+)
+fig_heat.update_yaxes(title="Team Member")
+fig_heat
+```
+
+</div>
+
+---
+
+<div class="card reveal">
+
+## Market Alignment Analysis
+### Extracting Industry Demand
+
+We filter job postings to focus exclusively on data-centric roles within data-heavy industries (NAICS sectors: Information, Finance & Insurance, and Professional Services).
+
+These sectors employ a large proportion of data & analytics professionals, making them strong benchmarks for industry expectations.
+
+We then identify postings related to analytics roles using keyword matching on job titles.
+
+Finally, we extract software skills listed in job descriptions and compute how frequently each skill appears across the filtered postings.
+
+Higher skill frequency = greater demand = higher importance for employability.
+
+```{python}
+naics_data_industries = [51, 52, 54]
+df_data_industry = lightcast_jp[
+    lightcast_jp["NAICS_2022_2"].astype(float).isin(naics_data_industries)
+]
+
+data_keywords = [
+    "data", "analytics", "analysis", "analyst",
+    "machine learning", "ml", "ai",
+    "business intelligence", "cloud",
+    "sql", "python"
+]
+
+df_data_roles = lightcast_jp[
+    lightcast_jp["TITLE_NAME"].str.lower().str.contains('|'.join(data_keywords), na=False)
+]
+
+df_filtered = df_data_industry[
+    df_data_industry["TITLE_NAME"].str.lower().str.contains('|'.join(data_keywords))
+]
+```
+
+### Software Skills Extraction
+
+Lightcast provides skill data as comma-separated text fields.
+
+We parse and standardize these strings, explode them into individual skills, and aggregate counts across all postings. This produces a clean, frequency-based ranking of the most in-demand technologies in data-oriented careers.
+
+```{python}
+df_filtered = df_filtered.copy()
+df_filtered["software_skill"] = (
+    df_filtered["SOFTWARE_SKILLS_NAME"]
+        .fillna("")
+        .str.split(",")
+        .apply(lambda lst: [s.strip() for s in lst if s.strip() != ""])
+)
+
+df_sw_exploded = (
+    df_filtered
+        .explode("software_skill")
+        .dropna(subset=["software_skill"])
+)
+
+industry_skill_counts = (
+    df_sw_exploded["software_skill"]
+        .value_counts()
+        .to_frame(name="count")
+)
+
+industry_skill_counts.head()
+```
+
+### Gap Calculation
+
+To quantify alignment between our team and the market, we compare:
+
+- $Team Score$ - average proficiency ratings (1–5 scale) provided internally
+- $Industry Score$ - demand-derived skill importance (normalized from posting frequency)
+
+The Gap metric is defined as:
+$Gap=Industry Score - Team Score$
+
+- A positive gap means the team exceeds market expectations.
+- A negative gap highlights opportunities for additional training or hiring.
+
+```{python}
+team_avg = df_skills.mean().to_frame(name="team_score")
+
+ind_skills = industry_skill_counts.rename_axis("Skill")
+ind_skills = ind_skills.loc[skills]
+
+gap_df = team_avg.join(ind_skills, how="left")
+
+max_demand = gap_df["count"].max()
+gap_df["industry_score"] = (gap_df["count"] / max_demand) * 5
+
+gap_df["gap"] = gap_df["industry_score"] - gap_df["team_score"]
+gap_df
+```
+
+</div>
+
+---
+
+<div class="card reveal">
+
+## Skill Gap Visualizatios
+### Bar Chart Comparison
+
+```{python}
+gap_long = (
+    gap_df[["team_score", "industry_score"]]
+    .reset_index(names="Skill")
+    .melt(id_vars="Skill", var_name="Source", value_name="Score")
+)
+skill_order = gap_df["industry_score"].sort_values(ascending=False).index.to_list()
+fig_gap = px.bar(
+    gap_long.sort_values("Score", ascending=False),
+    x="Score",
+    y="Skill",
+    color="Source",
+    barmode="group",
+    orientation="h",
+    title="Skill Gap Analysis",
+    labels={"Score": "Score (1–5)", "Skill": "", "Source": ""},
+    category_orders={"Skill": skill_order}
+)
+fig_gap.update_layout(
+    legend_title_text="",
+    xaxis=dict(range=[0, 5]),
+    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=0.75)
+)
+fig_gap
+```
+
+
+### Radar Chart Comparison
+
+```{python}
+skills_list = gap_df.index.tolist()
+team_values = gap_df["team_score"].tolist()
+industry_values = gap_df["industry_score"].tolist()
+
+skills_list += [skills_list[0]]
+team_values += [team_values[0]]
+industry_values += [industry_values[0]]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatterpolar(
+    r=team_values,
+    theta=skills_list,
+    fill='toself',
+    name='Team Level',
+    line=dict(color='rgba(44, 127, 184, 0.9)', width=3),
+    fillcolor='rgba(44, 127, 184, 0.3)'
+))
+
+fig.add_trace(go.Scatterpolar(
+    r=industry_values,
+    theta=skills_list,
+    fill='toself',
+    name='Industry Demand',
+    line=dict(color='rgba(255, 127, 14, 0.9)', width=3),
+    fillcolor='rgba(255, 127, 14, 0.3)'
+))
+
+fig.update_layout(
+    title="Skill Gap Analysis",
+    polar=dict(radialaxis=dict(visible=True, range=[0, 5])),
+    showlegend=True,
+    legend=dict(orientation="h", y=-0.2)
+)
+
+fig.show()
+```
+
+</div>
