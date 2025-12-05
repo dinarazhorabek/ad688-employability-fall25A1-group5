@@ -7,7 +7,8 @@ format:
 
 <div class="hero reveal">
 
-# Gender Disparities in Hiring & Political Influence
+# Gender Disparities in Hiring & Political Influence\
+
 ### A Data-Driven 2024 Job Market Analysis
 
 We combine job posting data, macroeconomic indicators, and peer-reviewed research to understand how gender and political context shape career opportunities.
@@ -21,6 +22,7 @@ Explore our findings and insights below.
 ### Why This Research Matters
 
 Gender inequality interacts with industry, policy, and geography.  
+
 Some states and sectors are closing gaps, while others remain sharply imbalanced.
 
 Our goal is to translate these patterns into **practical insights** for job seekers.

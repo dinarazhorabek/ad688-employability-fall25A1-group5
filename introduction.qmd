@@ -22,7 +22,8 @@ The analysis integrates quantitative data (job postings, salaries, geographic di
 
 Our project leverages two primary sources:
 
-### **1. Lightcast Job Postings (2024)**
+### **Lightcast Job Postings (2024)**
+
 This dataset contains thousands of job postings across the United States, including:
 - job titles  
 - employer information  
@@ -33,7 +34,8 @@ This dataset contains thousands of job postings across the United States, includ
 
 After cleaning and standardization, this dataset forms the backbone of our empirical analysis. It enables us to explore trends in demand, wage patterns, and regional differences.
 
-### **2. FRED Macroeconomic Indicators**
+### **FRED Macroeconomic Indicators**
+
 To contextualize shifts in hiring, we incorporate:
 - unemployment rates  
 - labor force participation  

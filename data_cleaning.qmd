@@ -34,7 +34,7 @@ This ensures accuracy, reproducibility, and coherence across the entire site.
 
 <div class="card reveal">
 
-## 1. Initial Dataset Overview
+### Initial Dataset Overview
 
 ```{python}
 import pandas as pd
@@ -270,6 +270,7 @@ df[["SALARY_FROM", "SALARY_TO", "SALARY", "PAY_PERIOD", "ANNUAL_SALARY"]].head()
 Understanding missingness is important for determining how to impute values and whether key fields are usable.
 
 We focus on essential analytical fields:
+
 	•	salary fields (now cleaned),
 	•	experience requirements,
 	•	location fields,
@@ -377,6 +378,7 @@ df.shape
 Exporting the Final Cleaned Dataset
 
 This cleaned dataset will be used consistently across:
+
 	•	Exploratory Data Analysis (EDA),
 	•	Skill Gap Analysis,
 	•	ML Methods,
@@ -401,10 +403,14 @@ df.head(), df.shape
 This cleaned dataset establishes the foundation for all downstream analysis.
 
 By explicitly cleaning and preserving salary fields, selectively dropping only non-essential sparse columns, standardizing dates, and removing duplicates, we ensure:
-	•	accuracy and reproducibility,
-	•	consistent salary-based insights,
-	•	reduced rendering load for GitHub Pages,
-	•	and smooth integration with the ML and NLP pipelines.
+
+- accuracy and reproducibility,
+  
+- consistent salary-based insights,
+  
+- reduced rendering load for GitHub Pages,
+  
+- and smooth integration with the ML and NLP pipelines.
 
 This completes the Data Cleaning & Pre-Processing phase.
 
