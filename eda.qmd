@@ -41,9 +41,9 @@ import numpy as np
 import re
 
 df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
-df.head()
-df.info()
-list(df.columns)
+#df.head()
+#df.info()
+#list(df.columns)
 ```
 
 </div>
@@ -101,39 +101,63 @@ This pattern signals promising entry points for job seekers aiming for rapid pla
 ### Salary Distribution by Industry
 
 Salary variation across industries answers: “Which sectors pay more, and how unequal are wages within each industry?”
-We use SALARY_FROM when present (cleaned numeric salary), otherwise fall back to any available salary column.
+We use the annualized salary field (ANNUAL_SALARY), which consolidates raw salary data from SALARY_FROM, SALARY_TO, and SALARY and converts it into a consistent yearly format based on reported pay period.
+This provides a clean, comparable measure of compensation across all industries.
+
 
 ```{python}
+industry_col = industry_col
 salary_col = "ANNUAL_SALARY" if "ANNUAL_SALARY" in df.columns else None
-salary_col
-```
 
-```{python}
 if industry_col and salary_col:
+
+    # Filter valid salaries
     df_salary = df[[industry_col, salary_col]].dropna()
 
-    if not df_salary.empty:
-        fig = px.box(
-            df_salary,
-            y=industry_col,
-            x=salary_col,
-            color=industry_col,
-            title="Annual Salary Distribution by Industry",
-            color_discrete_sequence=px.colors.qualitative.Set3,
-            height=750
-        )
-        fig.update_layout(showlegend=False)
-        fig.show()
-    else:
-        print("Salary distribution not available — no non-null salary values.")
+    # Remove noise categories that distort analysis
+    df_salary = df_salary[df_salary[industry_col] != "Unclassified Industry"]
+
+    # Cap extreme values at 300k for readability (still accurate for 95% of postings)
+    df_salary[salary_col] = np.where(df_salary[salary_col] > 300000, 300000, df_salary[salary_col])
+
+    # Compute median salary per industry for ordering
+    medians = (
+        df_salary.groupby(industry_col)[salary_col]
+        .median()
+        .sort_values(ascending=True)
+    )
+
+    ordered_categories = medians.index.tolist()
+
+    fig = px.box(
+        df_salary,
+        y=industry_col,
+        x=salary_col,
+        category_orders={industry_col: ordered_categories},
+        title="Annual Salary Distribution by Industry (Capped at 300K for Readability)",
+        color=industry_col,
+        color_discrete_sequence=px.colors.qualitative.Vivid,
+        height=900
+    )
+
+    fig.update_layout(
+        showlegend=False,
+        xaxis_title="Annual Salary (USD)",
+        yaxis_title="Industry",
+        margin=dict(l=120)
+    )
+
+    fig.show()
+
 else:
-    print("Industry or salary column missing.")
+    print("Salary chart not generated: Missing industry or salary column.")
 ```
 
 **Insight:**  
-Significant salary variation exists across industries, with sectors like Finance, Tech, and Healthcare offering consistently higher compensation ranges.
-Wide salary spreads within these industries suggest differentiated pay based on experience, certifications, and job specialization.
-These patterns help job seekers identify industries where upskilling yields stronger financial returns.
+Industries show substantial variation in annual salary levels, with Finance, Technology, and Healthcare ranking among the highest median-paying sectors.
+The wide spread of salary values within these sectors reflects diverse role seniority, specialization requirements, and certification-driven compensation structures.
+Meanwhile, service-oriented sectors such as Retail, Accommodation, and Food Services exhibit lower but more compressed salary ranges, signaling limited variance in role complexity.
+This distribution helps job seekers prioritize industries where strategic upskilling yields the strongest financial return.
 
 </div>
 

@@ -303,3 +303,55 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* =========================================================
+   WIDTH UPGRADE — MAIN CONTENT
+========================================================= */
+
+main.content {
+  max-width: 1180px !important;
+  margin: 2.75rem auto 4rem;
+  padding: 0 1.5rem;
+}
+
+/* =========================================================
+   CARD WIDTH + SPACING IMPROVEMENT
+========================================================= */
+
+.card {
+  padding: 2rem 2.2rem !important;
+  border-radius: 18px !important;
+  max-width: 1150px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* =========================================================
+   EXPAND PLOTLY VISUALIZATION AREA
+========================================================= */
+
+.plotly-graph-div {
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* =========================================================
+   WIDER CODE BLOCKS
+========================================================= */
+
+pre, code {
+  max-width: 1080px !important;
+  overflow-x: auto !important;
+  font-size: 0.85rem !important;
+}
+
+/* =========================================================
+   ADJUST SIDEBAR (ON THIS PAGE)
+========================================================= */
+
+#quarto-margin-sidebar {
+  right: 40px !important;
+  max-width: 260px !important;
+}
