@@ -42,15 +42,7 @@ import re
 
 df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
 df.head()
-```
-
-```{python}
-# Quick structure check
 df.info()
-```
-
-```{python}
-# List all column names
 list(df.columns)
 ```
 
@@ -85,7 +77,7 @@ if industry_col:
         orientation="h",
         title=f"Top 15 Industries by Job Postings ({industry_col})",
         color="Postings",
-        color_continuous_scale=px.colors.sequential.Blues_r,
+        color_continuous_scale=px.colors.sequential.Blues,
         height=650
     )
     fig.update_layout(yaxis={'categoryorder':'total ascending'})
@@ -112,10 +104,7 @@ Salary variation across industries answers: “Which sectors pay more, and how u
 We use SALARY_FROM when present (cleaned numeric salary), otherwise fall back to any available salary column.
 
 ```{python}
-salary_col = next(
-    (c for c in df.columns if ("SALARY" in c.upper()) and df[c].dtype in ["int64","float64"]),
-    None
-)
+salary_col = "ANNUAL_SALARY" if "ANNUAL_SALARY" in df.columns else None
 salary_col
 ```
 
@@ -129,16 +118,16 @@ if industry_col and salary_col:
             y=industry_col,
             x=salary_col,
             color=industry_col,
-            title=f"Salary Distribution by Industry ({salary_col})",
-            color_discrete_sequence=px.colors.qualitative.Safe,
-            height=700
+            title="Annual Salary Distribution by Industry",
+            color_discrete_sequence=px.colors.qualitative.Set3,
+            height=750
         )
         fig.update_layout(showlegend=False)
         fig.show()
     else:
-        print("No usable salary values in dataset.")
+        print("Salary distribution not available — no non-null salary values.")
 else:
-    print("Salary chart not generated: industry or numeric salary column missing.")
+    print("Industry or salary column missing.")
 ```
 
 **Insight:**  
@@ -170,12 +159,11 @@ if remote_col:
         names="Work Arrangement",
         values="Postings",
         title="Remote vs On-Site Job Postings",
-        color="Work Arrangement",
-        color_discrete_sequence=px.colors.qualitative.Set2
+        color_discrete_sequence=px.colors.qualitative.Pastel1
     )
     fig.show()
 else:
-    print("Remote work field not found.")
+    print("No remote work field found.")
 ```
 
 **Insight:**  
@@ -210,16 +198,16 @@ if not monthly.empty:
         monthly,
         x="Month",
         y="Postings",
-        title="Monthly Job Posting Trends",
+        title="Monthly Job Posting Trends (2024)",
         markers=True,
-        color_discrete_sequence=["#2C3E50"],
-        height=450
+        color_discrete_sequence=["#34495E"],
+        height=500
     )
     fig.update_traces(line_width=3)
     fig.update_layout(xaxis_tickangle=45)
     fig.show()
 else:
-    print("No valid POSTED dates available.")
+    print("No valid POSTED data to plot monthly trend.")
 ```
 
 **Insight:**  
@@ -246,15 +234,15 @@ if "STATE_NAME" in df.columns:
         x="Postings",
         y="State",
         orientation="h",
-        title="Top 25 U.S. States by Job Postings",
+        title="Top 25 States by Job Postings",
         color="Postings",
-        color_continuous_scale=px.colors.sequential.Viridis,
+        color_continuous_scale=px.colors.sequential.Teal,
         height=700
     )
     fig.update_layout(yaxis={'categoryorder':'total ascending'})
     fig.show()
 else:
-    print("STATE_NAME missing.")
+    print("STATE_NAME field not found.")
 ```
 
 **Insight:**  
@@ -283,7 +271,7 @@ if "SOFTWARE_SKILLS_NAME" in df.columns:
     skills = skills[(skills != "") & (skills != "nan")]
 
     top_skills = skills.value_counts().head(15).reset_index()
-    top_skills.columns = ["Skill","Postings"]
+    top_skills.columns = ["Skill", "Postings"]
 
     fig = px.bar(
         top_skills,
@@ -292,7 +280,7 @@ if "SOFTWARE_SKILLS_NAME" in df.columns:
         orientation="h",
         title="Top 15 Software Skills Requested",
         color="Postings",
-        color_continuous_scale=px.colors.sequential.Plasma,
+        color_continuous_scale=px.colors.sequential.OrRd,
         height=600
     )
     fig.update_layout(yaxis={'categoryorder':'total ascending'})

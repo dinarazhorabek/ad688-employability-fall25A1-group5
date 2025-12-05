@@ -14,15 +14,16 @@ format:
 
 ## Objective
 
-Data cleaning is the most critical phase in any analytics workflow.
+Data cleaning is the most critical phase in any analytics workflow.  
 Following the AD688 project requirements, our goals for this section are to:
 
-- inspect the raw dataset structure,
-- identify and remove redundant or outdated columns,
-- fix inconsistent formatting (e.g., stringified list fields),
-- standardize datetime fields and create analysis-ready variables,
-- handle missing values using appropriate statistical strategies,
-- remove duplicate job postings,
+- inspect the raw dataset structure,  
+- identify and remove redundant or outdated columns,  
+- fix inconsistent formatting (e.g., stringified list fields),  
+- **standardize salary fields and preserve them even when sparsely reported**,  
+- standardize datetime fields and create analysis-ready variables,  
+- handle missing values using appropriate statistical strategies,  
+- remove duplicate job postings,  
 - export a clean, consistent dataset used across EDA, ML, and NLP sections.
 
 This ensures accuracy, reproducibility, and coherence across the entire site.
@@ -33,24 +34,21 @@ This ensures accuracy, reproducibility, and coherence across the entire site.
 
 <div class="card reveal">
 
-### Initial Dataset Overview
+## 1. Initial Dataset Overview
 
 ```{python}
 import pandas as pd
+import numpy as np
+import ast
+import re
 
+# Load raw Lightcast job postings
 df = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
 
-# df.head()
-```
-
-```{python}
-# Dataset structure
-# df.info()
-```
-
-```{python}
-# List all column names
-# list(df.columns)
+# Basic structural overview
+df.head()
+df.info()
+list(df.columns)
 ```
 
 </div>
@@ -62,16 +60,17 @@ df = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
 ### Dropping Redundant or Outdated Columns
 
 Lightcast contains multiple versions of NAICS/SOC classifications, plus metadata fields (tracking URLs, flags, timestamps).
-Thus, we remove irrelevant or outdated fields.
+We remove clearly redundant metadata and older classification versions while keeping the 2022 NAICS codes and 2021 SOC codes.
 
 ```{python}
 columns_to_drop = [
     "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
-    "NAICS2","NAICS3","NAICS4","NAICS5","NAICS6",
-    "SOC_2","SOC_3","SOC_5"
+    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
+    "SOC_2", "SOC_3", "SOC_5"
 ]
 
 df.drop(columns=columns_to_drop, inplace=True, errors="ignore")
+
 df.head()
 ```
 
@@ -91,28 +90,36 @@ Many Lightcast columns store lists as text such as:
 So, we convert these into clean comma-separated strings.
 
 ```{python}
-import ast, re
-
 def clean_list(x):
+    """
+    Convert stringified Python lists into comma-separated strings and strip noise.
+    If parsing fails, fall back to a lightly cleaned string.
+    """
     if pd.isna(x):
         return ""
-    x = x.replace("\n"," ").strip()
+    x = str(x).replace("\n", " ").strip()
     try:
         obj = ast.literal_eval(x)
         if isinstance(obj, list):
             return ", ".join(str(i).strip() for i in obj)
-    except:
+    except Exception:
         pass
-    return re.sub(r'[$begin:math:display$$end:math:display$\"]',"",x).strip()
+    # Fallback: remove stray quotes if present
+    x = re.sub(r'["\']', "", x)
+    return x.strip()
 
 list_cols = [
-    "SOURCE_TYPES","SOURCES","SKILLS_NAME","SPECIALIZED_SKILLS_NAME",
-    "COMMON_SKILLS_NAME","SOFTWARE_SKILLS_NAME","CERTIFICATIONS_NAME"
+    "SOURCE_TYPES", "SOURCES",
+    "SKILLS_NAME", "SPECIALIZED_SKILLS_NAME",
+    "COMMON_SKILLS_NAME", "SOFTWARE_SKILLS_NAME",
+    "CERTIFICATIONS_NAME"
 ]
 
 for col in list_cols:
     if col in df.columns:
         df[col] = df[col].apply(clean_list)
+
+df.head()
 ```
 
 </div>
@@ -121,43 +128,193 @@ for col in list_cols:
 
 <div class="card reveal">
 
-### Handling Missing Values
+Salary Fields: Cleaning and Preservation
+
+Salary information is central to our job-market analysis, so we explicitly clean and preserve all salary-related fields, even when they are sparsely populated.
+
+We:
+
+	•	identify key salary-like columns: SALARY_FROM, SALARY_TO, SALARY, ORIGINAL_PAY_PERIOD,
+	•	strip currency symbols, commas, and non-numeric characters from numeric fields,
+	•	create a standardized PAY_PERIOD,
+	•	convert everything to an annualized ANNUAL_SALARY field suitable for EDA and modeling.
+
+
+```{python}
+# Key salary-related columns we want to preserve
+salary_cols = ["SALARY_FROM", "SALARY_TO", "SALARY", "ORIGINAL_PAY_PERIOD"]
+
+# Ensure the columns exist
+for col in salary_cols:
+    if col not in df.columns:
+        df[col] = np.nan
+
+# Helper to clean salary values, including ranges like "90k-120k"
+def clean_salary_range(x):
+    if pd.isna(x):
+        return np.nan
+    x = str(x)
+
+    # Keep digits, commas, dot, minus, and en-dash
+    x = re.sub(r"[^\d,\.\-\–]", "", x)
+
+    # If there is a range, split and average
+    if "-" in x or "–" in x:
+        parts = re.split(r"[-–]", x)
+        nums = []
+        for p in parts:
+            p = p.replace(",", "")
+            if p == "":
+                continue
+            try:
+                nums.append(float(p))
+            except Exception:
+                pass
+        if len(nums) >= 2:
+            return np.mean(nums)
+        elif len(nums) == 1:
+            return nums[0]
+        return np.nan
+
+    # Otherwise, treat as a single value
+    x = x.replace(",", "")
+    if x == "":
+        return np.nan
+    try:
+        return float(x)
+    except Exception:
+        return np.nan
+
+# Clean numeric salary fields (FROM, TO, SALARY)
+numeric_salary_fields = ["SALARY_FROM", "SALARY_TO", "SALARY"]
+
+for col in numeric_salary_fields:
+    df[col] = df[col].apply(clean_salary_range)
+
+# Choose the best base salary for each row
+def get_base_salary(row):
+    # 1. If SALARY exists, treat it as already standardized
+    if pd.notna(row["SALARY"]):
+        return row["SALARY"]
+    # 2. If both FROM and TO exist, average them
+    if pd.notna(row["SALARY_FROM"]) and pd.notna(row["SALARY_TO"]):
+        return (row["SALARY_FROM"] + row["SALARY_TO"]) / 2
+    # 3. Fallback to whichever exists
+    if pd.notna(row["SALARY_FROM"]):
+        return row["SALARY_FROM"]
+    if pd.notna(row["SALARY_TO"]):
+        return row["SALARY_TO"]
+    return np.nan
+
+# Normalize pay period strings
+def normalize_period(x):
+    if pd.isna(x):
+        return "year"
+    x = str(x).lower()
+
+    if any(k in x for k in ["year", "yr", "annual"]):
+        return "year"
+    if any(k in x for k in ["month", "mo", "per_month"]):
+        return "month"
+    if "biweek" in x:
+        return "biweek"
+    if any(k in x for k in ["week", "wk", "per_week"]):
+        return "week"
+    if any(k in x for k in ["day", "daily"]):
+        return "day"
+    if any(k in x for k in ["hour", "hr"]):
+        return "hour"
+    return "year"
+
+df["PAY_PERIOD"] = df["ORIGINAL_PAY_PERIOD"].apply(normalize_period)
+
+# Convert base salary to annual salary
+def convert_to_annual(row):
+    salary = get_base_salary(row)
+    period = row["PAY_PERIOD"]
+
+    if pd.isna(salary):
+        return np.nan
+
+    if period == "year":
+        return salary
+    if period == "month":
+        return salary * 12
+    if period == "week":
+        return salary * 52
+    if period == "biweek":
+        return salary * 26
+    if period == "day":
+        return salary * 260   # approx. work days in a year
+    if period == "hour":
+        return salary * 2080  # 40 hours * 52 weeks
+    return salary
+
+df["ANNUAL_SALARY"] = df.apply(convert_to_annual, axis=1)
+
+# Remove implausible values (e.g., < $10k or > $700k per year)
+df.loc[df["ANNUAL_SALARY"] < 10000, "ANNUAL_SALARY"] = np.nan
+df.loc[df["ANNUAL_SALARY"] > 700000, "ANNUAL_SALARY"] = np.nan
+
+df["ANNUAL_SALARY"] = df["ANNUAL_SALARY"].astype(float)
+
+df[["SALARY_FROM", "SALARY_TO", "SALARY", "PAY_PERIOD", "ANNUAL_SALARY"]].head()
+```
+
+</div>
 
 <div class="card reveal">
 
+### Handling Missing Values
+
 Understanding missingness is important for determining how to impute values and whether key fields are usable.
 
-We focus only on essential analytical fields:
+We focus on essential analytical fields:
+	•	salary fields (now cleaned),
+	•	experience requirements,
+	•	location fields,
+	•	duration.
 
-- Salary fields  
-- Experience requirements  
-- Location fields  
-- Duration  
-
-We compute missingness correlations **only for columns that still exist after cleaning.**
+We drop extremely sparse columns (more than 50% missing) but never drop salary-related fields, even if they exceed this threshold.
 
 ```{python}
-# Identify most-missing columns (overview)
+# Inspect the most-missing columns
 missing_summary = df.isna().mean().sort_values(ascending=False).head(15)
 missing_summary
 ```
 
 ```{python}
-# Drop columns with more than 50% missing values
-df.dropna(thresh=len(df) * 0.5, axis=1, inplace=True)
+# Critical columns that must be preserved
+critical_cols = [
+    c for c in (["SALARY_FROM", "SALARY_TO", "SALARY", "ORIGINAL_PAY_PERIOD",
+                 "ANNUAL_SALARY", "PAY_PERIOD"])
+    if c in df.columns
+]
 
-# Fill numeric values with median
-num_cols = df.select_dtypes(include=["float","int"]).columns
-df[num_cols] = df[num_cols].fillna(df[num_cols].median())
+threshold = len(df) * 0.5
+
+# Drop columns with >50% missing, except critical salary / pay-period fields
+cols_to_drop_missing = [
+    c for c in df.columns
+    if c not in critical_cols and df[c].isna().sum() > threshold
+]
+
+df.drop(columns=cols_to_drop_missing, inplace=True)
+
+# Fill numeric values with median (EXCLUDING salary-related fields)
+num_cols = df.select_dtypes(include=["float", "int"]).columns
+num_exclude = set(["SALARY_FROM", "SALARY_TO", "SALARY", "ANNUAL_SALARY"])
+num_fill = [c for c in num_cols if c not in num_exclude]
+
+df[num_fill] = df[num_fill].fillna(df[num_fill].median())
+
+# Leave salary-related fields as NaN when missing
 
 # Fill categorical values with "Unknown"
 cat_cols = df.select_dtypes(include="object").columns
 df[cat_cols] = df[cat_cols].fillna("Unknown")
-```
 
-```{python}
-print("Shape:", df.shape)
-display(df.head())
+print("Shape after missing-value handling:", df.shape)
 df.info()
 ```
 
@@ -199,7 +356,12 @@ subset_cols = [c for c in ["TITLE_NAME", "COMPANY_NAME", "LOCATION", "POSTED"]
                if c in df.columns]
 
 if subset_cols:
+    before = df.shape[0]
     df = df.drop_duplicates(subset=subset_cols, keep="first")
+    after = df.shape[0]
+    print(f"Removed {before - after} duplicate postings.")
+else:
+    print("Duplicate removal skipped: key columns missing.")
 
 df.shape
 ```
@@ -212,12 +374,13 @@ df.shape
 
 ### Exporting the Final Cleaned Dataset
 
-This cleaned dataset will be used consistently across:
+Exporting the Final Cleaned Dataset
 
-- EDA  
-- Skill Gap Analysis  
-- ML Methods  
-- NLP Methods  
+This cleaned dataset will be used consistently across:
+	•	Exploratory Data Analysis (EDA),
+	•	Skill Gap Analysis,
+	•	ML Methods,
+	•	NLP Methods.
 
 Exporting ensures team alignment and prevents inconsistent results.
 
@@ -236,13 +399,13 @@ df.head(), df.shape
 ## Summary
 
 This cleaned dataset establishes the foundation for all downstream analysis.
-By standardizing the cleaning workflow and exporting a unified dataset, we ensure:
 
-- accuracy and reproducibility,  
-- consistent modeling results,  
-- reduced rendering load for GitHub Pages,  
-- smooth integration with the ML and NLP pipelines.
+By explicitly cleaning and preserving salary fields, selectively dropping only non-essential sparse columns, standardizing dates, and removing duplicates, we ensure:
+	•	accuracy and reproducibility,
+	•	consistent salary-based insights,
+	•	reduced rendering load for GitHub Pages,
+	•	and smooth integration with the ML and NLP pipelines.
 
-This completes the **Data Cleaning & Exploration** phase.
+This completes the Data Cleaning & Pre-Processing phase.
 
 </div>
