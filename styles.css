@@ -239,10 +239,10 @@ main.content {
 }
 
 /* Increase vertical rhythm between blocks */
-section, .card, .hero, div.card, div.hero {
-  margin-top: 2.2rem !important;
-  margin-bottom: 2.2rem !important;
-}
+/* section, .card, .hero, div.card, div.hero { */
+  /* margin-top: 2.2rem !important; */
+  /* margin-bottom: 2.2rem !important; */
+/* } */
 
 /* Remove accidental double-spacing Quarto sometimes injects */
 .quarto-section {
