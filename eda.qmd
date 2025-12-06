@@ -76,12 +76,20 @@ if industry_col:
         y="Industry",
         orientation="h",
         title=f"Top 15 Industries by Job Postings ({industry_col})",
-        color="Postings",
-        color_continuous_scale=px.colors.sequential.Blues,
-        height=650
+        color="Industry",  # categorical color per industry
+        color_discrete_sequence=px.colors.qualitative.Prism,  
+        height=700
     )
-    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+
+    fig.update_layout(
+        yaxis={"categoryorder": "total ascending"},
+        plot_bgcolor="white",
+        paper_bgcolor="white",
+        showlegend=False 
+    )
+
     fig.show()
+
 else:
     print("No industry column found.")
 ```

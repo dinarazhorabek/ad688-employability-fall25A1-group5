@@ -132,11 +132,18 @@ fig_freq = px.bar(
     orientation="h",
     title="Top 30 Most Common Terms in Job Descriptions",
     labels={"count": "Frequency", "word": "Term"},
-    color="count",
-    color_continuous_scale=px.colors.sequential.Blues,
+    color="word",  
+    color_discrete_sequence=px.colors.qualitative.Pastel, 
     height=700
 )
-fig_freq.update_layout(yaxis={"categoryorder": "total ascending"})
+
+fig_freq.update_layout(
+    yaxis={"categoryorder": "total ascending"},
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    showlegend=False 
+)
+
 fig_freq.show()
 ```
 
@@ -218,6 +225,8 @@ tfidf_top
 ```
 
 ```{python}
+import plotly.express as px
+
 fig_tfidf = px.bar(
     tfidf_top.sort_values("score", ascending=True),
     x="score",
@@ -225,11 +234,18 @@ fig_tfidf = px.bar(
     orientation="h",
     title="Top 25 High-Information Terms (TF–IDF)",
     labels={"score": "Average TF–IDF Score", "term": "Term"},
-    color="score",
-    color_continuous_scale=px.colors.sequential.PuBu,
+    color="term",  # categorical coloring
+    color_discrete_sequence=px.colors.qualitative.Set3,  # vibrant, premium palette
     height=700
 )
-fig_tfidf.update_layout(yaxis={"categoryorder": "total ascending"})
+
+fig_tfidf.update_layout(
+    yaxis={"categoryorder": "total ascending"},
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    showlegend=False
+)
+
 fig_tfidf.show()
 ```
 
