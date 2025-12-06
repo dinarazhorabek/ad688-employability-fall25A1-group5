@@ -190,3 +190,78 @@ merged = merged[["GENDER_DOMINANCE", "GENDER_DOMINANCE_CODE", "PREDICTED_SALARY"
 print(merged)
 ```
 </div>
+
+<div class="card reveal">
+
+## Random Forest
+The Random Forest model is used to capture non-linear relationships between job posting characteristics and advertised salary. Unlike linear regression, which assumes a straight-line effect for each feature, Random Forests build many decision trees and combine their predictions. This allows the model to detect more complex interactions across features such as industry, remote work status, experience requirements, and gender dominance.
+
+### Model Training
+We specify the number of trees, allow trees to grow to full depth, and set a random seed to ensure reproducible results. Using multiple decision trees makes the model more robust and reduces overfitting.
+
+During training, the forest collectively learns how salary varies with experience level, industry code, employment type, remote type, and other factors.
+```{python}
+from sklearn.ensemble import RandomForestRegressor
+
+rf_model = RandomForestRegressor(
+    n_estimators=300,
+    max_depth=None,
+    random_state=79,
+    n_jobs=-1
+)
+
+rf_model.fit(X_train, y_train)
+y_pred_rf = rf_model.predict(X_test)
+```
+
+### Model Performance Evaluation
+We evaluate the model using two metrics:
+
+- **R²:** Measures how much variance in salary the model explains.
+- **RMSE:** Measures average prediction error in dollar terms.
+
+The model achieves an R² of approximately 0.21, indicating moderate predictive power given the complexity and noise typical of job posting salary data.
+
+```{python}
+from sklearn.metrics import r2_score, mean_squared_error
+
+rf_r2 = r2_score(y_test, y_pred_rf)
+rf_rmse = mean_squared_error(y_test, y_pred_rf) ** 0.5
+
+print(f"Random Forest R²: {rf_r2:.4f}")
+print(f"Random Forest RMSE: {rf_rmse:,.2f}")
+```
+
+### Feature Importance Analysis
+Random Forest provides an estimate of each feature’s importance based on how much it reduces prediction error across the forest of trees. In our results, experience and industry code are the strongest predictors, while gender dominance plays a smaller but measurable role.
+
+```{python}
+rf_importances = (
+pd.Series(rf_model.feature_importances_, index=X.columns)
+.sort_values(ascending=False)
+)
+print(rf_importances.head(10))
+```
+
+### Predicted Salary by Dominance Group
+
+The model predicts very similar salaries across all gender groups, indicating that non-linear interactions do not generate strong differences in salary once other job posting characteristics are held constant.
+```{python}
+base_rf = X_train.mean().copy()
+
+pred_rf = {}
+for group_code in [0, 1, 2]:
+    base_rf["GENDER_DOMINANCE"] = group_code
+    pred_rf[group_code] = rf_model.predict(base_rf.to_frame().T)[0]
+
+rf_merged = pd.DataFrame({
+"GENDER_DOMINANCE_CODE": list(pred_rf.keys()),
+"PREDICTED_SALARY_RF": list(pred_rf.values())
+})
+rf_merged["GENDER_DOMINANCE"] = rf_merged["GENDER_DOMINANCE_CODE"].map(
+{v: k for k, v in gender_encoding.items()}
+)
+rf_merged = rf_merged[["GENDER_DOMINANCE", "GENDER_DOMINANCE_CODE", "PREDICTED_SALARY_RF"]]
+print(rf_merged)
+```
+</div>
