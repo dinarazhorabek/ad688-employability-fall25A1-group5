@@ -1,6 +1,6 @@
 ---
-title: "ML Methods"
-subtitle: "Linking Job Postings with Macroeconomic Indicators"
+title: "Machine Learning Models"
+subtitle: "Modeling the Impact of Industry Gender Composition on Salaries"
 bibliography: references.bib
 csl: csl/econometrica.csl
 format:
