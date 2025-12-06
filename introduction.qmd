@@ -12,7 +12,7 @@ format:
 
 This website presents a structured analysis of the 2024 U.S. job market using a combination of **Lightcast job postings**, **FRED macroeconomic indicators**, and insights from academic research. Our goal is to understand how economic conditions, skill demand, and organizational behavior shape opportunities for job seekers entering the market in 2024.
 
-The analysis integrates quantitative data (job postings, salaries, geographic distribution, required skills) with qualitative insights drawn from peer-reviewed literature on hiring dynamics, gender disparities, and political context. By combining these perspectives, we aim to provide a more holistic and actionable understanding of labor market patterns.
+The analysis integrates quantitative data (job postings, salaries, geographic distribution, required skills) with qualitative insights drawn from peer-reviewed literature on hiring dynamics, gender disparities, and political context. By combining these perspectives, we provide a more holistic and actionable understanding of labor-market patterns.
 
 </div>
 
@@ -24,25 +24,27 @@ Our project leverages two primary sources:
 
 ### **Lightcast Job Postings (2024)**
 
-This dataset contains thousands of job postings across the United States, including:
+This dataset includes thousands of job postings across the United States, containing information on:
+
 - job titles  
-- employer information  
+- employer details  
 - required skills  
 - salaries where reported  
 - geographic location  
 - posting dates  
 
-After cleaning and standardization, this dataset forms the backbone of our empirical analysis. It enables us to explore trends in demand, wage patterns, and regional differences.
+After cleaning and standardization, this dataset serves as the backbone of our empirical analysis, allowing exploration of hiring demand, wage patterns, and regional variations.
 
 ### **FRED Macroeconomic Indicators**
 
-To contextualize shifts in hiring, we incorporate:
+To contextualize shifts in hiring, we incorporate macroeconomic time series from the Federal Reserve, including:
+
 - unemployment rates  
-- labor force participation  
-- CPI and inflation metrics  
+- labor-force participation  
+- CPI and inflation measures  
 - sector-level economic activity  
 
-These indicators help explain why specific industries expand or contract in hiring over time.
+These indicators help clarify why specific industries expand or contract over time.
 
 </div>
 
@@ -50,15 +52,15 @@ These indicators help explain why specific industries expand or contract in hiri
 
 # Motivation
 
-Understanding the job market has become increasingly complicated for recent graduates and career-switchers. Economic volatility, rapid technological change, and evolving skill requirements mean that job seekers must navigate a landscape that shifts year to year.
+Navigating the job market has become increasingly complex for recent graduates and career-switchers. Economic uncertainty, rapid technological development, and evolving skill requirements mean that job seekers must adapt to conditions that shift year to year.
 
-Three questions guided our analysis:
+Three guiding questions shape our analysis:
 
-1. **What skills are most in demand in 2024, and how have they changed over time?**  
-2. **How do geographic and sectoral variations influence job opportunities and salaries?**  
-3. **How do broader social factors such as gender representation and organizational culture shape hiring outcomes?**
+1. **Which skills are most in demand in 2024, and how have they evolved?**  
+2. **How do geographic and sectoral differences influence job opportunities and salary outcomes?**  
+3. **How do broader social factors, such as gender representation and organizational culture affect hiring?**
 
-These questions connect quantitative job-posting analysis with deeper research on disparities and structural influences in hiring.
+These questions connect quantitative job-posting data with research on labor inequality, organizational behavior, and workforce development.
 
 </div>
 
@@ -66,26 +68,26 @@ These questions connect quantitative job-posting analysis with deeper research o
 
 # What This Website Includes
 
-This website synthesizes our findings across several analytical stages:
+This website synthesizes findings across several analytical components:
 
 - **Data Cleaning & Preparation**  
-  How Lightcast and FRED data were standardized for analysis.
+  Standardizing, restructuring, and validating Lightcast job postings.
 
 - **Exploratory Data Analysis (EDA)**  
-  Trends in job volume, salary distributions, geographic patterns, and skill frequencies.
+  Hiring patterns, salary distributions, geographic variation, and skills demand.
 
 - **Skill Gap Analysis**  
-  A comparison of team capabilities with the skills most demanded in the market.
+  Comparison between team skill sets and market expectations.
 
 - **Machine Learning Methods**  
-  Employers and roles grouped using k-means clustering for pattern discovery.
+  Clustering and predictive modeling of job-market patterns.
 
 - **NLP Methods**  
-  Extracting meaningful signals from job descriptions, including skills, keywords, and sentiment.
+  Extracting insights from job descriptions, including skills and thematic patterns.
 
 - **Research Background**  
-  A curated review of social science research on hiring behavior, including gender disparities and political influences.
+  Academic perspectives on gender disparities, labor dynamics, and political influences.
 
-Together, these components offer a comprehensive picture of the labor market and provide evidence-based insights for job seekers navigating 2024.
+Collectively, these analyses provide a comprehensive, data-driven picture of the 2024 job market and inform actionable career strategies.
 
 </div>

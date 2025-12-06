@@ -226,3 +226,125 @@ footer {
 }
 #backToTop:hover { background: #111827; }
 #backToTop.hidden { display: none; }
+
+/* =========================================================
+   GLOBAL SPACING CALIBRATION
+   Ensures uniform spacing on ALL pages
+========================================================= */
+
+main.content {
+  max-width: 1180px !important;
+  margin: 3.5rem auto 4.5rem !important;
+  padding: 0 1.7rem !important;
+}
+
+/* Increase vertical rhythm between blocks */
+section, .card, .hero, div.card, div.hero {
+  margin-top: 2.2rem !important;
+  margin-bottom: 2.2rem !important;
+}
+
+/* Remove accidental double-spacing Quarto sometimes injects */
+.quarto-section {
+  margin-top: 1.6rem !important;
+  margin-bottom: 1.6rem !important;
+}
+
+/* =========================================================
+   PREMIUM TITLES — PROPORTIONAL SIZING + UNIVERSAL ALIGNMENT
+========================================================= */
+
+/* Center everything related to title */
+.quarto-title-block,
+.quarto-title-block h1,
+h1.title, h1 {
+  text-align: center !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Polished main H1 */
+.quarto-title-block h1, h1 {
+  font-size: 2.1rem !important;
+  letter-spacing: -0.35px !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Subtitle smaller than main title */
+.quarto-title-block .subtitle {
+  font-size: 1.05rem !important;
+  color: var(--leo-muted) !important;
+  margin-top: -0.35rem !important;
+  margin-bottom: 0.9rem !important;
+  text-align: center !important;
+}
+
+/* =========================================================
+   CARD REFINEMENT — Perfect padding, margins, shadows
+========================================================= */
+
+.card, .hero {
+  max-width: 1150px !important;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 2.1rem 2.4rem !important;
+  border: 1px solid rgba(148,163,184,0.28);
+  box-shadow: 0 12px 32px rgba(15,23,42,0.06);
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Top gradient header bar */
+.card::before, .hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 18px;
+  height: 3px;
+  background-image: var(--leo-accent-gradient);
+  border-radius: 999px;
+  opacity: 0.75;
+}
+
+/* Improve hover lift */
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(15,23,42,0.13);
+}
+
+/* =========================================================
+   LIST SPACING CONSISTENCY (bullet points)
+========================================================= */
+ul, ol {
+  margin-left: 1.2rem !important;
+  margin-top: 0.6rem !important;
+  margin-bottom: 0.6rem !important;
+  line-height: 1.65 !important;
+}
+
+/* =========================================================
+   PLOTLY CONTAINER STANDARDIZATION
+========================================================= */
+
+.plotly-graph-div {
+  max-width: 1100px !important;
+  margin: 2.2rem auto !important;
+}
+
+/* Reduce extra bottom margin under Plotly charts inside cards */
+.card .plotly-graph-div {
+  margin-bottom: 0.6rem !important;
+}
+
+/* =========================================================
+   TIGHTEN FOOTER
+========================================================= */
+
+footer {
+  margin-top: 4rem !important;
+  padding-top: 1.6rem !important;
+  padding-bottom: 1.2rem !important;
+}

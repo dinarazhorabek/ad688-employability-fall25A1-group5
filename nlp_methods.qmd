@@ -10,3 +10,391 @@ format:
     code-tools: true
 ---
 
+<div class="card reveal">
+
+## Overview
+
+Natural Language Processing (NLP) techniques allow us to extract patterns, themes, and linguistic signals embedded in job descriptions.  
+While structured data captures industry, salary, skills, and location, unstructured job text reveals employers’ expectations, behavioral traits, and role-specific competencies that are not always encoded in Lightcast’s structured fields.
+
+In this section, we:
+
+- clean and normalize job description text  
+- tokenize and filter low-value words  
+- compute word frequencies and visualize them  
+- apply TF–IDF to identify high-information terms  
+- quantify the presence of technical keywords in descriptions  
+
+These insights complement earlier EDA and Skill Gap Analysis results by highlighting **how employers talk** about data and analytics roles in practice.
+
+</div>
+
+---
+
+<div class="card reveal">
+
+## Load the Dataset
+
+```{python}
+import pandas as pd
+import numpy as np
+import re
+
+# Use the cleaned dataset to stay consistent with Data Cleaning, EDA, and ML sections
+df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
+
+# Keep only the columns we need for NLP
+df_text = df[["TITLE_NAME", "BODY", "NAICS_2022_2_NAME", "NAICS_2022_2"]].copy()
+df_text.head()
+```
+
+</div>
+
+<div class="card reveal">
+
+## Text Cleaning Pipeline
+
+We apply a lightweight but robust text cleaning pipeline:
+	1.	Convert all text to lowercase
+	2.	Remove punctuation, digits, and symbols
+	3.	Collapse repeated whitespace
+	4.	Tokenize into individual words
+	5.	Remove very common “filler” words using a custom stopword list
+	6.	Keep only alphabetic tokens with length ≥ 4
+
+This produces a semantically meaningful set of tokens for each job description while avoiding heavy external dependencies.
+
+```{python}
+# Simple tokenizer using regex + Python only (no NLTK)
+def simple_tokenize(text: str):
+    text = str(text).lower()
+    text = re.sub(r"[^a-z\s]", " ", text)   # keep only letters and spaces
+    text = re.sub(r"\s+", " ", text).strip()
+    tokens = text.split()
+    return [w for w in tokens if len(w) > 3]
+
+# Custom stopword list (focused on generic English terms)
+custom_stopwords = {
+    "this","that","with","from","about","there","their","which","have","were",
+    "been","also","into","such","they","them","your","will","would","could",
+    "should","other","than","some","more","when","what","where","these","those",
+    "just","here","very","much","many","most","over","under","while","after",
+    "before","still","next","only","each","every","then","because","within",
+    "including","using","across","through"
+}
+
+def clean_text(t: str) -> str:
+    t = str(t).lower()
+    t = re.sub(r"[^a-z\s]", " ", t)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+# Clean + tokenize BODY text
+df_text["clean_body"] = df_text["BODY"].fillna("").astype(str).apply(clean_text)
+
+df_text["tokens"] = df_text["clean_body"].apply(
+    lambda text: [w for w in simple_tokenize(text) if w not in custom_stopwords]
+)
+
+df_text[["TITLE_NAME", "tokens"]].head()
+```
+
+</div>
+
+<div class="card reveal">
+
+## Word Frequency Extraction
+
+We aggregate a global vocabulary across all postings and compute the most frequently occurring terms.
+
+```{python}
+from collections import Counter
+
+all_words = []
+df_text["tokens"].apply(all_words.extend)
+
+word_freq = Counter(all_words).most_common(30)
+freq_df = pd.DataFrame(word_freq, columns=["word", "count"])
+freq_df.head()
+```
+
+Visualization: Top Keywords in Job Descriptions
+
+The bar chart below highlights the 20 most common lexical terms appearing across job descriptions.
+
+```{python}
+import plotly.express as px
+
+fig_freq = px.bar(
+    freq_df.sort_values("count", ascending=True),
+    x="count",
+    y="word",
+    orientation="h",
+    title="Top 30 Most Common Terms in Job Descriptions",
+    labels={"count": "Frequency", "word": "Term"},
+    color="count",
+    color_continuous_scale=px.colors.sequential.Blues,
+    height=700
+)
+fig_freq.update_layout(yaxis={"categoryorder": "total ascending"})
+fig_freq.show()
+```
+
+</div>
+
+<div class="card reveal">
+
+## Word Cloud
+
+A word cloud provides a quick, intuitive view of recurring terms.
+Large words appear more frequently in text, giving a qualitative impression of employer emphasis.
+
+```{python}
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+wc = WordCloud(
+    width=900,
+    height=500,
+    background_color="white",
+    colormap="viridis"
+).generate(" ".join(all_words))
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wc, interpolation="bilinear")
+plt.axis("off")
+plt.title("Word Cloud of Job Description Terms", fontsize=16)
+plt.show()
+```
+
+</div>
+
+<div class="card reveal">
+
+## TF–IDF: High-Information Terms Across Job Descriptions
+
+Raw word counts can be dominated by generic terms (for example, “team,” “support,” “experience”).
+To focus on high-information terms that distinguish postings, we apply TF–IDF (Term Frequency–Inverse Document Frequency).
+
+This gives higher scores to words that
+
+- appear frequently within a posting, but
+- do not appear in every other posting.
+
+```{python}
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# For performance, optionally sample a subset if the dataset is huge
+MAX_DOCS = 15000
+if len(df_text) > MAX_DOCS:
+    df_tfidf = df_text.sample(n=MAX_DOCS, random_state=42).copy()
+else:
+    df_tfidf = df_text.copy()
+
+tfidf_vectorizer = TfidfVectorizer(
+    max_features=3000,
+    min_df=5,
+    max_df=0.6,
+    stop_words=None  # custom stopwords already applied at the text level
+)
+
+tfidf_matrix = tfidf_vectorizer.fit_transform(df_tfidf["clean_body"])
+feature_names = np.array(tfidf_vectorizer.get_feature_names_out())
+
+tfidf_matrix.shape
+```
+
+```{python}
+# Compute average TF–IDF score per term across all sampled documents
+avg_tfidf = tfidf_matrix.mean(axis=0).A1
+
+tfidf_df = (
+    pd.DataFrame({"term": feature_names, "score": avg_tfidf})
+    .sort_values("score", ascending=False)
+)
+
+tfidf_top = tfidf_df.head(25)
+tfidf_top
+```
+
+```{python}
+fig_tfidf = px.bar(
+    tfidf_top.sort_values("score", ascending=True),
+    x="score",
+    y="term",
+    orientation="h",
+    title="Top 25 High-Information Terms (TF–IDF)",
+    labels={"score": "Average TF–IDF Score", "term": "Term"},
+    color="score",
+    color_continuous_scale=px.colors.sequential.PuBu,
+    height=700
+)
+fig_tfidf.update_layout(yaxis={"categoryorder": "total ascending"})
+fig_tfidf.show()
+```
+
+</div>
+
+<div class="card reveal">
+
+## TF–IDF by Industry (Macro Lens)
+
+To connect language patterns with industry context, we compare TF–IDF profiles across a few major NAICS sectors:
+
+- Information (51)
+- Finance and Insurance (52)
+- Professional, Scientific, and Technical Services (54)
+
+```{python}
+# Map NAICS_2022_2 to readable sector labels
+sector_map = {
+    51.0: "Information",
+    52.0: "Finance & Insurance",
+    54.0: "Professional, Scientific & Technical"
+}
+
+df_text["NAICS_2022_2"] = df["NAICS_2022_2"].astype(float)
+df_text["sector"] = df_text["NAICS_2022_2"].map(sector_map)
+
+df_sector = df_text.dropna(subset=["sector", "clean_body"]).copy()
+df_sector["sector"].value_counts()
+```
+
+```{python}
+# Build separate corpora per sector
+sector_texts = (
+    df_sector
+    .groupby("sector")["clean_body"]
+    .apply(lambda s: " ".join(s.tolist()))
+)
+
+sector_texts
+```
+
+```{python}
+# Separate vectorizer for sector-level TF–IDF
+sector_vectorizer = TfidfVectorizer(
+    max_features=2000,
+    min_df=1,    # allow terms that appear in at least one sector corpus
+    max_df=1.0,  # do not drop terms that appear across multiple sectors
+    stop_words=None
+)
+
+sector_tfidf = sector_vectorizer.fit_transform(sector_texts.values)
+sector_terms = np.array(sector_vectorizer.get_feature_names_out())
+
+sector_tfidf.shape
+```
+
+```{python}
+# For each sector, extract its top 15 TF–IDF terms
+rows = []
+for i, sector_name in enumerate(sector_texts.index):
+    row_vec = sector_tfidf[i].toarray().ravel()
+    top_idx = row_vec.argsort()[-15:][::-1]
+    for idx in top_idx:
+        rows.append({
+            "sector": sector_name,
+            "term": sector_terms[idx],
+            "score": row_vec[idx]
+        })
+
+sector_tfidf_df = pd.DataFrame(rows)
+sector_tfidf_df.head()
+```
+
+```{python}
+fig_sect = px.bar(
+    sector_tfidf_df,
+    x="score",
+    y="term",
+    color="sector",
+    barmode="group",
+    orientation="h",
+    title="High-Information Terms by Sector (TF–IDF – Top 15 per Sector)",
+    labels={"score": "TF–IDF Score", "term": "Term", "sector": "Sector"},
+    height=800
+)
+fig_sect.update_layout(yaxis={"categoryorder": "total ascending"})
+fig_sect.show()
+```
+
+</div>
+
+<div class="card reveal">
+
+## Technical Terms Directly from Descriptions
+
+Although Lightcast provides structured software skill fields, job descriptions often repeat these terms inside free text.
+To quantify this, we scan cleaned descriptions for common technical keywords.
+
+```{python}
+technical_terms = [
+    "python", "sql", "excel", "tableau", "powerbi", "power bi",
+    "aws", "azure", "cloud", "machine learning",
+    "analytics", "analysis", "business intelligence"
+]
+
+tech_counts = {}
+for term in technical_terms:
+    pattern = term.replace(" ", "")  # basic normalization for "power bi" -> "powerbi"
+    tech_counts[term] = df_text["clean_body"].str.contains(pattern, regex=False).sum()
+
+tech_df = (
+    pd.DataFrame.from_dict(tech_counts, orient="index", columns=["count"])
+    .sort_values("count", ascending=True)
+    .reset_index()
+    .rename(columns={"index": "term"})
+)
+tech_df
+```
+
+```{python}
+fig_tech = px.bar(
+    tech_df,
+    x="count",
+    y="term",
+    orientation="h",
+    title="Technical Terms Found in Job Descriptions (Text Scan)",
+    labels={"count": "Mentions", "term": "Term"},
+    color="count",
+    color_continuous_scale=px.colors.sequential.GnBu,
+    height=600
+)
+fig_tech.update_layout(yaxis={"categoryorder": "total ascending"})
+fig_tech.show()
+```
+
+</div>
+
+<div class="card reveal">
+
+## Interpretation & Insights:
+
+1.	Dominant Themes in Employer Language
+Global frequency and word clouds show recurring emphasis on experience, support, team, management, and responsibilities.
+This indicates that employers value not only technical competence but also the ability to operate in collaborative, process-oriented environments.
+
+2.	High-Information Terms (TF–IDF)
+TF–IDF surfaces more specialized vocabulary (e.g., “pipeline,” “analytics,” “visualization,” “governance”) that differentiates advanced analytics roles from generic postings.
+These terms often correspond to specific project responsibilities or technical domains within data teams.
+
+3.	Sector-Specific Vocabulary
+- In Finance & Insurance, TF–IDF highlights concepts related to risk, portfolios, credit, and regulatory reporting.
+- In Professional, Scientific & Technical Services, terms linked to modeling, experimentation, and client delivery become more prominent.
+- In Information, we see emphasis on platforms, content, and digital products.
+This demonstrates how sector context shapes the language of “data work.”
+
+4.	Technical Signal in Text
+The repeated presence of terms such as SQL, Python, Excel, Tableau, Power BI, AWS, and Azure inside descriptions reinforces the structured skill patterns observed in the EDA section.
+These technologies function as “linguistic anchors” that clearly distinguish analytics roles from general business positions.
+
+5.	Implications for Job Seekers
+- Candidates aligning with these text-level signals (SQL + Python + BI + cloud) are better positioned for data-intensive roles.
+- Beyond tools, employers repeatedly emphasize concepts related to analysis, insights, decision-making, and stakeholder communication — confirming that soft skills and interpretation capabilities matter as much as raw coding ability.
+- Understanding how employers write about roles helps job seekers tailor resumes, cover letters, and LinkedIn profiles using the same vocabulary that appears in successful job descriptions.
+
+Taken together, the NLP results provide a qualitative, language-based complement to our structured EDA and Skill Gap Analysis, strengthening the case for a hybrid skill profile: technical depth, sector awareness, and communication skills that translate data into decisions.
+
+</div>
+

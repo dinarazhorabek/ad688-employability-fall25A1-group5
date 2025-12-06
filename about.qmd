@@ -4,7 +4,7 @@ title: "About Us"
 
 <div class="card reveal">
 
-# Team 5 – Gender Disparities in Hiring & Political Influence
+# Team 5:  Gender Disparities in Hiring & Political Influence
 
 Graduate students in the Master of Applied Business Analytics program at Boston University,  
 completing this project for **AD 688 – Web Analytics**.

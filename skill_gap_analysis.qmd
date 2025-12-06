@@ -95,6 +95,7 @@ fig_heat
 <div class="card reveal">
 
 ## Market Alignment Analysis
+
 ### Extracting Industry Demand
 
 We filter job postings to focus exclusively on data-centric roles within data-heavy industries (NAICS sectors: Information, Finance & Insurance, and Professional Services).
@@ -194,6 +195,7 @@ gap_df
 <div class="card reveal">
 
 ## Skill Gap Visualizatios
+
 ### Bar Chart Comparison
 
 ```{python}
@@ -221,7 +223,6 @@ fig_gap.update_layout(
 )
 fig_gap
 ```
-
 
 ### Radar Chart Comparison
 

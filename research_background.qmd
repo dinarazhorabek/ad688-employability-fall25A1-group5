@@ -1,6 +1,6 @@
 ---
 title: "Gender Disparities in Hiring & Political Influence"
-authors: "Team 5: Hung Nguyen, Nhat Tran, Dinara Zhorabek"
+authors: "Hung Nguyen, Nhat Tran, Dinara Zhorabek"
 date: today
 bibliography: references.bib
 csl: csl/econometrica.csl
