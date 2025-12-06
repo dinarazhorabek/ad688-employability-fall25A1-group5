@@ -147,6 +147,16 @@ print("Salary change per category step:", coef)
 Moving from a male-dominated to a mixed industry is associated with an average salary increase of about $2,149.     
 Moving from mixed to female-dominated shows an additional increase of roughly the same magnitude.
 
+### Model Performance Evaluation
+To assess the performance of the linear regression model, we compute the R² score using the test dataset. Our model explains approximately 11.4% of the variation in advertised salaries. Meaning that the model captures some underlying structure—especially differences driven by experience, industry, and location—but much of the salary variation remains unexplained under a linear framework.
+
+```{python}
+from sklearn.metrics import r2_score
+
+y_pred_lr = model.predict(X_test)
+lr_r2 = r2_score(y_test, y_pred_lr)
+print("R²:", lr_r2)
+```
 ### Predicted Salary by Dominance Group
 
 Using the average job posting profile in our dataset, we generated predicted salaries for each gender dominance category. The results show a **gradual upward trend in salary as industries become more female-dominated**, even after controlling for experience, employment type, remote status, staffing firm involvement, and state-level differences. In other words, postings in female-dominated or mixed industries tend to offer slightly higher advertised salaries than those in male-dominated sectors.
