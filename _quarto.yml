@@ -18,6 +18,8 @@ website:
         menu:
           - text: "Overview & Pipeline"
             href: data_analysis.qmd
+          - text: "Gender Domiance in Job Postings"
+            href: gender_dom_analysis.qmd
           - text: "Data Cleaning & Preprocessing"
             href: data_cleaning.qmd
           - text: "Exploratory Data Analysis"
