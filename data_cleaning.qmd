@@ -46,9 +46,9 @@ import re
 df = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
 
 # Basic structural overview
-df.head()
-df.info()
-list(df.columns)
+# df.head()
+# df.info()
+# list(df.columns)
 ```
 
 </div>
