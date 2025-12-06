@@ -9,11 +9,6 @@ data/lightcast_job_postings.csv
 data/lightcast_cleaned.csv
 
 
-figures/*.html
-figures/*.png
-figures/*.jpg
-figures/*.jpeg
-figures/*.svg
 
 
 
