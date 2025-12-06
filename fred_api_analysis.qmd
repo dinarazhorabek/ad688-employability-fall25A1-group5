@@ -10,6 +10,9 @@ from fredapi import Fred
 import plotly.graph_objects as go
 import plotly.io as pio
 import pandas as pd
+import os
+
+os.makedirs("figures", exist_ok=True)
 
 # Load API key from .env
 load_dotenv()
@@ -86,62 +89,110 @@ series_map = {
 
 # Download data
 data = {label: fred.get_series(sid) for label, sid in series_map.items()}
-print(data["part_women"].head())
+#print(data["part_women"].head())
 ```
 
+### Chart 0: Unemployment Rate for Men vs Women
 ```{python}
-# Sample Unemployment Rate chart to view
-pio.renderers.default = "browser"
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=data["unemp_total"].index, y=data["unemp_total"], mode="lines", name="Unemployment Rate"))
-fig.update_layout(title="Unemployment Rate Over Time", xaxis_title="Date", yaxis_title="Rate (%)")
-fig.show()
-```
-
-```{python}
-# Chart 0: Unemployment Rate for Men vs Women
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=data["unemp_women"].index, y=data["unemp_women"], 
-                        mode="lines", name="Women Unemployment Rate"))
-fig.add_trace(go.Scatter(x=data["unemp_men"].index, y=data["unemp_men"], 
-                        mode="lines", name="Men Unemployment Rate"))
-fig.update_layout(
+fig_unemp = go.Figure()
+# Men unemployment rate
+fig_unemp.add_trace(
+    go.Scatter(
+        x=data["unemp_men"].index,
+        y=data["unemp_men"],
+        mode="lines",
+        name="Men"
+    )
+)
+# Women unemployment rate
+fig_unemp.add_trace(
+    go.Scatter(
+        x=data["unemp_women"].index,
+        y=data["unemp_women"],
+        mode="lines",
+        name="Women"
+    )
+)
+fig_unemp.update_layout(
     title="Unemployment Rate: Men vs Women",
-    xaxis_title="Date", yaxis_title="Rate (%)",
-    legend_title="Group"
+    xaxis_title="Date",
+    yaxis_title="Rate (%)",
+    legend_title="Group",
+    width=700,
+    height=500
 )
-fig.show()
+fig_unemp.show()
+fig_unemp.write_html("figures/unemp_rate.html")
 ```
 
+### Chart 1: Gender Wage Gap Over Time (Median Weekly Earnings)
 ```{python}
-# Chart 1: Gender Wage Gap Over Time (Median Weekly Earnings)
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=data["earn_women"].index, y=data["earn_women"], mode="lines", name="Women Earnings"))
-fig.add_trace(go.Scatter(x=data["earn_men"].index, y=data["earn_men"],  mode="lines", name="Men Earnings"))
-fig.update_layout(
+fig_wage = go.Figure()
+# Men earnings line
+fig_wage.add_trace(
+    go.Scatter(
+        x=data["earn_men"].index,
+        y=data["earn_men"],
+        mode="lines",
+        name="Men"
+    )
+)
+# Women earnings line
+fig_wage.add_trace(
+    go.Scatter(
+        x=data["earn_women"].index,
+        y=data["earn_women"],
+        mode="lines",
+        name="Women"
+    )
+)
+fig_wage.update_layout(
     title="Median Weekly Earnings: Men vs Women",
-    xaxis_title="Year", yaxis_title="USD"
+    xaxis_title="Year",
+    yaxis_title="USD",
+    legend_title="Group",
+    width=700,
+    height=500
 )
-fig.show()
+fig_wage.show()
+fig_wage.write_html("figures/gender_wage_gap.html")
 ```
 
+### # Chart 2: Labor Force Participation - Men vs Women (Monthly, SA)
 ```{python}
-# Chart 2: Labor Force Participation - Men vs Women (Monthly, SA)
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=data["part_women"].index, y=data["part_women"],
-                         mode="lines", name="Women Participation"))
-fig.add_trace(go.Scatter(x=data["part_men"].index, y=data["part_men"],
-                         mode="lines", name="Men Participation"))
-fig.update_layout(
+fig_part = go.Figure()
+# Men participation line
+fig_part.add_trace(
+    go.Scatter(
+        x=data["part_men"].index,
+        y=data["part_men"],
+        mode="lines",
+        name="Men"
+    )
+)
+# Women participation line
+fig_part.add_trace(
+    go.Scatter(
+        x=data["part_women"].index,
+        y=data["part_women"],
+        mode="lines",
+        name="Women"
+    )
+)
+fig_part.update_layout(
     title="Labor Force Participation: Men vs Women (Monthly, SA)",
-    xaxis_title="Year", yaxis_title="Percent (%)"
+    xaxis_title="Year",
+    yaxis_title="Percent (%)",
+    legend_title="Group",
+    width=700,
+    height=500
 )
-fig.show()
+fig_part.show()
+fig_part.write_html("figures/labor_force_participation.html")
 ```
 
+### Chart 3: STEM SECTORS – Women Ratio Bar Chart (Sorted)
 ```{python}
-# Chart 3: STEM SECTORS – Women Ratio Bar Chart (Sorted)
-
 # Get the latest information available from Fred
 def get_latest(series):
     s = series.dropna()
@@ -163,19 +214,28 @@ stem_sorted = pd.Series({k: v[1] for k, v in stem_latest_data.items()}).sort_val
 stem_latest_date = max(v[0] for v in stem_latest_data.values()).strftime("%Y-%m")
 
 fig_stem = go.Figure()
-fig_stem.add_trace(go.Bar(x=stem_sorted.index, y=stem_sorted.values, 
-                        text=[f"{v:.1f}%" for v in stem_sorted.values], textposition="outside"))
-
+fig_stem.add_trace(
+    go.Bar(
+        x=stem_sorted.index,
+        y=stem_sorted.values,
+        text=[f"{v:.1f}%" for v in stem_sorted.values],
+        textposition="outside"
+    )
+)
 fig_stem.update_layout(
     title=f"Share of Women in STEM Sectors ({stem_latest_date})",
     yaxis_title="Women as % of Total Employment",
-    xaxis_tickangle=30
+    xaxis_title="STEM Sector",
+    xaxis_tickangle=30,
+    width=700,
+    height=500
 )
 fig_stem.show()
+fig_stem.write_html("figures/stem_women_share.html")
 ```
 
+### Chart 4: NON-STEM SECTORS – Women Ratio Bar Chart (Sorted)
 ```{python}
-# Chart 4: NON-STEM SECTORS – Women Ratio Bar Chart (Sorted)
 nonstem_ratio_vars = {
     "Leisure & Hospitality": data["emp_leisure_women_ratio"],
     "Education & Health": data["emp_edhealth_women_ratio"],
@@ -190,15 +250,24 @@ nonstem_latest_data = {sector: get_latest(series) for sector, series in nonstem_
 nonstem_sorted = pd.Series({k: v[1] for k, v in nonstem_latest_data.items()}).sort_values(ascending=False)
 # Get the most recent update date
 nonstem_latest_date = max(v[0] for v in nonstem_latest_data.values()).strftime("%Y-%m")
-
 fig_nonstem = go.Figure()
-fig_nonstem.add_trace(go.Bar(x=nonstem_sorted.index, y=nonstem_sorted.values,
-    text=[f"{v:.1f}%" for v in nonstem_sorted.values], textposition="outside", marker_color="indianred"))
-
+fig_nonstem.add_trace(
+    go.Bar(
+        x=nonstem_sorted.index,
+        y=nonstem_sorted.values,
+        text=[f"{v:.1f}%" for v in nonstem_sorted.values],
+        textposition="outside",
+        marker_color="indianred"
+    )
+)
 fig_nonstem.update_layout(
     title=f"Share of Women in Non-STEM Sectors ({nonstem_latest_date})",
     yaxis_title="Women as % of Total Employment",
-    xaxis_tickangle=30
+    xaxis_title="Non-STEM Sector",
+    xaxis_tickangle=30,
+    width=700,
+    height=500
 )
 fig_nonstem.show()
+fig_nonstem.write_html("figures/nonstem_women_share.html")
 ```

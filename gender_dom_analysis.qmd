@@ -167,7 +167,7 @@ fig_gd.update_layout(
     height=500
 )
 fig_gd.show()
-bubble_fig.write_html("figures/gender_salary_distr.html")
+fig_gd.write_html("figures/gender_salary_distr.html")
 ```
 
 ### Chart 2: Salary Distribution by Gender Dominance
