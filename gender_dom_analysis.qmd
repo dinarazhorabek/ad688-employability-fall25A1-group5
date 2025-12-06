@@ -1,0 +1,397 @@
+---
+title: "Gender Dominance Analysis"
+subtitle: "Distribution of Job Postings and Median Salaries Across Gender-Dominance Categories"
+bibliography: references.bib
+csl: csl/econometrica.csl
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-tools: true
+---
+### Load the Cleaned Dataset
+```{python}
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import plotly.io as pio
+import plotly.express as px
+import os
+
+os.makedirs("figures", exist_ok=True)
+
+# Load raw Lightcast job postings
+df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
+
+# Basic structural overview
+#df.head()
+```
+
+### Industry Data Preparation
+```{python}
+# Clean the dataset to analyze available industries
+# Remove rows where NAICS2_NAME is "Unknown"
+df = df[df["NAICS2_NAME"] != "Unknown"]
+
+# Use unclassified_count function to see % of Unclassified Industry in the dataset
+# Count rows before dropping
+before_count = len(df)
+
+# Count how many are "Unclassified Industry"
+unclassified_count = (df["NAICS2_NAME"] == "Unclassified Industry").sum()
+
+# Percentage of Unclassified Industry rows
+percentage = unclassified_count / before_count * 100
+print(f"Percentage of Unclassified Industry rows: {percentage:.2f}%")
+# Drop those rows
+df = df[df["NAICS2_NAME"] != "Unclassified Industry"]
+
+after_count = len(df)
+removed_count = before_count - after_count
+print("Rows removed:", removed_count)
+print("Rows before:", before_count)
+print("Rows after:", after_count)
+```
+
+### Exploring Unique Industry Categories (NAICS2_NAME)
+```{python}
+# Get list of uniques NAICS2_NAME
+naics2_name = df["NAICS2_NAME"].dropna().unique().tolist()
+print(naics2_name)
+```
+
+### Classifying Industries by Gender Dominance
+This reflects the process of mapping each NAICS2_NAME industry into one of three categories: Female-dominated, Male-dominated, or Mixed - based on U.S. labor statistics.
+
+```{python}
+gender_dom_map = {
+    # Male-dominated Industries
+    "Agriculture, Forestry, Fishing and Hunting": "Male-dominated",
+    "Mining, Quarrying, and Oil and Gas Extraction": "Male-dominated",
+    "Utilities": "Male-dominated",
+    "Construction": "Male-dominated",
+    "Manufacturing": "Male-dominated",
+    "Wholesale Trade": "Male-dominated",
+    "Transportation and Warehousing": "Male-dominated",
+    "Professional, Scientific, and Technical Services": "Male-dominated",
+    "Information": "Male-dominated",
+    "Management of Companies and Enterprises": "Male-dominated",
+
+    # Female-dominated Industries
+    "Finance and Insurance": "Female-dominated",
+    "Educational Services": "Female-dominated",
+    "Health Care and Social Assistance": "Female-dominated",
+    "Accommodation and Food Services": "Female-dominated",
+    "Other Services (except Public Administration)": "Female-dominated",
+
+    # Balanced Industries
+    "Retail Trade": "Balanced",
+    "Administrative and Support and Waste Management and Remediation Services": "Balanced",
+    "Real Estate and Rental and Leasing": "Balanced",
+    "Arts, Entertainment, and Recreation": "Balanced",
+    "Public Administration": "Balanced"
+}
+
+# Create a GENDER_DOMINANCE column in the dataset
+df["GENDER_DOMINANCE"] = df["NAICS2_NAME"].map(gender_dom_map)
+gender_dom_summary = (
+    df["GENDER_DOMINANCE"]
+    .value_counts()
+    .reset_index()
+)
+print("Total Job Posting Counts by Gender Dominance:")
+display(gender_dom_summary)
+```
+
+The dataset shows 35,159 job postings in male-dominated industries, followed by 13,013 postings in female-dominated industries, while balanced industries account for 11,804 postings. These counts provide a clear view of how job postings are distributed across the three gender-dominance categories. The larger volume in male-dominated fields suggests that most hiring activity in this dataset is concentrated in those sectors, with smaller but still significant demand in female-dominated and balanced industries. Together, this distribution gives a straightforward snapshot of where job opportunities are most active.
+
+### Median Salary by Industry with Job Count (Descending):
+```{python}
+# Drop rows with missing salary values
+df_salary = df.dropna(subset=["SALARY"])
+
+# Compute job counts
+industry_counts = (df_salary.groupby("NAICS2_NAME")["SALARY"].count().rename("JOB_COUNT"))
+
+industry_median_salary = (
+    df_salary.groupby("NAICS2_NAME")["SALARY"]
+    .median()
+    .rename("MEDIAN_SALARY")
+    .to_frame()
+    .join(industry_counts)
+    .sort_values("MEDIAN_SALARY", ascending=False)
+    .reset_index()
+)
+display(industry_median_salary)
+```
+
+```{python}
+# Group by gender dominance
+gender_dom_summary = (
+    df_salary.groupby("GENDER_DOMINANCE")
+    .agg(
+        JOB_COUNT=("SALARY", "count"),
+        MEDIAN_SALARY=("SALARY", "median")
+    )
+    .reset_index()
+    .sort_values("MEDIAN_SALARY", ascending=False)
+)
+display(gender_dom_summary)
+```
+
+### Chart 1: Median Salary by Gender Dominance Category
+```{python}
+# Build a color palette for gender dominance
+colors = {
+    "Male-dominated": "rgba(137, 176, 255, 0.8)",
+    "Female-dominated": "rgba(255, 179, 207, 0.8)",
+    "Balanced": "rgba(199, 168, 255, 0.8)"
+}
+
+fig_gd = go.Figure()
+
+fig_gd.add_trace(
+    go.Bar(
+        x=gender_dom_summary["GENDER_DOMINANCE"],
+        y=gender_dom_summary["MEDIAN_SALARY"],
+        text=[f"${v:,.0f}" for v in gender_dom_summary["MEDIAN_SALARY"]],
+        textposition="outside",
+        marker_color=[colors[cat] for cat in gender_dom_summary["GENDER_DOMINANCE"]]
+    )
+)
+fig_gd.update_layout(
+    title="Median Salary by Gender Dominance Category",
+    yaxis_title="Median Salary",
+    xaxis_title="Gender Dominance",
+    width=700,
+    height=500
+)
+fig_gd.show()
+bubble_fig.write_html("figures/gender_salary_distr.html")
+```
+
+### Chart 2: Salary Distribution by Gender Dominance
+```{python}
+fig_box = go.Figure()
+for category in df_salary["GENDER_DOMINANCE"].unique():
+    fig_box.add_trace(
+        go.Box(
+            y=df_salary[df_salary["GENDER_DOMINANCE"] == category]["SALARY"],
+            name=category,
+            marker_color=colors.get(category, "lightgray"),
+            boxmean=True
+        )
+    )
+
+fig_box.update_layout(
+    title="Salary Distribution by Gender Dominance",
+    yaxis_title="Salary",
+    xaxis_title="Gender Dominance",
+    width=800,
+    height=550
+)
+fig_box.show()
+fig_box.write_html("figures/gender_salary_boxplot.html")
+```
+
+### Chart 3: Job Count vs. Median Salary by Gender Dominance Category
+```{python}
+bubble_fig = px.scatter(
+    gender_dom_summary,
+    x="JOB_COUNT",
+    y="MEDIAN_SALARY",
+    size="JOB_COUNT",
+    color="GENDER_DOMINANCE",
+    color_discrete_map=colors,
+    hover_name="GENDER_DOMINANCE",
+    size_max=80
+)
+
+bubble_fig.update_layout(
+    title="Job Count vs. Median Salary by Gender Dominance Category",
+    xaxis_title="Job Count",
+    yaxis_title="Median Salary",
+    width=850,
+    height=550
+)
+bubble_fig.show()
+bubble_fig.write_html("figures/gender_salary_bubble.html")
+```
+
+### Chart 4: Median Salary and Job Count Across Male-Dominated Industries
+
+```{python}
+# Filter for male-dominated industries
+male_df = df_salary[df_salary["GENDER_DOMINANCE"] == "Male-dominated"]
+
+# Compute industry-level median salary
+male_salary_summary = (
+    male_df.groupby("NAICS2_NAME")["SALARY"]
+    .median()
+    .sort_values(ascending=False)
+)
+
+# Compute industry-level job counts
+male_job_counts = (male_df.groupby("NAICS2_NAME")["SALARY"].count().reindex(male_salary_summary.index))
+
+# Pastel blue for bars
+pastel_blue = "rgba(137, 176, 255, 0.8)"
+fig_male = go.Figure()
+fig_male.add_trace(
+    go.Bar(
+        x=male_salary_summary.index,
+        y=male_salary_summary.values,
+        text=[f"${v:,.0f}" for v in male_salary_summary.values],
+        textposition="outside",
+        marker_color=pastel_blue,
+        name="Median Salary"
+    )
+)
+
+# Add trend line for male-dominated industry job counts
+fig_male.add_trace(
+    go.Scatter(
+        x=male_salary_summary.index,
+        y=male_job_counts.values,
+        mode="lines+markers",
+        name="Job Count",
+        yaxis="y2"
+    )
+)
+
+fig_male.update_layout(
+    title="Median Salary and Job Count Across Male-Dominated Industries",
+    xaxis_title="Industry",
+    yaxis_title="Median Salary",
+    yaxis2=dict(
+        title="Job Count",
+        overlaying="y",
+        side="right",
+    ),
+    xaxis_tickangle=40,
+    width=1100,
+    height=700,
+    margin=dict(l=50, r=70, t=80, b=150)
+)
+fig_male.show()
+fig_male.write_html("figures/male_dom_industry.html")
+```
+
+### Chart 5: Median Salary and Job Count Across Female-Dominated Industries
+
+```{python}
+# Filter for female-dominated industries
+female_df = df_salary[df_salary["GENDER_DOMINANCE"] == "Female-dominated"]
+
+# Compute industry-level median salary
+female_salary_summary = (
+    female_df.groupby("NAICS2_NAME")["SALARY"]
+    .median()
+    .sort_values(ascending=False)
+)
+
+# Compute industry-level job counts
+female_job_counts = (female_df.groupby("NAICS2_NAME")["SALARY"].count().reindex(female_salary_summary.index))
+
+# Pastel pink for bars
+pastel_pink = "rgba(255, 179, 207, 0.8)"
+fig_female = go.Figure()
+fig_female.add_trace(
+    go.Bar(
+        x=female_salary_summary.index,
+        y=female_salary_summary.values,
+        text=[f"${v:,.0f}" for v in female_salary_summary.values],
+        textposition="outside",
+        marker_color=pastel_pink,
+        name="Median Salary"
+    )
+)
+
+# Add trend line for female-dominated industry job counts
+fig_female.add_trace(
+    go.Scatter(
+        x=female_salary_summary.index,
+        y=female_job_counts.values,
+        mode="lines+markers",
+        name="Job Count",
+        yaxis="y2"
+    )
+)
+
+fig_female.update_layout(
+    title="Median Salary and Job Count Across Female-Dominated Industries",
+    xaxis_title="Industry",
+    yaxis_title="Median Salary",
+    yaxis2=dict(
+        title="Job Count",
+        overlaying="y",
+        side="right",
+    ),
+    xaxis_tickangle=40,
+    width=1100,
+    height=700,
+    margin=dict(l=50, r=70, t=80, b=150)
+)
+fig_female.show()
+fig_female.write_html("figures/female_dom_industry.html")
+```
+
+### Chart 6: Median Salary and Job Count Across Balanced Industries
+
+```{python}
+# Filter for balanced industries
+balanced_df = df_salary[df_salary["GENDER_DOMINANCE"] == "Balanced"]
+
+# Compute industry-level median salary
+balanced_salary_summary = (
+    balanced_df.groupby("NAICS2_NAME")["SALARY"]
+    .median()
+    .sort_values(ascending=False)
+)
+
+# Compute industry-level job counts
+balanced_job_counts = (balanced_df.groupby("NAICS2_NAME")["SALARY"].count().reindex(balanced_salary_summary.index))
+
+# Pastel purple for bars
+pastel_purple = "rgba(199, 168, 255, 0.8)"
+fig_balanced = go.Figure()
+fig_balanced.add_trace(
+    go.Bar(
+        x=balanced_salary_summary.index,
+        y=balanced_salary_summary.values,
+        text=[f"${v:,.0f}" for v in balanced_salary_summary.values],
+        textposition="outside",
+        marker_color=pastel_purple,
+        name="Median Salary"
+    )
+)
+
+# Add trend line for balanced industry job counts
+fig_balanced.add_trace(
+    go.Scatter(
+        x=balanced_salary_summary.index,
+        y=balanced_job_counts.values,
+        mode="lines+markers",
+        name="Job Count",
+        yaxis="y2"
+    )
+)
+
+fig_balanced.update_layout(
+    title="Median Salary and Job Count Across Balanced Industries",
+    xaxis_title="Industry",
+    yaxis_title="Median Salary",
+    yaxis2=dict(
+        title="Job Count",
+        overlaying="y",
+        side="right",
+    ),
+    xaxis_tickangle=40,
+    width=1100,
+    height=850,
+    margin=dict(l=50, r=70, t=80, b=150)
+)
+fig_balanced.show()
+fig_balanced.write_html("figures/balanced_industry.html")
+```
+
