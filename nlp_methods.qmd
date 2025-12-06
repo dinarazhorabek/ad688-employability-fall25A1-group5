@@ -39,6 +39,12 @@ These insights complement earlier EDA and Skill Gap Analysis results by highligh
 import pandas as pd
 import numpy as np
 import re
+from collections import Counter
+import plotly.express as px
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction.text import TfidfVectorizer
+import plotly.express as px
 
 # Use the cleaned dataset to stay consistent with Data Cleaning, EDA, and ML sections
 df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
@@ -108,8 +114,6 @@ df_text[["TITLE_NAME", "tokens"]].head()
 We aggregate a global vocabulary across all postings and compute the most frequently occurring terms.
 
 ```{python}
-from collections import Counter
-
 all_words = []
 df_text["tokens"].apply(all_words.extend)
 
@@ -123,8 +127,6 @@ Visualization: Top Keywords in Job Descriptions
 The bar chart below highlights the 20 most common lexical terms appearing across job descriptions.
 
 ```{python}
-import plotly.express as px
-
 fig_freq = px.bar(
     freq_df.sort_values("count", ascending=True),
     x="count",
@@ -157,9 +159,6 @@ A word cloud provides a quick, intuitive view of recurring terms.
 Large words appear more frequently in text, giving a qualitative impression of employer emphasis.
 
 ```{python}
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-
 wc = WordCloud(
     width=900,
     height=500,
@@ -189,8 +188,6 @@ This gives higher scores to words that
 - do not appear in every other posting.
 
 ```{python}
-from sklearn.feature_extraction.text import TfidfVectorizer
-
 # For performance, optionally sample a subset if the dataset is huge
 MAX_DOCS = 15000
 if len(df_text) > MAX_DOCS:
@@ -225,8 +222,6 @@ tfidf_top
 ```
 
 ```{python}
-import plotly.express as px
-
 fig_tfidf = px.bar(
     tfidf_top.sort_values("score", ascending=True),
     x="score",
