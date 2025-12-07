@@ -452,6 +452,8 @@ fig_red.write_html("figures/gender_state_red.html")
 ### Chart 3: Women vs. Men Share in Blue State (2021-2024)
 
 ```{python}
+import plotly.express as px
+
 # Blue States Stacked Bar Chart
 df_blue = stacked_data[stacked_data["alignment"] == "Blue"]
 
