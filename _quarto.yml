@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: empl-web
+  output-dir: docs
 
 website:
   title: "Job Market Analysis 2024"
