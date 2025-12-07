@@ -10,3 +10,4 @@ data/lightcast_cleaned.csv
 data/lightcast_gender.csv
 
 figures/
+_freeze/
