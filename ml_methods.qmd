@@ -65,25 +65,29 @@ These were then encoded numerically as:
 This encoding allows the gender composition of industries to be used directly as a structured feature inside regression and machine learning models.
 
 By examining salary differences across these groups—while controlling for experience requirements, employment type, remote status, staffing-company involvement, and geographic factors—we evaluate whether certain industry gender compositions correspond to systematically higher or lower advertised wages within the professional and technical job postings present in our dataset.
+
 ```{python}
 import pandas as pd
 import numpy as np
 
-lightcast_jp = pd.read_csv("data/lightcast_cleaned.csv",low_memory=False)
+lightcast_jp = pd.read_csv("data/lightcast_gender.csv",low_memory=False)
 
-naics_gender_map = {
-    11: "Male-dominated", 21: "Male-dominated", 22: "Male-dominated", 23: "Male-dominated", 31: "Male-dominated", 42: "Male-dominated", 44: "Mixed", 48: "Male-dominated", 51: "Mixed", 52: "Female-dominated", 53: "Female-dominated", 54: "Female-dominated", 55: "Mixed", 56: "Mixed", 61: "Female-dominated", 62: "Female-dominated", 71: "Mixed", 72: "Female-dominated", 81: "Female-dominated", 92: "Mixed", 99: "Mixed",
-}
+```
+
+```{python}
+import pandas as pd
+import numpy as np
+
+lightcast_jp = pd.read_csv("data/lightcast_gender.csv",low_memory=False)
+
 gender_encoding = {
     "Male-dominated": 0,
     "Mixed": 1,
     "Female-dominated": 2,
 }
+lightcast_jp["GENDER_DOMINANCE_CODE"] = lightcast_jp["GENDER_DOMINANCE"].map(gender_encoding)
 ```
 
-```{python}
-lightcast_jp["GENDER_DOMINANCE"] = lightcast_jp["NAICS_2022_2"].map(naics_gender_map).map(gender_encoding)
-```
 </div>
 
 ---
@@ -107,14 +111,9 @@ We trained a linear regression model using the following features:
 - NAICS code
   
 ```{python}
-features = ["SALARY", "GENDER_DOMINANCE", "MIN_YEARS_EXPERIENCE", "EMPLOYMENT_TYPE", "REMOTE_TYPE", "IS_INTERNSHIP", "COMPANY_IS_STAFFING", "STATE_NAME", "NAICS_2022_2"]
+features = ["SALARY", "GENDER_DOMINANCE_CODE", "MIN_YEARS_EXPERIENCE", "EMPLOYMENT_TYPE", "REMOTE_TYPE", "IS_INTERNSHIP", "COMPANY_IS_STAFFING", "STATE_NAME", "NAICS_2022_2"]
 
-lightcast_jp[features].isna().sum()
-
-median_salary = lightcast_jp["SALARY"].median()
-lightcast_jp = lightcast_jp.fillna({
-  "SALARY": median_salary
-})
+print(lightcast_jp[features].isna().sum())
 
 df_model = lightcast_jp[features]
 # df_model.isna().sum()
@@ -141,7 +140,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = LinearRegression()
 model.fit(X_train, y_train)
 
-coef = model.coef_[ list(X.columns).index("GENDER_DOMINANCE") ]
+coef = model.coef_[ list(X.columns).index("GENDER_DOMINANCE_CODE") ]
 print("Salary change per category step:", coef)
 ```
 Moving from a male-dominated to a mixed industry is associated with an average salary increase of about $2,149.     
@@ -188,7 +187,7 @@ base = X_train.mean().copy()
 
 pred = {}
 for group_code in [0, 1, 2]:
-    base["GENDER_DOMINANCE"] = group_code
+    base["GENDER_DOMINANCE_CODE"] = group_code
     pred[group_code] = model.predict(base.to_frame().T)[0]
 
 merged = pd.DataFrame({
@@ -261,7 +260,7 @@ base_rf = X_train.mean().copy()
 
 pred_rf = {}
 for group_code in [0, 1, 2]:
-    base_rf["GENDER_DOMINANCE"] = group_code
+    base_rf["GENDER_DOMINANCE_CODE"] = group_code
     pred_rf[group_code] = rf_model.predict(base_rf.to_frame().T)[0]
 
 rf_merged = pd.DataFrame({
