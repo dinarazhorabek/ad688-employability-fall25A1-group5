@@ -21,7 +21,7 @@ import plotly.io as pio
 import plotly.express as px
 import os
 
-os.makedirs("figures", exist_ok=True)
+# os.makedirs("figures", exist_ok=True)
 
 # Load raw Lightcast job postings
 df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
@@ -209,7 +209,7 @@ fig_gd.update_layout(
     height=500
 )
 fig_gd.show()
-fig_gd.write_html("figures/gender_salary_distr.html")
+# fig_gd.write_html("figures/gender_salary_distr.html")
 ```
 
 Looking at the job postings, male-dominated industries lead in both number and pay, with 13,995 positions and a median salary of $125,900. Female-dominated sectors have 6,341 postings at a median of $101,500, while Mixed industries have the fewest openings, 5,531, with a median of $95,000. Overall, this points to a clear link between gender dominance in an industry and salary levels, with male-heavy fields offering both more opportunities and higher pay.
@@ -239,7 +239,7 @@ fig_box.update_layout(
     height=550
 )
 fig_box.show()
-fig_box.write_html("figures/gender_salary_boxplot.html")
+# fig_box.write_html("figures/gender_salary_boxplot.html")
 ```
 
 The boxplot shows that Male-dominated industries consistently offer higher salaries, with both a higher median and greater variation at the upper end. On the other hand, female-dominated industries display lower median salaries and a tighter distribution, suggesting fewer opportunities for better salary offers. The Mixed industries fall right in-between, with moderate median pay and some high-earning positions, though not as many as in male-dominated fields.
@@ -269,7 +269,7 @@ bubble_fig.update_layout(
     height=550
 )
 bubble_fig.show()
-bubble_fig.write_html("figures/gender_salary_bubble.html")
+# bubble_fig.write_html("figures/gender_salary_bubble.html")
 ```
 
 Male-dominated industries lead in both job count and median salary, with the largest number of openings and the highest pay. Female-dominated industries have fewer positions and lower median salaries, while Mixed industries fall in between, offering moderate opportunities and pay. Overall, higher male representation in an industry is associated with more jobs and higher salaries.
@@ -334,7 +334,7 @@ fig_male.update_layout(
     margin=dict(l=50, r=70, t=80, b=150)
 )
 fig_male.show()
-fig_male.write_html("figures/male_dom_industry.html")
+# fig_male.write_html("figures/male_dom_industry.html")
 ```
 
 The plot shows that male-dominated industries tend to offer relatively high median salaries, with Information ($132,550) and Professional/Scientific/Technical Services ($130,000) leading the group. However, job availability varies widely across some high-paying sectors: Information with a comparatively modest 2166 postings, while Professional/Scientific/Technical Services offers both high pay and large availability of 8530 postings. Thus, hands-on, strongly male-dominated fields like construction, mining, and agriculture show noticeably lower median salaries compared to many other industries overall, highlighting that physically intensive sectors don’t necessarily correspond to higher earnings.
@@ -399,7 +399,7 @@ fig_female.update_layout(
     margin=dict(l=50, r=70, t=80, b=150)
 )
 fig_female.show()
-fig_female.write_html("figures/female_dom_industry.html")
+# fig_female.write_html("figures/female_dom_industry.html")
 ```
 
 Female-dominated industries show a wider salary spread, ranging from about $76k to $145k, with Accommodation and Food Services unexpectedly offering the highest median pay ($144,560) despite only 212 job counts. Finance and Insurance stands out with strong salaries ($115,239) and by far the largest employment (3567), while Health Care and Social Assistance provides mid-range pay ($95,285) with substantial job availability (1280). Other Services and Educational Services offer lower salaries ($75,919) and moderate job counts (950), reflecting more service-oriented, lower-wage career tracks within this sector.
@@ -464,7 +464,7 @@ fig_balanced.update_layout(
     margin=dict(l=50, r=70, t=80, b=150)
 )
 fig_balanced.show()
-fig_balanced.write_html("figures/balanced_industry.html")
+# fig_balanced.write_html("figures/balanced_industry.html")
 ```
 
 Mixed industries show a narrower salary range - between $80k and $120k. Retail Trade offers the highest median pay ($120,000) despite moderate job availability (755), while Administrative and Support Services has the largest job count (3584) but lower median wages ($95,800). Real Estate,  Public Administration and Arts/Entertainment maintain moderate salaries with smaller job counts, reflecting niche but steady career paths. Overall, these industries appear more stable across pay and job availability, without the sharp disparities seen in male-dominated sectors.

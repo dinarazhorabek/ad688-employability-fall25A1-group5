@@ -314,6 +314,9 @@ fig_nonstem.write_html("figures/nonstem_women_share.html")
 
 </div>
 
+<div class="card reveal">
+
+
 # Gender Dominace by Red vs. Blue States
 
 ### Prepare the Dataset
@@ -353,4 +356,195 @@ state_agg = (df_state.groupby(["year","alignment"])[["female_pct","male_pct"]].m
 display(state_agg) 
 ```
 
+</div>
+
+<div class="card reveal">
+
+### Chart 1: Women Share in Blue vs Red States (2021–2024)
+
+```{python}
+color_map = {
+    "Blue": "rgba(0, 102, 204, 0.8)",
+    "Red": "rgba(204, 0, 0, 0.8)"
+}
+
+fig_female = px.bar(
+    state_agg,
+    x="year",
+    y="female_pct",
+    color="alignment",
+    barmode="group",
+    text="female_pct",
+    labels={"female_pct": "Women Share (%)"},
+    title="Women Share in Blue vs Red States (2021–2024)",
+    color_discrete_map=color_map
+)
+
+fig_female.update_traces(texttemplate="%{text:.2f}", textposition="outside")
+
+fig_female.update_layout(
+    xaxis_title="Year",
+    yaxis_title="Women Share (%)",
+    legend_title="State Alignment",
+    width=800,
+    height=500
+)
+fig_female.show()
+fig_female.write_html("figures/female_share_state.html")
+```
+
+</div>
+
+<div class="card reveal">
+
+### Chart 2: Women vs. Men Share in Red State (2021-2024)
+
+```{python}
+stacked_data = state_agg.melt(
+    id_vars=["year","alignment"],
+    value_vars=["female_pct","male_pct"],
+    var_name="gender",
+    value_name="percentage"
+)
+
+colors = {
+    "male_pct": "rgba(137, 176, 255, 0.8)",
+    "female_pct": "rgba(255, 179, 207, 0.8)"
+}
+
+# Red States Stacked Bar Chart
+df_red = stacked_data[stacked_data["alignment"] == "Red"]
+
+fig_red = px.bar(
+    df_red,
+    x="year",
+    y="percentage",
+    color="gender",
+    barmode="stack",
+    text="percentage",
+    labels={"percentage": "Share (%)"},
+    title="Women vs. Men in Red States (2021–2024)",
+    color_discrete_map=colors
+)
+
+fig_red.update_traces(texttemplate="%{text:.2f}", textposition="inside")
+fig_red.update_layout(
+    xaxis_title="Year",
+    yaxis_title="Share (%)",
+    legend_title="Gender",
+    width=700,
+    height=500
+)
+fig_red.show()
+fig_red.write_html("figures/gender_state_red.html")
+```
+
+</div>
+
+<div class="card reveal">
+
+### Chart 3: Women vs. Men Share in Blue State (2021-2024)
+
+```{python}
+# Blue States Stacked Bar Chart
+df_blue = stacked_data[stacked_data["alignment"] == "Blue"]
+
+fig_blue = px.bar(
+    df_blue,
+    x="year",
+    y="percentage",
+    color="gender",
+    barmode="stack",
+    text="percentage",
+    labels={"percentage": "Share (%)"},
+    title="Women vs. Men in Blue States (2021–2024)",
+    color_discrete_map=colors
+)
+
+fig_blue.update_traces(texttemplate="%{text:.2f}", textposition="inside")
+fig_blue.update_layout(
+    xaxis_title="Year",
+    yaxis_title="Share (%)",
+    legend_title="Gender",
+    width=700,
+    height=500
+)
+fig_blue.show()
+fig_blue.write_html("figures/gender_state_blue.html")
+```
+
+</div>
+
+<div class="card reveal">
+
+### Chart 4: US Female Share by State (2024)
+
+```{python}
+# Choose the year to show
+year_choice = 2024
+
+df_year = df_state[df_state["year"] == year_choice].copy()
+df_year["state_code"] = df_year["state_name"].map(state_to_abbrev)
+df_year = df_year[df_year["state_code"].notna()].copy()
+
+df_year["align_val"] = df_year["alignment"].map({"Red": 0, "Blue": 1})
+df_year["lat"] = df_year["state_code"].map(lambda x: state_centroids[x][0])
+df_year["lon"] = df_year["state_code"].map(lambda x: state_centroids[x][1])
+
+color_map = {
+    "Blue": "rgba(0, 102, 204, 0.8)",
+    "Red": "rgba(204, 0, 0, 0.8)"
+}
+
+fig = go.Figure()
+
+# Base layer
+fig.add_trace(go.Choropleth(
+    locations=df_year["state_code"],
+    z=df_year["align_val"],
+    locationmode="USA-states",
+    colorscale=[[0, color_map["Red"]], [1, color_map["Blue"]]],
+    showscale=False,
+    marker_line_color="white",
+    marker_line_width=0.5
+))
+
+# Bubble overlay: only state name visible, female_pct in hover
+fig.add_trace(go.Scattergeo(
+    lon=df_year["lon"],
+    lat=df_year["lat"],
+    text=df_year["state_code"],
+    hovertext=df_year.apply(lambda r: f"{r['state_name']}<br>Female: {r['female_pct']:.1f}%", axis=1),
+    marker=dict(
+        size=df_year["female_pct"] * 1.5,
+        color="white",
+        opacity=0.85,
+        line=dict(width=0.5, color="black")
+    ),
+    mode="markers+text",
+    textposition="middle center",
+    hoverinfo="text",
+    name="Female Share"
+))
+
+fig.update_layout(
+    title=f"US Female Employment Share by State ({year_choice})",
+    title_x=0.5,
+    margin=dict(t=80),
+    geo=dict(
+        scope="usa",
+        projection=go.layout.geo.Projection(type="albers usa"),
+        showland=True,
+        landcolor="rgb(240,240,240)"
+    ),
+    width=800,
+    height=600,
+    legend_title_text="Female Share"
+)
+
+fig.show()
+fig.write_html(f"figures/us_female_state_map.html")
+```
+
+</div>
 

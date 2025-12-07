@@ -69,25 +69,25 @@ if industry_col:
         .reset_index()
     )
     industry_counts.columns = ["Industry", "Postings"]
-
-    fig = px.bar(
-        industry_counts,
-        x="Postings",
-        y="Industry",
-        orientation="h",
-        title=f"Top 15 Industries by Job Postings ({industry_col})",
-        color="Industry",  # categorical color per industry
-        color_discrete_sequence=px.colors.qualitative.Prism,  
-        height=700
-    )
-
+    
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=industry_counts["Postings"],
+        y=industry_counts["Industry"],
+        orientation="h"
+    ))
     fig.update_layout(
-        yaxis={"categoryorder": "total ascending"},
+        title=f"Top 15 Industries by Job Postings ({industry_col})",
         plot_bgcolor="white",
-        paper_bgcolor="white",
-        showlegend=False 
-    )
-
+        margin=dict(l=10, r=10, t=60, b=10),
+        height=500,
+        xaxis=dict(
+            showgrid=True,
+            gridcolor="#eaeaea",
+        ),
+        yaxis=dict(
+            categoryorder='total ascending',
+        ))
     fig.show()
 
 else:
@@ -105,12 +105,77 @@ Professional, Scientific & Technical Services and Administrative & Support Servi
 
 <div class="card reveal">
 
+### Annual Salary - Trend Over Time
+
+```{python}
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+df2 = df.copy()
+df2 = df2.dropna(subset=["ANNUAL_SALARY", "month"])
+
+# Group by month (string)
+agg = (
+    df2.groupby("month")
+    .agg(
+        postings=("ANNUAL_SALARY", "size"), 
+        avg_salary=("ANNUAL_SALARY", "mean")
+        ).reset_index().sort_values("month")
+)
+
+# Dual-axis chart
+# fig = make_subplots(specs=[[{"secondary_y": True}]])
+fig = go.Figure()
+fig.add_trace(go.Bar(
+    x=agg["month"],
+    y=agg["postings"],
+    name="Job Postings",
+    marker_color="#ff7043",
+    yaxis="y1",
+    hovertemplate="Job postings: %{y:,}<extra></extra>"
+))
+fig.add_trace(go.Scatter(
+    x=agg["month"],
+    y=agg["avg_salary"],
+    name="Annual Salary",
+    mode="lines+markers",
+    yaxis="y2",
+    line=dict(color="#1f77b4", width=3),
+    hovertemplate="Salary: $%{y:,.0f}<extra></extra>"
+))
+
+fig.update_layout(
+    title="Annual Salary - Trend Over Time",
+    template="plotly_white",
+    hovermode="x unified",
+    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    xaxis=dict(
+        title="Month",
+        tickformat="%b %Y",
+        showgrid=True,
+        gridcolor="#eaeaea"
+    ),
+    yaxis=dict(
+        title="Job Postings",
+        showgrid=True,
+        gridcolor="#eaeaea"
+    ),
+    yaxis2=dict(
+        title="Annual Salary($)",
+        overlaying="y",
+        side="right",
+        tickprefix="$",
+        showgrid=False
+    )
+)
+fig.show()
+```
+
 ### Salary Distribution by Industry
 
 Salary variation across industries answers: “Which sectors pay more, and how unequal are wages within each industry?”
 We use the annualized salary field (ANNUAL_SALARY), which consolidates raw salary data from SALARY_FROM, SALARY_TO, and SALARY and converts it into a consistent yearly format based on reported pay period.
 This provides a clean, comparable measure of compensation across all industries.
-
 
 ```{python}
 industry_col = industry_col
@@ -204,73 +269,177 @@ The majority of postings either do not explicitly tag remote work or are implici
 
 <div class="card reveal">
 
-### Job Postings Over Time
-
-Seasonal and macroeconomic patterns show up in how postings evolve over time.
-We aggregate job postings by month using the standardized POSTED date.
-
-```{python}
-if "POSTED" in df.columns:
-    df["POSTED"] = pd.to_datetime(df["POSTED"], errors="coerce")
-
-    monthly = (
-        df.groupby(df["POSTED"].dt.to_period("M"))
-        .size()
-        .reset_index(name="Postings")
-    )
-    monthly["Month"] = monthly["POSTED"].astype(str)
-else:
-    monthly = pd.DataFrame()
-
-if not monthly.empty:
-    fig = px.line(
-        monthly,
-        x="Month",
-        y="Postings",
-        title="Monthly Job Posting Trends (2024)",
-        markers=True,
-        color_discrete_sequence=["#34495E"],
-        height=500
-    )
-    fig.update_traces(line_width=3)
-    fig.update_layout(xaxis_tickangle=45)
-    fig.show()
-else:
-    print("No valid POSTED data to plot monthly trend.")
-```
-
-**Insight:**
-
-Posting volumes exhibit a clear mid-year trough in late June followed by a strong rebound in July and August, consistent with typical fiscal and academic hiring cycles. The June slowdown likely reflects decision lags around mid-year budgets, while the late-summer increase aligns with pre-fall staffing needs. For job seekers, this timing suggests that applications submitted immediately after the June dip are more likely to coincide with rising employer demand.
-
-</div>
-
-<div class="card reveal">
-
 ### Geographic Distribution of Jobs (by State)
 
 Geographic EDA answers: “Which states have the most job opportunities?”
 We use STATE_NAME (cleaned) to compute the total number of postings per state.
 
 ```{python}
-if "STATE_NAME" in df.columns:
-    state_counts = df["STATE_NAME"].value_counts().head(25).reset_index()
-    state_counts.columns = ["State", "Postings"]
+STATE_CENTROIDS = {
+    "AL": (32.806, -86.791), "AK": (64.200, -149.493), "AZ": (34.049, -111.094),
+    "AR": (35.201, -91.832), "CA": (36.778, -119.418), "CO": (39.550, -105.782),
+    "CT": (41.603, -73.087), "DE": (38.910, -75.527), "DC": (38.907, -77.037),
+    "FL": (27.664, -81.516), "GA": (32.165, -82.900), "HI": (19.896, -155.582),
+    "ID": (44.068, -114.742), "IL": (40.633, -89.398), "IN": (40.267, -86.134),
+    "IA": (41.878, -93.098), "KS": (39.012, -98.484), "KY": (37.839, -84.270),
+    "LA": (30.984, -91.963), "ME": (45.254, -69.445), "MD": (39.045, -76.641),
+    "MA": (42.407, -71.382), "MI": (44.314, -85.602), "MN": (46.729, -94.685),
+    "MS": (32.355, -89.398), "MO": (37.964, -91.832), "MT": (46.879, -110.362),
+    "NE": (41.492, -99.901), "NV": (38.803, -116.419), "NH": (43.193, -71.572),
+    "NJ": (40.058, -74.406), "NM": (34.519, -105.870), "NY": (43.000, -75.000),
+    "NC": (35.759, -79.019), "ND": (47.551, -101.002), "OH": (40.417, -82.907),
+    "OK": (35.468, -97.516), "OR": (43.804, -120.554), "PA": (41.203, -77.194),
+    "RI": (41.580, -71.477), "SC": (33.837, -81.164), "SD": (43.969, -99.901),
+    "TN": (35.518, -86.580), "TX": (31.968, -99.901), "UT": (39.321, -111.094),
+    "VT": (44.558, -72.577), "VA": (37.431, -78.657), "WA": (47.751, -120.740),
+    "WV": (38.597, -80.454), "WI": (43.785, -88.787), "WY": (43.076, -107.290)
+}
+STATE_NAMES = {
+    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California", "CO": "Colorado",
+    "CT": "Connecticut", "DE": "Delaware", "DC": "District of Columbia", "FL": "Florida", "GA": "Georgia",
+    "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky",
+    "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota",
+    "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire",
+    "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", "ND": "North Dakota",
+    "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island",
+    "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah",
+    "VT": "Vermont", "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"
+}
+STATE_NAME_TO_CODE = {
+    "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+    "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+    "District of Columbia": "DC", "Florida": "FL", "Georgia": "GA",
+    "Hawaii": "HI", "Idaho": "ID", "Illinois": "IL", "Indiana": "IN",
+    "Iowa": "IA", "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA",
+    "Maine": "ME", "Maryland": "MD", "Massachusetts": "MA", "Michigan": "MI",
+    "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO", "Montana": "MT",
+    "Nebraska": "NE", "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ",
+    "New Mexico": "NM", "New York": "NY", "North Carolina": "NC",
+    "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK", "Oregon": "OR",
+    "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+    "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+    "Vermont": "VT", "Virginia": "VA", "Washington": "WA",
+    "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY"
+}
+```
 
-    fig = px.bar(
-        state_counts,
-        x="Postings",
-        y="State",
+```{python}
+df = df[~df["CITY_NAME"].str.contains("Unknown", na=False)].copy()
+df_city = (
+    df
+    .dropna(subset=["CITY_NAME", "STATE_NAME"])
+    .groupby(["CITY_NAME", "STATE_NAME"], as_index=False)
+    .agg(total_job_postings=("CITY_NAME", "size"))
+)
+df_city["STATE_CODE"] = df_city["STATE_NAME"].map(STATE_NAME_TO_CODE)
+df_city = df_city.dropna(subset=["STATE_CODE"])
+df_city = df_city.nlargest(100, "total_job_postings")
+
+df_state = (
+    df_city.groupby("STATE_CODE", as_index=False)
+           .agg(total_postings=("total_job_postings", "sum"))
+)
+# city coordinates
+lats, lons = [], []
+counts = df_city.groupby("STATE_CODE")["CITY_NAME"].transform("count")
+idxs = df_city.groupby("STATE_CODE").cumcount()
+
+for st_code, k, idx in zip(df_city["STATE_CODE"], counts, idxs):
+    base = STATE_CENTROIDS.get(st_code, (37.0, -96.0))  # fallback center of US
+    angle = 2 * np.pi * (idx / max(k, 1))
+    radius = 0.8
+
+    lats.append(base[0] + radius * np.cos(angle))
+    lons.append(base[1] + radius * np.sin(angle))
+
+df_city["lat"] = lats
+df_city["lon"] = lons
+
+# Bubble size scaling
+max_total = float(df_city["total_job_postings"].max())
+size_scale = 40.0 / np.sqrt(max_total) if max_total > 0 else 1.0
+
+fig = go.Figure()
+fig.add_trace(go.Choropleth(
+    locations=df_state["STATE_CODE"],
+    z=df_state["total_postings"],
+    locationmode="USA-states",
+    colorscale="Blues",
+    marker_line_color="white",
+    marker_line_width=0.6,
+    colorbar_title="Total postings",
+    hovertemplate="<b>%{location}</b><br>Total: %{z:,}<extra></extra>",
+    zmin=0,
+    zmax=df_state["total_postings"].max()
+))
+
+# City bubbles
+fig.add_trace(go.Scattergeo(
+    lon=df_city["lon"],
+    lat=df_city["lat"],
+    text=df_city["CITY_NAME"],
+    mode="markers",
+    marker=dict(
+        size=np.sqrt(df_city["total_job_postings"]) * size_scale,
+        sizemin=5,
+        opacity=0.85,
+        color="#22c55e",
+        line=dict(width=0.8, color="white")
+    ),
+    customdata=df_city["total_job_postings"],
+    hovertemplate=(
+        "<b>%{text}</b><br>"
+        "Total postings: %{customdata:,}"
+        "<extra></extra>"
+    ),
+    showlegend=False,
+    name="City postings"
+))
+
+# State labels
+label_lats, label_lons, label_names = [], [], []
+for code in df_state["STATE_CODE"]:
+    if code in STATE_CENTROIDS:
+        lat, lon = STATE_CENTROIDS[code]
+        label_lats.append(lat)
+        label_lons.append(lon)
+        label_names.append(STATE_NAMES.get(code, code))
+
+fig.add_trace(go.Scattergeo(
+    lat=label_lats,
+    lon=label_lons,
+    mode="text",
+    text=label_names,
+    textfont=dict(size=9, color="rgba(0,0,0,0.75)"),
+    hoverinfo="skip",
+    showlegend=False
+))
+
+fig.update_layout(
+    title="Job postings by Location",
+    geo=dict(
+        scope="usa",
+        projection=go.layout.geo.Projection(type="albers usa"),
+        showland=True,
+        landcolor="#fafafa"
+    ),
+    # margin=dict(l=100, r=20, t=60, b=60),
+    paper_bgcolor="white",
+    plot_bgcolor="white"
+)
+fig.update_traces(
+    selector=dict(type="choropleth"),
+    colorbar=dict(
         orientation="h",
-        title="Top 25 States by Job Postings",
-        color="Postings",
-        color_continuous_scale=px.colors.sequential.Teal,
-        height=700
+        x=0.5,
+        xanchor="center",
+        y=-0.01,
+        yanchor="top",
+        thickness=12,
+        len=0.6
     )
-    fig.update_layout(yaxis={'categoryorder':'total ascending'})
-    fig.show()
-else:
-    print("STATE_NAME field not found.")
+)
+fig.show()
 ```
 
 **Insight:**
@@ -299,18 +468,32 @@ if "SOFTWARE_SKILLS_NAME" in df.columns:
 
     top_skills = skills.value_counts().head(15).reset_index()
     top_skills.columns = ["Skill", "Postings"]
-
-    fig = px.bar(
-        top_skills,
-        x="Postings",
-        y="Skill",
-        orientation="h",
-        title="Top 15 Software Skills Requested",
-        color="Postings",
-        color_continuous_scale=px.colors.sequential.OrRd,
-        height=600
-    )
-    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=top_skills["Postings"],
+        y=top_skills["Skill"],
+        orientation="h"
+    ))
+    fig.update_layout(
+        title="Top 15 Software Skills",
+        plot_bgcolor="white",
+        margin=dict(l=10, r=10, t=60, b=10),
+        height=500,
+        xaxis=dict(
+            showgrid=True,
+            gridcolor="#eaeaea",
+        ),
+        yaxis=dict(
+            categoryorder='total ascending',
+        ),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        ))
     fig.show()
 else:
     print("Software skills column not available.")
