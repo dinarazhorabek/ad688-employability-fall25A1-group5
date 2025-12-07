@@ -184,7 +184,17 @@ fig_wage.update_layout(
     yaxis_title="USD",
     legend_title="Group",
     width=700,
-    height=500
+    height=500,
+    annotations=[
+        dict(
+            text="Source: U.S. Bureau of Labor Statistics via FRED",
+            xref="paper", yref="paper",
+            x=1, y=-0.2,
+            showarrow=False,
+            font=dict(size=10, color="gray"),
+            xanchor="right"
+        )
+    ]
 )
 fig_wage.show()
 fig_wage.write_html("figures/gender_wage_gap.html")
@@ -222,7 +232,17 @@ fig_part.update_layout(
     yaxis_title="Percent (%)",
     legend_title="Group",
     width=700,
-    height=500
+    height=500,
+    annotations=[
+        dict(
+            text="Source: U.S. Bureau of Labor Statistics via FRED",
+            xref="paper", yref="paper",
+            x=1, y=-0.2,
+            showarrow=False,
+            font=dict(size=10, color="gray"),
+            xanchor="right"
+        )
+    ]
 )
 fig_part.show()
 fig_part.write_html("figures/labor_force_participation.html")
@@ -266,11 +286,21 @@ fig_stem.add_trace(
 )
 fig_stem.update_layout(
     title=f"Share of Women in STEM Sectors ({stem_latest_date})",
-    yaxis_title="Women as % of Total Employment",
+    yaxis_title="% of Total Employment",
     xaxis_title="STEM Sector",
     xaxis_tickangle=30,
     width=700,
-    height=500
+    height=500,
+    annotations=[
+        dict(
+            text="Source: U.S. Bureau of Labor Statistics (BLS) via FRED",
+            xref="paper", yref="paper",
+            x=0, y=1.15,
+            showarrow=False,
+            font=dict(size=10, color="gray"),
+            xanchor="left"
+        )
+    ]
 )
 fig_stem.show()
 fig_stem.write_html("figures/stem_women_share.html")
@@ -309,11 +339,21 @@ fig_nonstem.add_trace(
 )
 fig_nonstem.update_layout(
     title=f"Share of Women in Non-STEM Sectors ({nonstem_latest_date})",
-    yaxis_title="Women as % of Total Employment",
+    yaxis_title="% of Total Employment",
     xaxis_title="Non-STEM Sector",
     xaxis_tickangle=30,
     width=700,
-    height=500
+    height=500,
+    annotations=[
+        dict(
+            text="Source: U.S. Bureau of Labor Statistics (BLS) via FRED",
+            xref="paper", yref="paper",
+            x=0, y=1.15,
+            showarrow=False,
+            font=dict(size=10, color="gray"),
+            xanchor="left"
+        )
+    ]
 )
 fig_nonstem.show()
 fig_nonstem.write_html("figures/nonstem_women_share.html")
