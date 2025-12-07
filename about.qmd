@@ -9,12 +9,8 @@ format:
   
 # Team 5
 
-We are graduate students in the **Master of Applied Business Analytics (MABA)** program at  
-**Boston University Metropolitan College**, completing this project for  
-**AD 688 – Web Analytics**.
-
-Our work integrates labor market analytics, machine learning, gender disparities research,  
-and cloud-based data engineering practices.
+We are graduate students in the **Master of Applied Business Analytics (ABA)** program at **Boston University Metropolitan College**, completing this project for **AD 688 – Cloud Analytics for Business**.  
+Our work combines cloud data engineering, labor market analytics, machine learning, and gender gap research to deliver a data-driven, policy-relevant analysis.
 
 </div>
 
@@ -27,21 +23,21 @@ and cloud-based data engineering practices.
 <div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Hung Nguyen</strong><br>
 <span style="color:#555;">
-Contributed to data wrangling, Quarto website architecture, and aligning macro–micro insights within the analytical narrative.
+Developed the Quarto website architecture, contributed to data wrangling workflows, and implemented the NLP models used to analyze job posting text and skill demand patterns.
 </span>
 </div>
 
 <div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Nhat Tran</strong><br>
 <span style="color:#555;">
-Led FRED API integration, time-series analyses, and macroeconomic labor trend visualization.
+Led FRED API integration, conducted time-series analyses, and built labor market trend visualizations to support national and state-level comparisons.
 </span>
 </div>
 
 <div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Dinara Zhorabek</strong><br>
 <span style="color:#555;">
-Guided research framing, literature foundation, and policy-driven gender gap interpretation.
+Designed and implemented the machine learning models, guided the research framing, and synthesized literature and policy insights to interpret gender disparities within the analytical results.
 </span>
 </div>
 
