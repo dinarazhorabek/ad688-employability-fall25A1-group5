@@ -4,7 +4,7 @@ title: "About Us"
 
 <div class="card reveal">
 
-# Team 5:  Gender Disparities in Hiring & Political Influence
+## Team 5
 
 Graduate students in the Master of Applied Business Analytics program at Boston University,  
 completing this project for **AD 688 – Web Analytics**.
@@ -14,6 +14,9 @@ completing this project for **AD 688 – Web Analytics**.
 <div class="card reveal avatar-row">
 
 <div class="avatar-card">
+
+## Team Members:
+
 <strong>Hung Nguyen</strong><br>
 Data wrangling, Quarto architecture, integration of macro/micro insights.
 </div>

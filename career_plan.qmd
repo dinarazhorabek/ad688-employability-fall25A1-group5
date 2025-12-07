@@ -7,35 +7,36 @@ format:
 
 <div class="card reveal">
 
-# From Evidence to Action
+## Practical Applications
+
 Brief explanation of how we converted analysis into a 3-step strategy.
 
 </div>
 
 <div class="card reveal">
 
-## Dinara
+### Dinara
 
 
 </div>
 
 <div class="card reveal">
 
-## Nhat
+### Nhat
 
 
 </div>
 
 <div class="card reveal">
 
-## Hung (Leo)
+### Hung (Leo)
 
 
 </div>
 
 <div class="card reveal">
 
-## Team Findings
+### Team Findings
 
 
 </div>
