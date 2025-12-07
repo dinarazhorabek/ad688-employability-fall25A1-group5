@@ -43,6 +43,12 @@ By comparing industry demand vs. team proficiency, we identified skill strengths
 
 #### Dinara’s Interpretation & Recommendations
 
+<div class="card reveal">
+
+Insert your content here :D
+
+</div>
+
 </div>
 
 ---
@@ -60,6 +66,12 @@ By comparing industry demand vs. team proficiency, we identified skill strengths
 
 #### Nhat’s Interpretation & Recommendations
 
+<div class="card reveal">
+
+Insert your content here :D
+
+</div>
+
 </div>
 
 ---
@@ -75,9 +87,19 @@ By comparing industry demand vs. team proficiency, we identified skill strengths
 
 ---
 
-#### Leo’s Interpretation & Recommendations
+#### Interpretation & Recommendations
 
-My radar shows balanced capability across SQL, Python, and AWS…
+<div class="card reveal">
+
+As I think about my current skill profile, I’m beginning to understand more clearly how my strengths connect with the kind of work I want to pursue in data and analytics. Skills like SQL, Python, and Excel have become the backbone of the way I approach problems, and they give me the confidence to work through analytical workflows as well as explore the early stages of data engineering. I’m also becoming more comfortable with AWS, and as I continue learning it, I can see how valuable this will be as cloud technologies become more standard across the industry.
+
+At the same time, this project made it very clear where I need to grow next. Visualization tools such as Tableau and Power BI show up in almost every job posting I look at, and developing stronger skills in these areas would help me tell better stories with data and communicate my ideas more effectively. I also want to deepen my knowledge of AWS, especially services like S3, Lambda, Glue, and Redshift, because understanding how these pieces fit together will allow me to build more complete, automated, and scalable analytics pipelines.
+
+Looking ahead, I can see myself moving toward a more technical analytics path, whether that means becoming a Technical Data Analyst, an Analytics Engineer, or even a Junior Data Engineer. To prepare for that future, I want to strengthen my abilities in Tableau and Power BI so I can improve the way I communicate insights, and I also want to advance my AWS proficiency by eventually earning the relevant certifications. I plan to start building more portfolio projects that combine SQL, Python, cloud services, and automation, and I also want to keep improving the way I translate technical findings into meaningful insights that people can act on.
+
+Overall, this project helped me recognize not only the skills I already have, but also the areas where I want to push myself so I can grow into the professional I hope to become. By focusing on visualization and deepening my cloud engineering experience, I feel more confident that I can continue developing into a strong, well-rounded analytics professional who can work across both technical and business environments.
+
+</div>
 
 </div>
 
