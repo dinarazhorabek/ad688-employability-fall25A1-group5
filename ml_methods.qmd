@@ -21,42 +21,9 @@ This analysis examines how industry-level gender dominance relates to advertised
 
 These categories reflect broad workforce participation trends across major sectors. Male-dominated sectors typically include labor-intensive industries such as construction and transportation, while female-dominated sectors include health care, education, and administrative or professional services. Mixed sectors show more balanced gender representation or significant role-based variation.
 
-The table below summarizes gender dominance patterns across common U.S. business sectors:
-
-### Gender Dominance by Sector
-
-| Sector | Gender Dominance | Notes |
-|--------|------------------|-------|
-| Agriculture, Forestry, Fishing & Hunting | Male-dominated | Women represent ~42% |
-| Mining | Male-dominated | Very low female representation (~15%) |
-| Utilities | Male-dominated | Technical roles skew male |
-| Construction | Strongly male-dominated | Only ~1.3% of workers are women |
-| Manufacturing | Male-dominated | Women ~6.6% |
-| Wholesale Trade | Male-dominated | Logistics and sales skew male |
-| Retail Trade | Mixed | Admin roles female; logistics roles male |
-| Transportation & Warehousing | Male-dominated | Trucking heavily male |
-| Information | Mixed | Tech skew male; media more balanced |
-| Finance & Insurance | Female-dominated | Women ~61% of workforce |
-| Real Estate & Rental & Leasing | Female-dominated | Administrative roles female-majority |
-| Professional, Scientific & Technical Services | Female-dominated | High female representation in legal/accounting/consulting |
-| Management of Companies & Enterprises | Mixed | Women underrepresented in top roles |
-| Administrative & Support Services | Mixed | Admin roles female; waste management male |
-| Educational Services | Strongly female-dominated | Women ~70–75% |
-| Health Care & Social Assistance | Strongly female-dominated | Women ~80% |
-| Arts, Entertainment & Recreation | Mixed | Varies by occupation |
-| Accommodation & Food Services | Female-dominated | Service and hospitality roles female-majority |
-| Other Services | Female-dominated | Personal care + nonprofit work |
-| Public Administration | Mixed | Balanced participation across roles |
-
 ### Integration into Modeling
 
-For predictive modeling, we collapsed these nuanced categories into a simplified three-group system:
-
-- **Male-dominated**  
-- **Mixed**  
-- **Female-dominated**
-
-These were then encoded numerically as:
+These three groups were then encoded numerically as:
 
 - `0` → Male-dominated  
 - `1` → Mixed  
@@ -65,14 +32,6 @@ These were then encoded numerically as:
 This encoding allows the gender composition of industries to be used directly as a structured feature inside regression and machine learning models.
 
 By examining salary differences across these groups—while controlling for experience requirements, employment type, remote status, staffing-company involvement, and geographic factors—we evaluate whether certain industry gender compositions correspond to systematically higher or lower advertised wages within the professional and technical job postings present in our dataset.
-
-```{python}
-import pandas as pd
-import numpy as np
-
-lightcast_jp = pd.read_csv("data/lightcast_gender.csv",low_memory=False)
-
-```
 
 ```{python}
 import pandas as pd
@@ -113,7 +72,7 @@ We trained a linear regression model using the following features:
 ```{python}
 features = ["SALARY", "GENDER_DOMINANCE_CODE", "MIN_YEARS_EXPERIENCE", "EMPLOYMENT_TYPE", "REMOTE_TYPE", "IS_INTERNSHIP", "COMPANY_IS_STAFFING", "STATE_NAME", "NAICS_2022_2"]
 
-print(lightcast_jp[features].isna().sum())
+# print(lightcast_jp[features].isna().sum())
 
 df_model = lightcast_jp[features]
 # df_model.isna().sum()
@@ -143,11 +102,11 @@ model.fit(X_train, y_train)
 coef = model.coef_[ list(X.columns).index("GENDER_DOMINANCE_CODE") ]
 print("Salary change per category step:", coef)
 ```
-Moving from a male-dominated to a mixed industry is associated with an average salary increase of about $2,149.     
-Moving from mixed to female-dominated shows an additional increase of roughly the same magnitude.
+Moving from a male-dominated to a mixed industry is associated with an average salary decrease of about $7K.     
+Moving from mixed to female-dominated shows an additional decrease of roughly the same magnitude.
 
 ### Model Performance Evaluation
-To assess the performance of the linear regression model, we compute the R² score using the test dataset. Our model explains approximately 11.4% of the variation in advertised salaries. Meaning that the model captures some underlying structure—especially differences driven by experience, industry, and location—but much of the salary variation remains unexplained under a linear framework.
+To assess the performance of the linear regression model, we compute the R² score using the test dataset. Our model explains approximately 24.3% of the variation in advertised salaries. Meaning that the model captures some underlying structure—especially differences driven by experience, industry, and location—but much of the salary variation remains unexplained under a linear framework.
 
 ```{python}
 from sklearn.metrics import r2_score
@@ -158,30 +117,14 @@ print("R²:", lr_r2)
 ```
 ### Predicted Salary by Dominance Group
 
-Using the average job posting profile in our dataset, we generated predicted salaries for each gender dominance category. The results show a **gradual upward trend in salary as industries become more female-dominated**, even after controlling for experience, employment type, remote status, staffing firm involvement, and state-level differences. In other words, postings in female-dominated or mixed industries tend to offer slightly higher advertised salaries than those in male-dominated sectors.
+Using the average job posting profile in our dataset, we generated predicted salaries for each gender dominance category. The results show a **downward trend in salary as industries become more female-dominated**, even after controlling for experience, employment type, remote status, staffing firm involvement, and state-level differences. In other words, job postings in male-dominated industries are associated with higher advertised salaries, while female-dominated sectors tend to offer lower salaries for otherwise comparable postings in our dataset.
 
-However, it is important to interpret this finding in the context of **the composition of our dataset**. The Lightcast sample is heavily concentrated in knowledge-based and technical occupations, including:
+Rather than a universal labor-market pattern, the results reflect:
 
-- Data analysts  
-- Data scientists  
-- Enterprise and solutions architects  
-- Business intelligence roles  
-- Technical consulting and professional services  
+> A salary premium associated with male-dominated technical and analytical job clusters represented in our dataset, not necessarily a generalizable pattern across the entire U.S. workforce.
 
-These roles primarily fall within industries such as:
+This contextual caveat helps ensure the analysis is interpreted correctly without overstating conclusions beyond the scope of the available data.
 
-- **Professional, Scientific & Technical Services** (female-leaning to mixed)  
-- **Finance & Insurance** (female-dominated)  
-- **Information** (mixed)  
-- **Management of Companies & Enterprises** (mixed)
-
-Because our dataset contains **few postings from traditionally male-dominated sectors** (e.g., construction, mining, manufacturing, transportation), the model does not capture the broader national labor-market differences across all industries.
-
-Therefore, the upward salary trend toward female-dominated industries should be interpreted as:
-
-> **a pattern specific to the white-collar and analytical job clusters represented in our dataset**, rather than a universal trend across the U.S. economy.
-
-This contextualization helps avoid overgeneralizing findings beyond the scope of the available data.
 ```{python}
 base = X_train.mean().copy()
 
@@ -229,7 +172,7 @@ We evaluate the model using two metrics:
 - **R²:** Measures how much variance in salary the model explains.
 - **RMSE:** Measures average prediction error in dollar terms.
 
-The model achieves an R² of approximately 0.21, indicating moderate predictive power given the complexity and noise typical of job posting salary data.
+The model achieves an R² of approximately 0.44, indicating moderate predictive power given the complexity and noise typical of job posting salary data.
 
 ```{python}
 from sklearn.metrics import r2_score, mean_squared_error
@@ -254,7 +197,8 @@ print(rf_importances.head(10))
 
 ### Predicted Salary by Dominance Group
 
-The model predicts very similar salaries across all gender groups, indicating that non-linear interactions do not generate strong differences in salary once other job posting characteristics are held constant.
+The Random Forest model shows substantial salary differences across gender-dominance categories. These predictions suggest that male-dominated industries carry a significant salary premium, with advertised salaries nearly $56,000 higher than those in mixed or female-dominated industries. In contrast, the salaries for mixed and female-dominated sectors are almost identical.
+  
 ```{python}
 base_rf = X_train.mean().copy()
 
