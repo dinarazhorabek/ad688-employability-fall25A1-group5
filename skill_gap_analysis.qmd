@@ -265,4 +265,36 @@ fig.update_layout(
 fig.show()
 ```
 
+```{python}
+#| include: false
+for member in df_skills.index:
+    values = df_skills.loc[member].tolist()
+    values_closed = values + [values[0]]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatterpolar(
+        r=values_closed,
+        theta=skills_list,
+        fill='toself',
+        name=member,
+        line=dict(color='rgba(44, 127, 184, 0.9)', width=3),
+        fillcolor='rgba(44, 127, 184, 0.3)'
+    ))
+    fig.add_trace(go.Scatterpolar(
+        r=industry_values,
+        theta=skills_list,
+        fill='toself',
+        name='Industry Demand',
+        line=dict(color='rgba(255, 127, 14, 0.9)', width=3),
+        fillcolor='rgba(255, 127, 14, 0.3)'
+    ))
+    fig.update_layout(
+        title=f"Skill Profile: {member}",
+        polar=dict(radialaxis=dict(visible=True, range=[0, 5])),
+        showlegend=False,
+        height=500,
+    )
+    fig.show()
+    fig.write_html(f"figures/skill_profile_{member}.html")
+```
 </div>
