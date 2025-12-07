@@ -45,9 +45,9 @@ format:
     number-sections: false
     smooth-scroll: true
     page-layout: full
-    code-copy: true     # adds copy button to code blocks
-    anchor-sections: true  # enables section anchors for scrollspy
-    link-external-newwindow: true  # opens external links in a new tab
+    code-copy: true     
+    anchor-sections: true  
+    link-external-newwindow: true  
 
   pdf:
     documentclass: report
@@ -59,7 +59,7 @@ format:
     fontsize: 12pt
 
 execute:
-  freeze: auto   # speeds up rendering
+  freeze: auto  
 
 include-after-body:
   - footer.html
