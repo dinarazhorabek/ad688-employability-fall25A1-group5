@@ -36,7 +36,7 @@ os.makedirs("figures", exist_ok=True)
 #| echo: false
 # warning: false
 lightcast_jp = pd.read_csv('data/lightcast_cleaned.csv')
-lightcast_jp.head()
+# lightcast_jp.head()
 ```
 
 </div>
@@ -166,8 +166,8 @@ industry_skill_counts.head()
 
 To quantify alignment between our team and the market, we compare:
 
-- $Team Score$ - average proficiency ratings (1–5 scale) provided internally
-- $Industry Score$ - demand-derived skill importance (normalized from posting frequency)
+- Team Score - average proficiency ratings (1–5 scale) provided internally
+- Industry Score - demand-derived skill importance (normalized from posting frequency)
 
 The Gap metric is defined as:
 $Gap=Industry Score - Team Score$
@@ -196,7 +196,7 @@ gap_df
 
 <div class="card reveal">
 
-## Skill Gap Visualizatios
+## Skill Gap Visualizations
 
 ### Bar Chart Comparison
 
@@ -221,7 +221,7 @@ fig_gap = px.bar(
 fig_gap.update_layout(
     legend_title_text="",
     xaxis=dict(range=[0, 5]),
-    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=0.75)
+    legend=dict(orientation="v", yanchor="top", y=0.15, xanchor="left", x=0.75)
 )
 fig_gap
 ```
@@ -269,7 +269,6 @@ fig.show()
 
 ```{python}
 #| include: false
-
 for member in df_skills.index:
     values = df_skills.loc[member].tolist()
     values_closed = values + [values[0]]
@@ -300,4 +299,14 @@ for member in df_skills.index:
     fig.show()
     fig.write_html(f"figures/skill_profile_{member}.html")
 ```
+</div>
+
+<div class="card reveal">
+
+## Improvement Plan
+
+> How can the team collaborate to bridge skill gaps?
+
+While our team demonstrates strong proficiency across most software skills, we still need more consistency to meet industry expectations. To address this, we developed a collaborative improvement plan where members with higher expertise will guide others through structured peer learning. The plan focuses on small but consistent practice activities, especially in the skills with the highest industry demand: Python, SQL, Tableau/Power BI, and Microsoft Excel. For example, we will practice SQL by solving LeetCode problems and joining SQL contests, and strengthen Power BI and Tableau skills by creating hands-on visualizations. We will also remain active on GitHub to document progress and maintain a strong professional portfolio.
+
 </div>

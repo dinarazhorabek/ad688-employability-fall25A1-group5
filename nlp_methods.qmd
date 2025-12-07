@@ -133,14 +133,19 @@ fig_freq = px.bar(
     y="word",
     orientation="h",
     title="Top 30 Most Common Terms in Job Descriptions",
-    labels={"count": "Frequency", "word": "Term"},
-    color="word",  
-    color_discrete_sequence=px.colors.qualitative.Pastel, 
-    height=700
+    labels={"count": "Frequency", "word": "Term"}
+    # color="word",  
+    # color_discrete_sequence=px.colors.qualitative.Pastel, 
+    # height=700
 )
-
 fig_freq.update_layout(
-    yaxis={"categoryorder": "total ascending"},
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="#eaeaea",
+    ),
+    yaxis=dict(
+        categoryorder='total ascending',
+    ),
     plot_bgcolor="white",
     paper_bgcolor="white",
     showlegend=False 
@@ -218,7 +223,7 @@ tfidf_df = (
 )
 
 tfidf_top = tfidf_df.head(25)
-tfidf_top
+tfidf_top.head()
 ```
 
 ```{python}
@@ -231,16 +236,20 @@ fig_tfidf = px.bar(
     labels={"score": "Average TF–IDF Score", "term": "Term"},
     color="term",  # categorical coloring
     color_discrete_sequence=px.colors.qualitative.Set3,  # vibrant, premium palette
-    height=700
+    # height=700
 )
-
 fig_tfidf.update_layout(
-    yaxis={"categoryorder": "total ascending"},
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="#eaeaea",
+    ),
+    yaxis=dict(
+        categoryorder='total ascending',
+    ),
     plot_bgcolor="white",
     paper_bgcolor="white",
     showlegend=False
 )
-
 fig_tfidf.show()
 ```
 
@@ -323,10 +332,19 @@ fig_sect = px.bar(
     barmode="group",
     orientation="h",
     title="High-Information Terms by Sector (TF–IDF – Top 15 per Sector)",
-    labels={"score": "TF–IDF Score", "term": "Term", "sector": "Sector"},
-    height=800
+    labels={"score": "TF–IDF Score", "term": "Term", "sector": "Sector"}
+    # height=800
 )
-fig_sect.update_layout(yaxis={"categoryorder": "total ascending"})
+fig_sect.update_layout(
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="#eaeaea",
+    ),
+    yaxis=dict(
+        categoryorder='total ascending',
+    ),
+    legend=dict(orientation="v", yanchor="top", y=0.25, xanchor="left", x=0.75)
+    )
 fig_sect.show()
 ```
 
@@ -357,7 +375,7 @@ tech_df = (
     .reset_index()
     .rename(columns={"index": "term"})
 )
-tech_df
+tech_df.head()
 ```
 
 ```{python}
@@ -368,11 +386,18 @@ fig_tech = px.bar(
     orientation="h",
     title="Technical Terms Found in Job Descriptions (Text Scan)",
     labels={"count": "Mentions", "term": "Term"},
-    color="count",
-    color_continuous_scale=px.colors.sequential.GnBu,
-    height=600
+    # color="count",
+    # color_continuous_scale=px.colors.sequential.GnBu,
+    # height=600
 )
-fig_tech.update_layout(yaxis={"categoryorder": "total ascending"})
+fig_tech.update_layout(
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="#eaeaea",
+    ),
+    yaxis=dict(
+        categoryorder='total ascending',
+    ))
 fig_tech.show()
 ```
 
