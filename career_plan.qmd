@@ -81,9 +81,13 @@ My radar shows balanced capability across SQL, Python, and AWS…
 
 </div>
 
+:::
+
+</div>
+
 ---
 
-### Team Findings
+# Team Findings
 
 <div class="card reveal">
 
@@ -98,9 +102,5 @@ My radar shows balanced capability across SQL, Python, and AWS…
 - AWS for all members  
 - Advanced SQL  
 - Dashboard portfolio development  
-
-</div>
-
-:::
 
 </div>
