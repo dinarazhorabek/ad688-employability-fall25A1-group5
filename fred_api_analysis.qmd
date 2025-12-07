@@ -13,6 +13,7 @@ format:
 <div class="card reveal">
 
 ### Import Fred APIs
+
 ```{python}
 import os
 from dotenv import load_dotenv
@@ -106,7 +107,8 @@ data = {label: fred.get_series(sid) for label, sid in series_map.items()}
 
 <div class="card reveal">
 
-### Chart 1: Unemployment Rate for Men vs Women
+### Chart 1: Unemployment Rate (Men vs Women)
+
 ```{python}
 fig_unemp = go.Figure()
 # Men unemployment rate
@@ -144,6 +146,7 @@ fig_unemp.write_html("figures/unemp_rate.html")
 <div class="card reveal">
 
 ### Chart 2: Gender Wage Gap Over Time (Median Weekly Earnings)
+
 ```{python}
 fig_wage = go.Figure()
 # Men earnings line
@@ -181,6 +184,7 @@ fig_wage.write_html("figures/gender_wage_gap.html")
 <div class="card reveal">
 
 ### Chart 3: Labor Force Participation - Men vs Women (Monthly, SA)
+
 ```{python}
 fig_part = go.Figure()
 # Men participation line
@@ -218,6 +222,7 @@ fig_part.write_html("figures/labor_force_participation.html")
 <div class="card reveal">
 
 ### Chart 4: STEM SECTORS – Women Ratio Bar Chart
+
 ```{python}
 # Get the latest information available from Fred
 def get_latest(series):
@@ -265,6 +270,7 @@ fig_stem.write_html("figures/stem_women_share.html")
 <div class="card reveal">
 
 ### Chart 5: NON-STEM SECTORS – Women Ratio Bar Chart
+
 ```{python}
 nonstem_ratio_vars = {
     "Leisure & Hospitality": data["emp_leisure_women_ratio"],
@@ -304,9 +310,9 @@ fig_nonstem.write_html("figures/nonstem_women_share.html")
 
 </div>
 
-# Gender Dominace by States
+### Gender Dominance by States
 
 ```{python}
-gender_state = pd_readcsv("data/acs_computer_math_gender_by_state_5yrs.csv")
+gender_state = pd.read_csv("data/acs_computer_math_gender_by_state_5yrs.csv")
 gender_state.head()
 ```
