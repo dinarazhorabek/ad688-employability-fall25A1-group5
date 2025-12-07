@@ -1,5 +1,5 @@
 ---
-title: "Data Analysis Overview"
+title: "Gender Disparities Overview"
 subtitle: "Cleaning, Exploration, and Patterns in the 2024 Job Market"
 bibliography: references.bib
 csl: csl/econometrica.csl

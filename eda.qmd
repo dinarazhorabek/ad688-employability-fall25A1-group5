@@ -95,7 +95,8 @@ else:
 ```
 
 
-**Insight:**  
+**Insight:**
+  
 Professional, Scientific & Technical Services and Administrative & Support Services account for the largest share of job postings, indicating sustained demand for analytical, operational, and client-facing roles. These sectors typically exhibit continuous hiring cycles driven by project-based work, business expansion, and comparatively high turnover. For job seekers, they represent strong entry points into the labor market with broad role variety and relatively frequent openings.
 
 </div>
@@ -159,7 +160,8 @@ else:
     print("Salary chart not generated: Missing industry or salary column.")
 ```
 
-**Insight:**  
+**Insight:**
+
 Annual salary levels differ substantially across industries, with Finance, Information, and Professional Services exhibiting the highest median compensation. The wide dispersion of salaries within these sectors reflects variation in seniority, specialization, and credential requirements. In contrast, service-oriented industries such as Retail and Accommodation & Food Services show lower but more compressed salary ranges, consistent with narrower variation in role complexity. These patterns suggest that targeted upskilling toward high-skill roles in Finance, Tech, and Professional Services is likely to yield the greatest earnings uplift.
 
 </div>
@@ -194,7 +196,8 @@ else:
     print("No remote work field found.")
 ```
 
-**Insight:**  
+**Insight:**
+
 The majority of postings either do not explicitly tag remote work or are implicitly on-site, with only a modest share labeled as Remote or Hybrid. Where remote options are available, they are concentrated in data, IT, and knowledge-intensive roles that can be performed digitally. For job seekers prioritizing location flexibility, this suggests focusing on analytically oriented roles and employers that have formal remote-work policies rather than assuming remote options are widespread across all occupations.
 
 </div>
@@ -236,7 +239,8 @@ else:
     print("No valid POSTED data to plot monthly trend.")
 ```
 
-**Insight:**  
+**Insight:**
+
 Posting volumes exhibit a clear mid-year trough in late June followed by a strong rebound in July and August, consistent with typical fiscal and academic hiring cycles. The June slowdown likely reflects decision lags around mid-year budgets, while the late-summer increase aligns with pre-fall staffing needs. For job seekers, this timing suggests that applications submitted immediately after the June dip are more likely to coincide with rising employer demand.
 
 </div>
@@ -269,7 +273,8 @@ else:
     print("STATE_NAME field not found.")
 ```
 
-**Insight:**  
+**Insight:**
+
 Texas, California, and Florida emerge as national hiring hubs, reflecting their large and diversified economies, population growth, and strong business ecosystems. Many of the remaining top states, such as Virginia, New York, New Jersey, and North Carolina are anchored by federal agencies, financial centers, or technology clusters. Concentrating job search efforts in these high-volume states can materially increase the number of suitable opportunities available to candidates.
 
 </div>
@@ -312,6 +317,7 @@ else:
 ```
 
 **Insight:**
+
 SQL, Python, and Excel appear as the most universally requested tools, underscoring their status as core competencies for analytics, BI, and operations roles. Tableau and Power BI, together with dashboarding skills more broadly, highlight the premium placed on communicating data insights visually. Cloud and platform skills such as AWS, Azure, and Oracle Cloud are less frequent but still prominent, indicating growing demand for candidates who can work across both traditional analytics stacks and modern cloud-based architectures.
 
 </div>
@@ -323,11 +329,16 @@ SQL, Python, and Excel appear as the most universally requested tools, underscor
 ### EDA Summary
 
 The exploratory analysis reveals five consistent themes in the 2024 job market:
-	•	Industry concentration: Hiring is heavily concentrated in Professional Services, Administrative & Support Services, and key service sectors, which together generate a large share of postings.
-	•	Compensation differences: Median annual salaries vary sharply by industry, with Finance, Information, and Professional Services offering the strongest earnings potential.
-	•	Remote work structure: Explicitly remote and hybrid roles remain a minority but are disproportionately found in digital and analytics-intensive occupations.
-	•	Seasonality: Job posting activity dips around late June and rebounds sharply in late summer, highlighting the importance of timing in job search strategies.
-	•	Skill demand: SQL, Python, Excel, BI tools, and cloud platforms dominate technical requirements, defining a clear “baseline stack” for aspiring data and business analytics professionals.
+
+- **Industry concentration**: Hiring is heavily concentrated in Professional Services, Administrative & Support Services, and key service sectors, which together generate a large share of postings.
+
+- **Compensation differences**: Median annual salaries vary sharply by industry, with Finance, Information, and Professional Services offering the strongest earnings potential.
+
+- **Remote work structure**: Explicitly remote and hybrid roles remain a minority but are disproportionately found in digital and analytics-intensive occupations.
+
+- **Seasonality**: Job posting activity dips around late June and rebounds sharply in late summer, highlighting the importance of timing in job search strategies.
+
+- **Skill demand**: SQL, Python, Excel, BI tools, and cloud platforms dominate technical requirements, defining a clear “baseline stack” for aspiring data and business analytics professionals.
 
 These insights directly feed into the subsequent Skill Gap Analysis, ML Methods, and Career Strategy sections by identifying which industries, skills, and time windows matter most for job seekers in 2024.
 

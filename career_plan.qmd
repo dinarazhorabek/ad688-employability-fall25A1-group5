@@ -7,35 +7,36 @@ format:
 
 <div class="card reveal">
 
-# From Evidence to Action
+## Practical Applications
+
 Brief explanation of how we converted analysis into a 3-step strategy.
 
 </div>
 
 <div class="card reveal">
 
-## Step 1 · Choose Sectors & Locations Strategically
-(Your Step 1 content.)
+### Dinara
+
 
 </div>
 
 <div class="card reveal">
 
-## Step 2 · Build High-Signal Skills
-(Your Step 2 content.)
+### Nhat
+
 
 </div>
 
 <div class="card reveal">
 
-## Step 3 · Signal Fit & Leadership Identity
-(Your Step 3 content.)
+### Hung (Leo)
+
 
 </div>
 
 <div class="card reveal">
 
-## Personal Next Steps (Team 5)
-(Your individual next steps.)
+### Team Findings
+
 
 </div>

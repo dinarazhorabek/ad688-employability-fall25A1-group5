@@ -10,26 +10,24 @@ website:
     right:
       - text: "Home"
         href: index.qmd
-      - text: "Introduction"
-        href: introduction.qmd
       - text: "Research Background"
         href: research_background.qmd
       - text: "Analysis"
         menu:
-          - text: "Overview & Pipeline"
-            href: data_analysis.qmd
-          - text: "Gender Domiance in Job Postings"
-            href: gender_dom_analysis.qmd
+          - text: "Gender Disparities Overview"
+            href: fred_api_analysis.qmd
           - text: "Data Cleaning & Preprocessing"
             href: data_cleaning.qmd
           - text: "Exploratory Data Analysis"
             href: eda.qmd
+          - text: "Gender Dominance in Job Postings"
+            href: gender_dom_analysis.qmd
+          - text: "Machine-Learning Models"
+            href: ml_methods.qmd
+          - text: "NLP Analysis"
+            href: nlp_methods.qmd
           - text: "Skill Gap Analysis"
             href: skill_gap_analysis.qmd
-          - text: "ML Methods"
-            href: ml_methods.qmd
-          - text: "NLP Methods"
-            href: nlp_methods.qmd
       - text: "Career Strategy"
         href: career_plan.qmd
       - text: "About Us"
