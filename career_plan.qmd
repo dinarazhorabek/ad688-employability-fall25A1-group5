@@ -13,30 +13,66 @@ Brief explanation of how we converted analysis into a 3-step strategy.
 
 </div>
 
+---
+
 <div class="card reveal">
 
-### Dinara
+## Dinara
 
+### Skill Profile (Radar Chart)
+
+<iframe src="figures/skill_profile_Dinara.html" 
+        width="100%" 
+        height="520" 
+        style="border:none;">
+</iframe>
+
+### Interpretation & Career Strategy
+ 
+</div>
+
+---
+
+<div class="card reveal">
+
+## Nhat
+
+### Skill Profile (Radar Chart)
+
+<iframe src="figures/skill_profile_Nhat.html" 
+        width="100%" 
+        height="520" 
+        style="border:none;">
+</iframe>
+
+### Interpretation & Career Strategy 
 
 </div>
 
+---
+
 <div class="card reveal">
 
-### Nhat
+## Hung (Leo)
 
+### Skill Profile (Radar Chart)
+
+<iframe src="figures/skill_profile_Leo.html" 
+        width="100%" 
+        height="520" 
+        style="border:none;">
+</iframe>
+
+### Interpretation & Career Strategy 
 
 </div>
 
-<div class="card reveal">
-
-### Hung (Leo)
-
-
-</div>
+---
 
 <div class="card reveal">
 
-### Team Findings
+## Team Findings
 
+Summaries of shared strengths, common gaps, team-level recommendations, role alignment, etc.
 
 </div>

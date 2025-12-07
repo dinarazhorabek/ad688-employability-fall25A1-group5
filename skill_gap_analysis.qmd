@@ -25,9 +25,11 @@ The goal is to identify strengths, highlight capability gaps, and provide insigh
 #| output: false
 import pandas as pd
 import re
-
 import plotly.express as px
 import plotly.graph_objects as go
+import os
+
+os.makedirs("figures", exist_ok=True)
 ```
 
 ```{python}
@@ -267,6 +269,7 @@ fig.show()
 
 ```{python}
 #| include: false
+
 for member in df_skills.index:
     values = df_skills.loc[member].tolist()
     values_closed = values + [values[0]]
