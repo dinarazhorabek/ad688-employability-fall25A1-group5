@@ -1,44 +1,63 @@
 ---
 title: "About Us"
+format:
+  html:
+    toc: false
 ---
 
 <div class="card reveal">
+  
+# Team 5
 
-## Team 5
+We are graduate students in the **Master of Applied Business Analytics (MABA)** program at  
+**Boston University Metropolitan College**, completing this project for  
+**AD 688 – Web Analytics**.
 
-Graduate students in the Master of Applied Business Analytics program at Boston University,  
-completing this project for **AD 688 – Web Analytics**.
+Our work integrates labor market analytics, machine learning, gender disparities research,  
+and cloud-based data engineering practices.
 
 </div>
 
-<div class="card reveal avatar-row">
+<div class="card reveal">
 
-<div class="avatar-card">
+## Team Members
 
-## Team Members:
+<div class="avatar-row" style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start;">
 
+<div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Hung Nguyen</strong><br>
-Data wrangling, Quarto architecture, integration of macro/micro insights.
+<span style="color:#555;">
+Contributed to data wrangling, Quarto website architecture, and aligning macro–micro insights within the analytical narrative.
+</span>
 </div>
 
-<div class="avatar-card">
+<div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Nhat Tran</strong><br>
-FRED API integration, time-series visualization, macro interpretation.
+<span style="color:#555;">
+Led FRED API integration, time-series analyses, and macroeconomic labor trend visualization.
+</span>
 </div>
 
-<div class="avatar-card">
+<div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Dinara Zhorabek</strong><br>
-Research framing, literature review, policy/gender analysis.
+<span style="color:#555;">
+Guided research framing, literature foundation, and policy-driven gender gap interpretation.
+</span>
+</div>
+
 </div>
 
 </div>
 
 <div class="card reveal">
 
-## Tools & Stack
+## Tools & Technology Stack
 
-- Python / PySpark / Pandas / Plotly  
-- FRED API & Lightcast job postings  
-- Quarto + GitHub Pages  
+- Python & PySpark  
+- Pandas, NumPy, Seaborn, Plotly  
+- FRED API and Lightcast Job Postings  
+- AWS (EC2)  
+- Quarto & GitHub Pages  
+- SQL and data preprocessing pipelines  
 
 </div>

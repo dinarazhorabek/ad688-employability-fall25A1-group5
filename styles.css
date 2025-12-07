@@ -119,7 +119,7 @@ h1::after {
 }
 
 /* =========================================================
-   CARDS (UNIFIED SIZING + PREMIUM FEEL)
+   CARDS
 ========================================================= */
 .hero, .card {
   max-width: 1150px !important;
@@ -229,7 +229,6 @@ footer {
 
 /* =========================================================
    GLOBAL SPACING CALIBRATION
-   Ensures uniform spacing on ALL pages
 ========================================================= */
 
 main.content {
@@ -238,12 +237,6 @@ main.content {
   padding: 0 1.7rem !important;
 }
 
-/* Increase vertical rhythm between blocks */
-/* section, .card, .hero, div.card, div.hero { */
-  /* margin-top: 2.2rem !important; */
-  /* margin-bottom: 2.2rem !important; */
-/* } */
-
 /* Remove accidental double-spacing Quarto sometimes injects */
 .quarto-section {
   margin-top: 1.6rem !important;
@@ -251,20 +244,9 @@ main.content {
 }
 
 /* =========================================================
-   PREMIUM TITLES — PROPORTIONAL SIZING + UNIVERSAL ALIGNMENT
+   PREMIUM TITLES — PROPORTIONAL SIZING
 ========================================================= */
 
-/* Center everything related to title */
-.quarto-title-block,
-.quarto-title-block h1,
-h1.title, h1 {
-  text-align: center !important;
-  width: 100% !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Polished main H1 */
 .quarto-title-block h1, h1 {
   font-size: 2.1rem !important;
   letter-spacing: -0.35px !important;
@@ -272,7 +254,6 @@ h1.title, h1 {
   margin-bottom: 0.5rem !important;
 }
 
-/* Subtitle smaller than main title */
 .quarto-title-block .subtitle {
   font-size: 1.05rem !important;
   color: var(--leo-muted) !important;
@@ -282,51 +263,7 @@ h1.title, h1 {
 }
 
 /* =========================================================
-   CARD REFINEMENT — Perfect padding, margins, shadows
-========================================================= */
-
-.card, .hero {
-  max-width: 1150px !important;
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 2.1rem 2.4rem !important;
-  border: 1px solid rgba(148,163,184,0.28);
-  box-shadow: 0 12px 32px rgba(15,23,42,0.06);
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Top gradient header bar */
-.card::before, .hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 18px;
-  right: 18px;
-  height: 3px;
-  background-image: var(--leo-accent-gradient);
-  border-radius: 999px;
-  opacity: 0.75;
-}
-
-/* Improve hover lift */
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(15,23,42,0.13);
-}
-
-/* =========================================================
-   LIST SPACING CONSISTENCY (bullet points)
-========================================================= */
-ul, ol {
-  margin-left: 1.2rem !important;
-  margin-top: 0.6rem !important;
-  margin-bottom: 0.6rem !important;
-  line-height: 1.65 !important;
-}
-
-/* =========================================================
-   PLOTLY CONTAINER STANDARDIZATION
+   PLOTLY FIXES
 ========================================================= */
 
 .plotly-graph-div {
@@ -334,17 +271,115 @@ ul, ol {
   margin: 2.2rem auto !important;
 }
 
-/* Reduce extra bottom margin under Plotly charts inside cards */
 .card .plotly-graph-div {
   margin-bottom: 0.6rem !important;
 }
 
 /* =========================================================
-   TIGHTEN FOOTER
+   FOOTER REFINEMENT
 ========================================================= */
 
 footer {
   margin-top: 4rem !important;
   padding-top: 1.6rem !important;
   padding-bottom: 1.2rem !important;
+}
+
+/* =========================================================
+   GRADIENT CARD OVERRIDE FOR SKILL PROFILES
+========================================================= */
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px 28px;
+  margin: 25px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border: 2px solid transparent;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(90deg, #6a5af9, #8a63d2, #b76df8, #f78dff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.reveal {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+iframe {
+  border-radius: 12px;
+  background: white;
+}
+
+.tabs-container {
+  margin-top: 40px;
+}
+
+/* =========================================================
+   NAVBAR DROPDOWN STYLING
+========================================================= */
+
+.navbar .dropdown-menu {
+  border-radius: 12px !important;
+  padding: 8px 0 !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.navbar .dropdown-item {
+  padding: 10px 18px !important;
+  font-weight: 500 !important;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: #f0e6ff !important;
+  color: #6a5af9 !important;
+}
+
+/* =========================================================
+   SCROLLSPY HIGHLIGHT STYLE
+========================================================= */
+
+#toc .active, 
+#toc a:hover {
+  color: #6a5af9 !important;
+  font-weight: 600 !important;
+}
+
+/* Highlight sidebar links */
+.sidebar nav a.active {
+  color: #6a5af9 !important;
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   HERO SECTION SUPPORT
+========================================================= */
+
+.hero-section {
+  padding: 80px 0;
+  text-align: center;
+  background: linear-gradient(135deg, #e3f0ff, #f8e8ff);
+  border-radius: 20px;
+  margin-bottom: 30px;
+}
+
+/* =========================================================
+   TABS POLISHING
+========================================================= */
+
+.panel-tabset .nav-link.active {
+  font-weight: 700 !important;
+  color: #6a5af9 !important;
+  border-bottom: 2px solid #6a5af9 !important;
+}
+
+.panel-tabset .nav-link {
+  padding: 10px 16px !important;
+  font-weight: 500;
 }

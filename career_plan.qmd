@@ -9,70 +9,98 @@ format:
 
 ## Practical Applications
 
-Brief explanation of how we converted analysis into a 3-step strategy.
+To convert our job market analytics into actionable career recommendations, we followed a structured three-step framework:
+
+### **1. Market Demand Extraction**
+We analyzed Lightcast job postings for Data & Analytics roles across high-demand sectors (Information, Finance & Insurance, and Professional Services).  
+
+### **2. Team Capability Assessment**
+Each member evaluated their skill levels (1–5) across seven core analytics competencies.  
+
+### **3. Gap & Alignment Strategy**
+By comparing industry demand vs. team proficiency, we identified skill strengths, shortages, and role-alignment recommendations.
 
 </div>
 
 ---
 
+# Individual Strategy Profiles
+
+<div class="tabs-container">
+
+::: {.panel-tabset}
+
+### Dinara
+
 <div class="card reveal">
 
-## Dinara
+#### Skill Profile (Interactive Radar Chart)
 
-### Skill Profile (Radar Chart)
-
-<iframe src="figures/skill_profile_Dinara.html" 
-        width="100%" 
-        height="520" 
-        style="border:none;">
-</iframe>
-
-### Interpretation & Career Strategy
- 
-</div>
+<iframe src="figures/skill_profile_Dinara.html"
+        width="100%" height="520"></iframe>
 
 ---
 
-<div class="card reveal">
-
-## Nhat
-
-### Skill Profile (Radar Chart)
-
-<iframe src="figures/skill_profile_Nhat.html" 
-        width="100%" 
-        height="520" 
-        style="border:none;">
-</iframe>
-
-### Interpretation & Career Strategy 
+#### Dinara’s Interpretation & Recommendations
 
 </div>
 
 ---
 
+### Nhat
+
 <div class="card reveal">
 
-## Hung (Leo)
+#### Skill Profile (Interactive Radar Chart)
 
-### Skill Profile (Radar Chart)
+<iframe src="figures/skill_profile_Nhat.html"
+        width="100%" height="520"></iframe>
 
-<iframe src="figures/skill_profile_Leo.html" 
-        width="100%" 
-        height="520" 
-        style="border:none;">
-</iframe>
+---
 
-### Interpretation & Career Strategy 
+#### Nhat’s Interpretation & Recommendations
 
 </div>
 
 ---
 
+### Hung (Leo)
+
 <div class="card reveal">
 
-## Team Findings
+#### Skill Profile (Interactive Radar Chart)
 
-Summaries of shared strengths, common gaps, team-level recommendations, role alignment, etc.
+<iframe src="figures/skill_profile_Leo.html"
+        width="100%" height="520"></iframe>
+
+---
+
+#### Leo’s Interpretation & Recommendations
+
+My radar shows balanced capability across SQL, Python, and AWS…
+
+</div>
+
+---
+
+### Team Findings
+
+<div class="card reveal">
+
+## Collective Findings
+
+### Shared Strengths
+- Strong analytical and SQL foundations  
+- Balanced Python and Excel experience  
+- Diverse BI + cloud skills across members  
+
+### Shared Growth Opportunities
+- AWS for all members  
+- Advanced SQL  
+- Dashboard portfolio development  
+
+</div>
+
+:::
 
 </div>
