@@ -9,6 +9,9 @@ format:
     code-fold: true
     code-tools: true
 ---
+
+<div class="card reveal">
+
 ### Load the Cleaned Dataset
 ```{python}
 import pandas as pd
@@ -26,6 +29,10 @@ df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
 # Basic structural overview
 #df.head()
 ```
+
+</div>
+
+<div class="card reveal">
 
 ### Industry Data Preparation
 
@@ -56,6 +63,10 @@ print("Rows before:", before_count)
 print("Rows after:", after_count)
 ```
 
+</div>
+
+<div class="card reveal">
+
 ### Exploring Unique Industry Categories (NAICS2_NAME)
 
 We retrieve the list of unique industry categories by extracting all distinct values from the NAICS2_NAME column after removing missing entries.
@@ -66,6 +77,10 @@ naics2_name = df["NAICS2_NAME"].dropna().unique().tolist()
 print(naics2_name)
 ```
 
+</div>
+
+<div class="card reveal">
+
 ### Classifying Industries by Gender Dominance
 
 We classify each NAICS2_NAME industry into one of three gender-dominance categories based on U.S. labor statistics:
@@ -74,7 +89,7 @@ We classify each NAICS2_NAME industry into one of three gender-dominance categor
 
 - **Female-dominated industries:** Finance and Insurance; Educational Services; Health Care and Social Assistance; Accommodation and Food Services; Other Services (except Public Administration).
 
-- **Balanced industries:** Retail Trade; Administrative and Support and Waste Management and Remediation Services; Real Estate and Rental and Leasing; Arts, Entertainment, and Recreation; Public Administration.
+- **Mixed industries:** Retail Trade; Administrative and Support and Waste Management and Remediation Services; Real Estate and Rental and Leasing; Arts, Entertainment, and Recreation; Public Administration.
 
 ```{python}
 gender_dom_map = {
@@ -97,12 +112,12 @@ gender_dom_map = {
     "Accommodation and Food Services": "Female-dominated",
     "Other Services (except Public Administration)": "Female-dominated",
 
-    # Balanced Industries
-    "Retail Trade": "Balanced",
-    "Administrative and Support and Waste Management and Remediation Services": "Balanced",
-    "Real Estate and Rental and Leasing": "Balanced",
-    "Arts, Entertainment, and Recreation": "Balanced",
-    "Public Administration": "Balanced"
+    # Mixed Industries
+    "Retail Trade": "Mixed",
+    "Administrative and Support and Waste Management and Remediation Services": "Mixed",
+    "Real Estate and Rental and Leasing": "Mixed",
+    "Arts, Entertainment, and Recreation": "Mixed",
+    "Public Administration": "Mixed"
 }
 
 # Create a GENDER_DOMINANCE column in the dataset
@@ -117,12 +132,18 @@ print("Total Job Posting Counts by Gender Dominance:")
 display(gender_dom_summary)
 ```
 
-Out of 59,976 total job postings, the dataset shows 35,159 job postings in male-dominated industries, followed by 13,013 postings in female-dominated industries, while balanced industries account for 11,804 postings. These counts provide a clear view of how job postings are distributed across the three gender-dominance categories. The larger volume in male-dominated fields suggests that most hiring activity in this dataset is concentrated in those sectors, with smaller but still significant demand in female-dominated and balanced industries. Together, this distribution gives a straightforward snapshot of where job opportunities are most active.
+Out of 59,976 total job postings, the dataset shows 35,159 job postings in male-dominated industries, followed by 13,013 postings in female-dominated industries, while Mixed industries account for 11,804 postings. These counts provide a clear view of how job postings are distributed across the three gender-dominance categories. The larger volume in male-dominated fields suggests that most hiring activity in this dataset is concentrated in those sectors, with smaller but still significant demand in female-dominated and Mixed industries. Together, this distribution gives a straightforward snapshot of where job opportunities are most active.
 
-### Median Salary by Industry with Job Count:
+</div>
+
+<div class="card reveal">
+
+### Median Salary by Industry with Job Count
 ```{python}
 # Drop rows with missing salary values
 df_salary = df.dropna(subset=["SALARY"])
+# Save new df as lighcast_gender.csv to local folder
+df_salary.to_csv("./data/lightcast_gender.csv", index=False)
 
 # Compute job counts
 industry_counts = (df_salary.groupby("NAICS2_NAME")["SALARY"].count().rename("JOB_COUNT"))
@@ -139,6 +160,10 @@ industry_median_salary = (
 display(industry_median_salary)
 ```
 
+</div>
+
+<div class="card reveal">
+
 ```{python}
 # Group by gender dominance
 gender_dom_summary = (
@@ -153,13 +178,17 @@ gender_dom_summary = (
 display(gender_dom_summary)
 ```
 
+</div>
+
+<div class="card reveal">
+
 ### Chart 1: Median Salary by Gender Dominance Category
 ```{python}
 # Build a color palette for gender dominance
 colors = {
     "Male-dominated": "rgba(137, 176, 255, 0.8)",
     "Female-dominated": "rgba(255, 179, 207, 0.8)",
-    "Balanced": "rgba(199, 168, 255, 0.8)"
+    "Mixed": "rgba(199, 168, 255, 0.8)"
 }
 
 fig_gd = go.Figure()
@@ -183,7 +212,11 @@ fig_gd.show()
 fig_gd.write_html("figures/gender_salary_distr.html")
 ```
 
-Looking at the job postings, male-dominated industries lead in both number and pay, with 13,995 positions and a median salary of $125,900. Female-dominated sectors have 6,341 postings at a median of $101,500, while balanced industries have the fewest openings, 5,531, with a median of $95,000. Overall, this points to a clear link between gender dominance in an industry and salary levels, with male-heavy fields offering both more opportunities and higher pay.
+Looking at the job postings, male-dominated industries lead in both number and pay, with 13,995 positions and a median salary of $125,900. Female-dominated sectors have 6,341 postings at a median of $101,500, while Mixed industries have the fewest openings, 5,531, with a median of $95,000. Overall, this points to a clear link between gender dominance in an industry and salary levels, with male-heavy fields offering both more opportunities and higher pay.
+
+</div>
+
+<div class="card reveal">
 
 ### Chart 2: Salary Distribution by Gender Dominance
 ```{python}
@@ -209,7 +242,11 @@ fig_box.show()
 fig_box.write_html("figures/gender_salary_boxplot.html")
 ```
 
-The boxplot shows that Male-dominated industries consistently offer higher salaries, with both a higher median and greater variation at the upper end. On the other hand, female-dominated industries display lower median salaries and a tighter distribution, suggesting fewer opportunities for better salary offers. The balanced industries fall right in-between, with moderate median pay and some high-earning positions, though not as many as in male-dominated fields.
+The boxplot shows that Male-dominated industries consistently offer higher salaries, with both a higher median and greater variation at the upper end. On the other hand, female-dominated industries display lower median salaries and a tighter distribution, suggesting fewer opportunities for better salary offers. The Mixed industries fall right in-between, with moderate median pay and some high-earning positions, though not as many as in male-dominated fields.
+
+</div>
+
+<div class="card reveal">
 
 ### Chart 3: Job Count vs. Median Salary by Gender Dominance Category
 ```{python}
@@ -235,7 +272,11 @@ bubble_fig.show()
 bubble_fig.write_html("figures/gender_salary_bubble.html")
 ```
 
-Male-dominated industries lead in both job count and median salary, with the largest number of openings and the highest pay. Female-dominated industries have fewer positions and lower median salaries, while balanced industries fall in between, offering moderate opportunities and pay. Overall, higher male representation in an industry is associated with more jobs and higher salaries.
+Male-dominated industries lead in both job count and median salary, with the largest number of openings and the highest pay. Female-dominated industries have fewer positions and lower median salaries, while Mixed industries fall in between, offering moderate opportunities and pay. Overall, higher male representation in an industry is associated with more jobs and higher salaries.
+
+</div>
+
+<div class="card reveal">
 
 ### Chart 4: Median Salary and Job Count Across Male-Dominated Industries
 
@@ -298,6 +339,10 @@ fig_male.write_html("figures/male_dom_industry.html")
 
 The plot shows that male-dominated industries tend to offer relatively high median salaries, with Information ($132,550) and Professional/Scientific/Technical Services ($130,000) leading the group. However, job availability varies widely across some high-paying sectors: Information with a comparatively modest 2166 postings, while Professional/Scientific/Technical Services offers both high pay and large availability of 8530 postings. Thus, hands-on, strongly male-dominated fields like construction, mining, and agriculture show noticeably lower median salaries compared to many other industries overall, highlighting that physically intensive sectors don’t necessarily correspond to higher earnings.
 
+</div>
+
+<div class="card reveal">
+
 ### Chart 5: Median Salary and Job Count Across Female-Dominated Industries
 
 ```{python}
@@ -359,11 +404,15 @@ fig_female.write_html("figures/female_dom_industry.html")
 
 Female-dominated industries show a wider salary spread, ranging from about $76k to $145k, with Accommodation and Food Services unexpectedly offering the highest median pay ($144,560) despite only 212 job counts. Finance and Insurance stands out with strong salaries ($115,239) and by far the largest employment (3567), while Health Care and Social Assistance provides mid-range pay ($95,285) with substantial job availability (1280). Other Services and Educational Services offer lower salaries ($75,919) and moderate job counts (950), reflecting more service-oriented, lower-wage career tracks within this sector.
 
-### Chart 6: Median Salary and Job Count Across Balanced Industries
+</div>
+
+<div class="card reveal">
+
+### Chart 6: Median Salary and Job Count Across Mixed Industries
 
 ```{python}
-# Filter for balanced industries
-balanced_df = df_salary[df_salary["GENDER_DOMINANCE"] == "Balanced"]
+# Filter for Mixed industries
+balanced_df = df_salary[df_salary["GENDER_DOMINANCE"] == "Mixed"]
 
 # Compute industry-level median salary
 balanced_salary_summary = (
@@ -389,7 +438,7 @@ fig_balanced.add_trace(
     )
 )
 
-# Add trend line for balanced industry job counts
+# Add trend line for Mixed industry job counts
 fig_balanced.add_trace(
     go.Scatter(
         x=balanced_salary_summary.index,
@@ -401,7 +450,7 @@ fig_balanced.add_trace(
 )
 
 fig_balanced.update_layout(
-    title="Median Salary and Job Count Across Balanced Industries",
+    title="Median Salary and Job Count Across Mixed Industries",
     xaxis_title="Industry",
     yaxis_title="Median Salary",
     yaxis2=dict(
@@ -418,4 +467,7 @@ fig_balanced.show()
 fig_balanced.write_html("figures/balanced_industry.html")
 ```
 
-Balanced industries show a narrower salary range - between $80k and $120k. Retail Trade offers the highest median pay ($120,000) despite moderate job availability (755), while Administrative and Support Services has the largest job count (3584) but lower median wages ($95,800). Real Estate,  Public Administration and Arts/Entertainment maintain moderate salaries with smaller job counts, reflecting niche but steady career paths. Overall, these industries appear more stable across pay and job availability, without the sharp disparities seen in male-dominated sectors.
+Mixed industries show a narrower salary range - between $80k and $120k. Retail Trade offers the highest median pay ($120,000) despite moderate job availability (755), while Administrative and Support Services has the largest job count (3584) but lower median wages ($95,800). Real Estate,  Public Administration and Arts/Entertainment maintain moderate salaries with smaller job counts, reflecting niche but steady career paths. Overall, these industries appear more stable across pay and job availability, without the sharp disparities seen in male-dominated sectors.
+
+</div>
+

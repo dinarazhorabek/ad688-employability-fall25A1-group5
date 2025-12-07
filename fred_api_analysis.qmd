@@ -12,6 +12,7 @@ format:
 
 <div class="card reveal">
 
+### Import Fred APIs
 ```{python}
 import os
 from dotenv import load_dotenv
@@ -132,7 +133,17 @@ fig_unemp.update_layout(
     yaxis_title="Rate (%)",
     legend_title="Group",
     width=700,
-    height=500
+    height=500,
+    annotations=[
+        dict(
+            text="Source: U.S. Bureau of Labor Statistics via FRED",
+            xref="paper", yref="paper",
+            x=1, y=-0.2,
+            showarrow=False,
+            font=dict(size=10, color="gray"),
+            xanchor="right"
+        )
+    ]
 )
 fig_unemp.show()
 fig_unemp.write_html("figures/unemp_rate.html")
@@ -302,3 +313,44 @@ fig_nonstem.write_html("figures/nonstem_women_share.html")
 ```
 
 </div>
+
+# Gender Dominace by Red vs. Blue States
+
+### Prepare the Dataset
+```{python}
+# Load the dataset for state population by gender (2021-2024) 
+df_state = pd.read_csv("data/acs_computer_math_gender_by_state_5yrs.csv")
+
+# Compute gender shares between states 
+df_state["female_pct"] = (df_state["cm_female"] / df_state["cm_total"] * 100).round(2) 
+df_state["male_pct"] = (df_state["cm_male"] / df_state["cm_total"] * 100).round(2) 
+
+df_state.head()
+```
+
+### Create an Alignment Map for Red vs. Blue State across US
+```{python} 
+state_align_map = { 
+    # Blue states 
+    "California": "Blue", "Colorado": "Blue", "Connecticut": "Blue", "Delaware": "Blue", "District of Columbia": "Blue", "Hawaii": "Blue", "Illinois": "Blue", "Maine": "Blue", "Maryland": "Blue", "Massachusetts": "Blue", "Minnesota": "Blue", "Nevada": "Blue", "New Hampshire": "Blue", "New Jersey": "Blue", "New Mexico": "Blue", "New York": "Blue", "Oregon": "Blue", "Rhode Island": "Blue", "Vermont": "Blue", "Virginia": "Blue", "Washington": "Blue", "Georgia": "Blue", "Arizona": "Blue", "Pennsylvania": "Blue", "Michigan": "Blue", "Wisconsin": "Blue", 
+
+    # Red states (Republican-leaning in 2020)
+    "Alabama": "Red", "Alaska": "Red", "Arkansas": "Red", "Florida": "Red", "Idaho": "Red", "Indiana": "Red", "Iowa": "Red", "Kansas": "Red", "Kentucky": "Red", "Louisiana": "Red", "Mississippi": "Red", "Missouri": "Red", "Montana": "Red", "Nebraska": "Red", "North Carolina": "Red", "North Dakota": "Red", "Ohio": "Red", "Oklahoma": "Red", "South Carolina": "Red", "South Dakota": "Red", "Tennessee": "Red", "Texas": "Red", "Utah": "Red", "West Virginia": "Red", "Wyoming": "Red", 
+
+    # Territories 
+    "Puerto Rico": "Territory" } 
+
+df_state["alignment"] = df_state["state_name"].map(state_align_map) 
+
+df_state.head() 
+
+# Drop Puerto Rico and any non-aligned rows
+df_state = df_state[df_state["alignment"].isin(["Red","Blue"])].copy() 
+
+# Aggregate by alignment + year 
+state_agg = (df_state.groupby(["year","alignment"])[["female_pct","male_pct"]].mean().reset_index().round(2))
+
+display(state_agg) 
+```
+
+
