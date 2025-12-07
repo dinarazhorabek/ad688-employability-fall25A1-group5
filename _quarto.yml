@@ -15,7 +15,7 @@ website:
       - text: "Analysis"
         menu:
           - text: "Gender Disparities Overview"
-            href: data_analysis.qmd
+            href: fred_api_analysis.qmd
           - text: "Data Cleaning & Preprocessing"
             href: data_cleaning.qmd
           - text: "Exploratory Data Analysis"

@@ -1,7 +1,16 @@
 ---
-title: "FRED Analysis"
-format: html
+title: "Gender Disparities Overview"
+subtitle: "Cleaning, Exploration, and Patterns in the 2024 Job Market"
+bibliography: references.bib
+csl: csl/econometrica.csl
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-tools: true
 ---
+
+<div class="card reveal">
 
 ```{python}
 import os
@@ -92,6 +101,10 @@ data = {label: fred.get_series(sid) for label, sid in series_map.items()}
 #print(data["part_women"].head())
 ```
 
+</div>
+
+<div class="card reveal">
+
 ### Chart 0: Unemployment Rate for Men vs Women
 ```{python}
 fig_unemp = go.Figure()
@@ -124,6 +137,10 @@ fig_unemp.update_layout(
 fig_unemp.show()
 fig_unemp.write_html("figures/unemp_rate.html")
 ```
+
+</div>
+
+<div class="card reveal">
 
 ### Chart 1: Gender Wage Gap Over Time (Median Weekly Earnings)
 ```{python}
@@ -158,6 +175,10 @@ fig_wage.show()
 fig_wage.write_html("figures/gender_wage_gap.html")
 ```
 
+</div>
+
+<div class="card reveal">
+
 ### # Chart 2: Labor Force Participation - Men vs Women (Monthly, SA)
 ```{python}
 fig_part = go.Figure()
@@ -190,6 +211,10 @@ fig_part.update_layout(
 fig_part.show()
 fig_part.write_html("figures/labor_force_participation.html")
 ```
+
+</div>
+
+<div class="card reveal">
 
 ### Chart 3: STEM SECTORS – Women Ratio Bar Chart (Sorted)
 ```{python}
@@ -234,6 +259,10 @@ fig_stem.show()
 fig_stem.write_html("figures/stem_women_share.html")
 ```
 
+</div>
+
+<div class="card reveal">
+
 ### Chart 4: NON-STEM SECTORS – Women Ratio Bar Chart (Sorted)
 ```{python}
 nonstem_ratio_vars = {
@@ -271,3 +300,5 @@ fig_nonstem.update_layout(
 fig_nonstem.show()
 fig_nonstem.write_html("figures/nonstem_women_share.html")
 ```
+
+</div>
