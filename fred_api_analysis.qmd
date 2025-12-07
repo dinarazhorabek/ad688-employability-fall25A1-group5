@@ -12,6 +12,7 @@ format:
 
 <div class="card reveal">
 
+### Import Fred APIs
 ```{python}
 import os
 from dotenv import load_dotenv
@@ -302,3 +303,10 @@ fig_nonstem.write_html("figures/nonstem_women_share.html")
 ```
 
 </div>
+
+# Gender Dominace by States
+
+```{python}
+gender_state = pd_readcsv("data/acs_computer_math_gender_by_state_5yrs.csv")
+gender_state.head()
+```
