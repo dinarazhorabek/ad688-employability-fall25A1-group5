@@ -64,13 +64,13 @@ skills = [
 df_skills = pd.DataFrame(
     {
         "Name": team_members,
-        "SQL (Programming Language)": [5, 3, 4],
-        "Python (Programming Language)": [4, 3, 5],
+        "SQL (Programming Language)": [5, 3, 3],
+        "Python (Programming Language)": [4, 3, 4],
         "Tableau (Business Intelligence Software)": [3, 4, 2],
-        "Power BI": [2, 5, 3],
+        "Power BI": [3, 5, 2],
         "Microsoft Excel": [5, 4, 4],
-        "R (Programming Language)": [2, 1, 3],
-        "Amazon Web Services": [4, 4, 4],
+        "R (Programming Language)": [4, 3, 3],
+        "Amazon Web Services": [4, 3, 3],
     }
 ).set_index("Name")
 ```

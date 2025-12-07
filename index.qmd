@@ -2,40 +2,97 @@
 title: "Home"
 format:
   html:
-    toc: false
+    toc: true
+    toc-depth: 3
 ---
 
-<div class="hero reveal">
+<div class="card reveal">
 
-# Gender Disparities in Hiring & Political Influence\
+# Overview
 
-### A Data-Driven 2024 Job Market Analysis
+This website presents a structured analysis of the 2024 U.S. job market using a combination of **Lightcast job postings**, **FRED macroeconomic indicators**, and insights from academic research. Our goal is to understand how economic conditions, skill demand, and organizational behavior shape opportunities for job seekers entering the market in 2024.
 
-We combine job posting data, macroeconomic indicators, and peer-reviewed research to understand how gender and political context shape career opportunities.
-
-Explore our findings and insights below.
+The analysis integrates quantitative data (job postings, salaries, geographic distribution, required skills) with qualitative insights drawn from peer-reviewed literature on hiring dynamics, gender disparities, and political context. By combining these perspectives, we provide a more holistic and actionable understanding of labor-market patterns.
 
 </div>
 
 <div class="card reveal">
 
-### Why This Research Matters
+# Data Sources
 
-Gender inequality interacts with industry, policy, and geography.  
+Our project leverages two primary sources:
 
-Some states and sectors are closing gaps, while others remain sharply imbalanced.
+### **Lightcast Job Postings (2024)**
 
-Our goal is to translate these patterns into **practical insights** for job seekers.
+This dataset includes thousands of job postings across the United States, containing information on:
+
+- job titles  
+- employer details  
+- required skills  
+- salaries where reported  
+- geographic location  
+- posting dates  
+
+After cleaning and standardization, this dataset serves as the backbone of our empirical analysis, allowing exploration of hiring demand, wage patterns, and regional variations.
+
+### **FRED Macroeconomic Indicators**
+
+To contextualize shifts in hiring, we incorporate macroeconomic time series from the Federal Reserve, including:
+
+- unemployment rates  
+- labor-force participation  
+- CPI and inflation measures  
+- sector-level economic activity  
+
+These indicators help clarify why specific industries expand or contract over time.
 
 </div>
 
 <div class="card reveal">
 
-### What This Site Includes
+# Why It Matters
 
-- Research Overview  
-- Data Analysis  
-- Career Strategy  
-- Team Profiles  
+Navigating the job market has become increasingly complex for recent graduates and career-switchers. Economic uncertainty, rapid technological development, and evolving skill requirements mean that job seekers must adapt to conditions that shift year to year.
+
+Three guiding questions shape our analysis:
+
+1. **Which skills are most in demand in 2024, and how have they evolved?**  
+2. **How do geographic and sectoral differences influence job opportunities and salary outcomes?**  
+3. **How do broader social factors, such as gender representation and organizational culture affect hiring?**
+
+These questions connect quantitative job-posting data with research on labor inequality, organizational behavior, and workforce development.
+
+</div>
+
+<div class="card reveal">
+
+# Website Structure
+
+This website synthesizes findings across several analytical components:
+
+- **Research Background**  
+  Academic perspectives on gender disparities, labor dynamics, and political influences.
+
+- **Analysis**
+
+  - **Gender Dispartities Overview** : 
+
+  - **Data Cleaning & Preparation**  : Standardizing, restructuring, and validating Lightcast job postings.
+
+  - **Exploratory Data Analysis (EDA)**  : Hiring patterns, salary distributions, geographic variation, and skills demand.
+
+  - **Gender Dominance in Job Postings** : 
+
+  - **Machine Learning Models**  : Clustering and predictive modeling of job-market patterns.
+
+  - **NLP Analysis**  : Extracting insights from job descriptions, including skills and thematic patterns.
+
+  - **Skill Gap Analysis**  : Comparison between team skill sets and market expectations.
+
+- **Career Strategy**
+
+- **About Us**
+
+Collectively, these analyses provide a comprehensive, data-driven picture of the 2024 job market and inform actionable career strategies.
 
 </div>
