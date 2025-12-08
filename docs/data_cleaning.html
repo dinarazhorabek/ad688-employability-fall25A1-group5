@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.43">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,12 +68,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4379b0ccadffce622b03caf4c46266b3.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-69d87467896a330188e7f833fde9423c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6e9526e7d15d37e5e674417aa327a718.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d1b12f2568ecbe55642fee6aa00bd082.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-5af9452bc6020cfbe72c5cc3e063fe0c.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -256,7 +256,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <hr>
 <section id="initial-dataset-overview" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="initial-dataset-overview">Initial Dataset Overview</h3>
-<div id="5d385dbb" class="cell" data-execution_count="1">
+<div id="e421425e" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -278,7 +278,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <section id="dropping-redundant-or-outdated-columns" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="dropping-redundant-or-outdated-columns">Dropping Redundant or Outdated Columns</h3>
 <p>Lightcast contains multiple versions of NAICS/SOC classifications, plus metadata fields (tracking URLs, flags, timestamps). We remove clearly redundant metadata and older classification versions while keeping the 2022 NAICS codes and 2021 SOC codes.</p>
-<div id="8006d842" class="cell" data-execution_count="2">
+<div id="7043def2" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [</span>
@@ -299,7 +299,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <p>Many Lightcast columns store lists as text such as:</p>
 <p>[“Job Board”] [“disabledperson.com”, “dejobs.org”]</p>
 <p>So, we convert these into clean comma-separated strings.</p>
-<div id="c2f270af" class="cell" data-execution_count="3">
+<div id="d26422fc" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_list(x):</span>
@@ -333,7 +333,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -454,7 +454,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 •   strip currency symbols, commas, and non-numeric characters from numeric fields,
 •   create a standardized PAY_PERIOD,
 •   convert everything to an annualized ANNUAL_SALARY field suitable for EDA and modeling.</code></pre>
-<div id="dae3c25b" class="cell" data-execution_count="4">
+<div id="58cb495d" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Key salary-related columns we want to preserve</span></span>
@@ -576,7 +576,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"SALARY"</span>, <span class="st">"PAY_PERIOD"</span>, <span class="st">"ANNUAL_SALARY"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -632,25 +632,25 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 •   location fields,
 •   duration.</code></pre>
 <p>We drop extremely sparse columns (more than 50% missing) but never drop salary-related fields, even if they exceed this threshold.</p>
-<div id="e4b42ad8" class="cell" data-execution_count="5">
+<div id="c4f1cb55" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the most-missing columns</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>missing_summary <span class="op">=</span> df.isna().mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">15</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>missing_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>ACTIVE_SOURCES_INFO       0.892163
 MAX_YEARS_EXPERIENCE      0.883721
-MAX_EDULEVELS_NAME        0.774959
 MAX_EDULEVELS             0.774959
+MAX_EDULEVELS_NAME        0.774959
 LIGHTCAST_SECTORS         0.754655
 LIGHTCAST_SECTORS_NAME    0.754655
 ANNUAL_SALARY             0.672377
 SALARY                    0.575050
-SALARY_FROM               0.553119
-SALARY_TO                 0.553119
 ORIGINAL_PAY_PERIOD       0.553119
+SALARY_TO                 0.553119
+SALARY_FROM               0.553119
 DURATION                  0.376783
 MIN_YEARS_EXPERIENCE      0.319264
 MODELED_DURATION          0.266076
@@ -658,7 +658,7 @@ MODELED_EXPIRED           0.212640
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="5bea998d" class="cell" data-execution_count="6">
+<div id="0754a908" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Critical columns that must be preserved</span></span>
@@ -708,7 +708,7 @@ memory usage: 63.1+ MB</code></pre>
 <section id="standardizing-the-posted-date-and-creating-a-month-column" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="standardizing-the-posted-date-and-creating-a-month-column">Standardizing the POSTED Date and Creating a Month Column</h3>
 <p>Datetime consistency is essential for trend analysis and for joining with FRED macroeconomic indicators.</p>
-<div id="415cb240" class="cell" data-execution_count="7">
+<div id="b152424e" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"POSTED"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"POSTED"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
@@ -717,12 +717,12 @@ memory usage: 63.1+ MB</code></pre>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"POSTED"</span>, <span class="st">"month"</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/nc/5dc3_9y52yv6qhckcby4v4dc0000gn/T/ipykernel_60450/3881994798.py:2: PerformanceWarning:
+<pre><code>/var/folders/qg/l3hwrchj11q3x74bf7cmqkv00000gn/T/ipykernel_11275/3881994798.py:2: PerformanceWarning:
 
 DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
 </code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -780,7 +780,7 @@ DataFrame is highly fragmented.  This is usually the result of calling `frame.in
 </li>
 <li>original posting date</li>
 </ul>
-<div id="8b7e043b" class="cell" data-execution_count="8">
+<div id="e884cef0" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>subset_cols <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> [<span class="st">"TITLE_NAME"</span>, <span class="st">"COMPANY_NAME"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>]</span>
@@ -799,7 +799,7 @@ DataFrame is highly fragmented.  This is usually the result of calling `frame.in
 <div class="cell-output cell-output-stdout">
 <pre><code>Removed 3300 duplicate postings.</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>(69198, 115)</code></pre>
 </div>
 </div>
@@ -814,7 +814,7 @@ DataFrame is highly fragmented.  This is usually the result of calling `frame.in
 •   ML Methods,
 •   NLP Methods.</code></pre>
 <p>Exporting ensures team alignment and prevents inconsistent results.</p>
-<div id="99f27fbe" class="cell" data-execution_count="9">
+<div id="43e654fd" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"data/lightcast_cleaned.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
@@ -1191,11 +1191,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          if (link.getAttribute("rel") === null) {
-            link.setAttribute("rel", "noopener");
-          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
