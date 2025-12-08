@@ -36,13 +36,14 @@ By comparing industry demand vs. team proficiency, we identified skill strengths
 
 #### Skill Profile (Interactive Radar Chart)
 
-<iframe src="figures/skill_profile_Dinara.html"
-        width="100%" height="520"></iframe>
+<iframe src="figures/skill_profile_Dinara.html" 
+        width="100%" 
+        height="520" 
+        style="border:none;">
+</iframe>
 
----
-
-#### Dinara’s Interpretation & Recommendations
-
+### Interpretation & Career Strategy
+ 
 </div>
 
 ---
@@ -56,9 +57,7 @@ By comparing industry demand vs. team proficiency, we identified skill strengths
 <iframe src="figures/skill_profile_Nhat.html"
         width="100%" height="520"></iframe>
 
----
-
-#### Nhat’s Interpretation & Recommendations
+### Interpretation & Career Strategy 
 
 </div>
 
@@ -70,37 +69,22 @@ By comparing industry demand vs. team proficiency, we identified skill strengths
 
 #### Skill Profile (Interactive Radar Chart)
 
-<iframe src="figures/skill_profile_Leo.html"
-        width="100%" height="520"></iframe>
+<iframe src="figures/skill_profile_Leo.html" 
+        width="100%" 
+        height="520" 
+        style="border:none;">
+</iframe>
 
----
-
-#### Leo’s Interpretation & Recommendations
-
-My radar shows balanced capability across SQL, Python, and AWS…
+### Interpretation & Career Strategy 
 
 </div>
 
 ---
-
-### Team Findings
 
 <div class="card reveal">
 
-## Collective Findings
+## Team Findings
 
-### Shared Strengths
-- Strong analytical and SQL foundations  
-- Balanced Python and Excel experience  
-- Diverse BI + cloud skills across members  
-
-### Shared Growth Opportunities
-- AWS for all members  
-- Advanced SQL  
-- Dashboard portfolio development  
-
-</div>
-
-:::
+Summaries of shared strengths, common gaps, team-level recommendations, role alignment, etc.
 
 </div>

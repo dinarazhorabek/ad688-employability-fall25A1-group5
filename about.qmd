@@ -9,12 +9,8 @@ format:
   
 # Team 5
 
-We are graduate students in the **Master of Applied Business Analytics (MABA)** program at  
-**Boston University Metropolitan College**, completing this project for  
-**AD 688 – Web Analytics**.
-
-Our work integrates labor market analytics, machine learning, gender disparities research,  
-and cloud-based data engineering practices.
+Graduate students in the Master of Applied Business Analytics program at Boston University,  
+completing this project for **AD 688 – Web Analytics**.
 
 </div>
 
@@ -26,25 +22,17 @@ and cloud-based data engineering practices.
 
 <div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Hung Nguyen</strong><br>
-<span style="color:#555;">
-Contributed to data wrangling, Quarto website architecture, and aligning macro–micro insights within the analytical narrative.
-</span>
+Data wrangling, Quarto architecture, integration of macro/micro insights.
 </div>
 
 <div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Nhat Tran</strong><br>
-<span style="color:#555;">
-Led FRED API integration, time-series analyses, and macroeconomic labor trend visualization.
-</span>
+FRED API integration, time-series visualization, macro interpretation.
 </div>
 
 <div class="avatar-card" style="flex: 1; min-width: 260px; max-width: 340px;">
 <strong>Dinara Zhorabek</strong><br>
-<span style="color:#555;">
-Guided research framing, literature foundation, and policy-driven gender gap interpretation.
-</span>
-</div>
-
+Research framing, literature review, policy/gender analysis.
 </div>
 
 </div>

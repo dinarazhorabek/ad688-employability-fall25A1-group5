@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: empl-web
+  output-dir: docs
 
 website:
   title: "Job Market Analysis 2024"
@@ -45,21 +45,6 @@ format:
     number-sections: false
     smooth-scroll: true
     page-layout: full
-    code-copy: true     # adds copy button to code blocks
-    anchor-sections: true  # enables section anchors for scrollspy
-    link-external-newwindow: true  # opens external links in a new tab
-
-  pdf:
-    documentclass: report
-    toc: true
-    toc-depth: 3
-    number-sections: true
-    geometry: margin=1in
-    papersize: letter
-    fontsize: 12pt
-
-execute:
-  freeze: auto   # speeds up rendering
 
 include-after-body:
   - footer.html

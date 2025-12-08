@@ -71,7 +71,7 @@ columns_to_drop = [
 
 df.drop(columns=columns_to_drop, inplace=True, errors="ignore")
 
-df.head()
+# df.head()
 ```
 
 </div>
@@ -119,7 +119,7 @@ for col in list_cols:
     if col in df.columns:
         df[col] = df[col].apply(clean_list)
 
-df.head()
+df.head(3)
 ```
 
 </div>
@@ -258,7 +258,7 @@ df.loc[df["ANNUAL_SALARY"] > 700000, "ANNUAL_SALARY"] = np.nan
 
 df["ANNUAL_SALARY"] = df["ANNUAL_SALARY"].astype(float)
 
-df[["SALARY_FROM", "SALARY_TO", "SALARY", "PAY_PERIOD", "ANNUAL_SALARY"]].head()
+df[["SALARY_FROM", "SALARY_TO", "SALARY", "PAY_PERIOD", "ANNUAL_SALARY"]].head(3)
 ```
 
 </div>
@@ -389,7 +389,7 @@ Exporting ensures team alignment and prevents inconsistent results.
 ```{python}
 df.to_csv("data/lightcast_cleaned.csv", index=False)
 
-df.head(), df.shape
+# df.head(), df.shape
 ```
 
 </div>
