@@ -256,7 +256,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <hr>
 <section id="initial-dataset-overview" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="initial-dataset-overview">Initial Dataset Overview</h3>
-<div id="27d33662" class="cell" data-execution_count="1">
+<div id="da6848aa" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -278,7 +278,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <section id="dropping-redundant-or-outdated-columns" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="dropping-redundant-or-outdated-columns">Dropping Redundant or Outdated Columns</h3>
 <p>Lightcast contains multiple versions of NAICS/SOC classifications, plus metadata fields (tracking URLs, flags, timestamps). We remove clearly redundant metadata and older classification versions while keeping the 2022 NAICS codes and 2021 SOC codes.</p>
-<div id="bb89ad40" class="cell" data-execution_count="2">
+<div id="5fad342e" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [</span>
@@ -299,7 +299,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <p>Many Lightcast columns store lists as text such as:</p>
 <p>[“Job Board”] [“disabledperson.com”, “dejobs.org”]</p>
 <p>So, we convert these into clean comma-separated strings.</p>
-<div id="aed95bbf" class="cell" data-execution_count="3">
+<div id="5e8a5fc1" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_list(x):</span>
@@ -331,9 +331,9 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].<span class="bu">apply</span>(clean_list)</span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>display(df.head(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -454,7 +454,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 •   strip currency symbols, commas, and non-numeric characters from numeric fields,
 •   create a standardized PAY_PERIOD,
 •   convert everything to an annualized ANNUAL_SALARY field suitable for EDA and modeling.</code></pre>
-<div id="59cff8cf" class="cell" data-execution_count="4">
+<div id="db409884" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Key salary-related columns we want to preserve</span></span>
@@ -574,9 +574,9 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 <span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"ANNUAL_SALARY"</span>] <span class="op">=</span> df[<span class="st">"ANNUAL_SALARY"</span>].astype(<span class="bu">float</span>)</span>
 <span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"SALARY"</span>, <span class="st">"PAY_PERIOD"</span>, <span class="st">"ANNUAL_SALARY"</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"SALARY"</span>, <span class="st">"PAY_PERIOD"</span>, <span class="st">"ANNUAL_SALARY"</span>]].head(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -632,7 +632,7 @@ Following the AD688 project requirements, our goals for this section are to:</p>
 •   location fields,
 •   duration.</code></pre>
 <p>We drop extremely sparse columns (more than 50% missing) but never drop salary-related fields, even if they exceed this threshold.</p>
-<div id="8317a2a2" class="cell" data-execution_count="5">
+<div id="9eac5e2e" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the most-missing columns</span></span>
@@ -658,7 +658,7 @@ MODELED_EXPIRED           0.212640
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="aefa4ccb" class="cell" data-execution_count="6">
+<div id="cea9608e" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Critical columns that must be preserved</span></span>
@@ -708,7 +708,7 @@ memory usage: 63.1+ MB</code></pre>
 <section id="standardizing-the-posted-date-and-creating-a-month-column" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="standardizing-the-posted-date-and-creating-a-month-column">Standardizing the POSTED Date and Creating a Month Column</h3>
 <p>Datetime consistency is essential for trend analysis and for joining with FRED macroeconomic indicators.</p>
-<div id="ce8f1640" class="cell" data-execution_count="7">
+<div id="f8e3942e" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"POSTED"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"POSTED"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
@@ -717,7 +717,7 @@ memory usage: 63.1+ MB</code></pre>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"POSTED"</span>, <span class="st">"month"</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/nc/5dc3_9y52yv6qhckcby4v4dc0000gn/T/ipykernel_8527/3881994798.py:2: PerformanceWarning:
+<pre><code>/var/folders/nc/5dc3_9y52yv6qhckcby4v4dc0000gn/T/ipykernel_16759/3881994798.py:2: PerformanceWarning:
 
 DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
 </code></pre>
@@ -780,7 +780,7 @@ DataFrame is highly fragmented.  This is usually the result of calling `frame.in
 </li>
 <li>original posting date</li>
 </ul>
-<div id="baed18bd" class="cell" data-execution_count="8">
+<div id="b22a1dd9" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>subset_cols <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> [<span class="st">"TITLE_NAME"</span>, <span class="st">"COMPANY_NAME"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>]</span>
@@ -814,7 +814,7 @@ DataFrame is highly fragmented.  This is usually the result of calling `frame.in
 •   ML Methods,
 •   NLP Methods.</code></pre>
 <p>Exporting ensures team alignment and prevents inconsistent results.</p>
-<div id="95663361" class="cell" data-execution_count="9">
+<div id="1918586c" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"data/lightcast_cleaned.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
@@ -1625,7 +1625,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
 <span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].<span class="bu">apply</span>(clean_list)</span>
 <span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">3</span>)</span>
+<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a>display(df.head(<span class="dv">3</span>))</span>
 <span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a>&lt;/div&gt;</span>
@@ -1764,7 +1764,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"ANNUAL_SALARY"</span>] <span class="op">=</span> df[<span class="st">"ANNUAL_SALARY"</span>].astype(<span class="bu">float</span>)</span>
 <span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"SALARY"</span>, <span class="st">"PAY_PERIOD"</span>, <span class="st">"ANNUAL_SALARY"</span>]].head(<span class="dv">3</span>)</span>
+<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"SALARY"</span>, <span class="st">"PAY_PERIOD"</span>, <span class="st">"ANNUAL_SALARY"</span>]].head(<span class="dv">3</span>))</span>
 <span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a>&lt;/div&gt;</span>

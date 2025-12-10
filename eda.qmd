@@ -55,8 +55,13 @@ df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
 ### Job Postings by Industry (Top Sectors Hiring)
 
 ```{python}
-industry_candidates = ["NAICS_2022_2_NAME", "INDUSTRY_NAME", "NAICS_2022_3_NAME"]
-industry_col = next((c for c in industry_candidates if c in df.columns), None)
+industry_candidates = [
+    "NAICS_2022_2_NAME", 
+    "INDUSTRY_NAME", 
+    "NAICS_2022_3_NAME"]
+industry_col = next(
+    (c for c in industry_candidates if c in df.columns), 
+    None)
 industry_col
 ```
 
@@ -148,7 +153,12 @@ fig.update_layout(
     title="Annual Salary - Trend Over Time",
     template="plotly_white",
     hovermode="x unified",
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    legend=dict(
+        orientation="h", 
+        yanchor="bottom", 
+        y=1.02, 
+        xanchor="right", 
+        x=1),
     xaxis=dict(
         title="Month",
         tickformat="%b %Y",
@@ -170,6 +180,12 @@ fig.update_layout(
 )
 fig.show()
 ```
+**Insight:**
+
+
+</div>
+
+<div class="card reveal">
 
 ### Salary Distribution by Industry
 
@@ -190,7 +206,11 @@ if industry_col and salary_col:
     df_salary = df_salary[df_salary[industry_col] != "Unclassified Industry"]
 
     # Cap extreme values at 300k for readability (still accurate for 95% of postings)
-    df_salary[salary_col] = np.where(df_salary[salary_col] > 300000, 300000, df_salary[salary_col])
+    df_salary[salary_col] = np.where(
+        df_salary[salary_col] > 300000, 
+        300000, 
+        df_salary[salary_col]
+        )
 
     # Compute median salary per industry for ordering
     medians = (
@@ -206,7 +226,7 @@ if industry_col and salary_col:
         y=industry_col,
         x=salary_col,
         category_orders={industry_col: ordered_categories},
-        title="Annual Salary Distribution by Industry (Capped at 300K for Readability)",
+        title="Annual Salary Distribution by Industry",
         color=industry_col,
         color_discrete_sequence=px.colors.qualitative.Vivid,
         height=900
@@ -295,15 +315,24 @@ STATE_CENTROIDS = {
     "WV": (38.597, -80.454), "WI": (43.785, -88.787), "WY": (43.076, -107.290)
 }
 STATE_NAMES = {
-    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California", "CO": "Colorado",
-    "CT": "Connecticut", "DE": "Delaware", "DC": "District of Columbia", "FL": "Florida", "GA": "Georgia",
-    "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky",
-    "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota",
-    "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire",
-    "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", "ND": "North Dakota",
-    "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island",
-    "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah",
-    "VT": "Vermont", "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"
+    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", 
+    "AR": "Arkansas", "CA": "California", "CO": "Colorado",
+    "CT": "Connecticut", "DE": "Delaware", 
+    "DC": "District of Columbia", "FL": "Florida", 
+    "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", 
+    "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", 
+    "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", 
+    "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", 
+    "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi", 
+    "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", 
+    "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", 
+    "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", 
+    "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", 
+    "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island",
+    "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", 
+    "TX": "Texas", "UT": "Utah", "VT": "Vermont", 
+    "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", 
+    "WI": "Wisconsin", "WY": "Wyoming"
 }
 STATE_NAME_TO_CODE = {
     "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",

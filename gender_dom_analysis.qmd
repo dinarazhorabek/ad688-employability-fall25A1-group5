@@ -5,9 +5,8 @@ bibliography: references.bib
 csl: csl/econometrica.csl
 format:
   html:
-    toc: true
     code-fold: true
-    code-tools: true
+    # code-tools: true
 ---
 
 <div class="card reveal">
@@ -21,12 +20,8 @@ import plotly.io as pio
 import plotly.express as px
 import os
 
-# os.makedirs("figures", exist_ok=True)
-
 # Load raw Lightcast job postings
 df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
-
-# Basic structural overview
 #df.head()
 ```
 
@@ -70,11 +65,10 @@ print("Rows after:", after_count)
 ### Exploring Unique Industry Categories (NAICS2_NAME)
 
 We retrieve the list of unique industry categories by extracting all distinct values from the NAICS2_NAME column after removing missing entries.
-
 ```{python}
 # Get list of uniques NAICS2_NAME
 naics2_name = df["NAICS2_NAME"].dropna().unique().tolist()
-print(naics2_name)
+# print(naics2_name)
 ```
 
 </div>
@@ -146,7 +140,9 @@ df_salary = df.dropna(subset=["SALARY"])
 df_salary.to_csv("./data/lightcast_gender.csv", index=False)
 
 # Compute job counts
-industry_counts = (df_salary.groupby("NAICS2_NAME")["SALARY"].count().rename("JOB_COUNT"))
+industry_counts = (df_salary.groupby("NAICS2_NAME")["SALARY"]
+    .count()
+    .rename("JOB_COUNT"))
 
 industry_median_salary = (
     df_salary.groupby("NAICS2_NAME")["SALARY"]
@@ -196,20 +192,23 @@ fig_gd.add_trace(
     go.Bar(
         x=gender_dom_summary["GENDER_DOMINANCE"],
         y=gender_dom_summary["MEDIAN_SALARY"],
-        text=[f"${v:,.0f}" for v in gender_dom_summary["MEDIAN_SALARY"]],
+        text=[
+            f"${v:,.0f}" for v in gender_dom_summary["MEDIAN_SALARY"]
+            ],
         textposition="outside",
-        marker_color=[colors[cat] for cat in gender_dom_summary["GENDER_DOMINANCE"]]
+        marker_color=[
+            colors[cat] for cat in gender_dom_summary["GENDER_DOMINANCE"]
+            ]
     )
 )
 fig_gd.update_layout(
     title="Median Salary by Gender Dominance Category",
     yaxis_title="Median Salary",
-    xaxis_title="Gender Dominance",
-    width=700,
-    height=500
+    xaxis_title="Gender Dominance"
+    # width=700,
+    # height=500
 )
 fig_gd.show()
-# fig_gd.write_html("figures/gender_salary_distr.html")
 ```
 
 Looking at the job postings, male-dominated industries lead in both number and pay, with 13,995 positions and a median salary of $125,900. Female-dominated sectors have 6,341 postings at a median of $101,500, while Mixed industries have the fewest openings, 5,531, with a median of $95,000. Overall, this points to a clear link between gender dominance in an industry and salary levels, with male-heavy fields offering both more opportunities and higher pay.
@@ -224,7 +223,9 @@ fig_box = go.Figure()
 for category in df_salary["GENDER_DOMINANCE"].unique():
     fig_box.add_trace(
         go.Box(
-            y=df_salary[df_salary["GENDER_DOMINANCE"] == category]["SALARY"],
+            y=df_salary[
+                df_salary["GENDER_DOMINANCE"] == category
+                ]["SALARY"],
             name=category,
             marker_color=colors.get(category, "lightgray"),
             boxmean=True
@@ -234,12 +235,11 @@ for category in df_salary["GENDER_DOMINANCE"].unique():
 fig_box.update_layout(
     title="Salary Distribution by Gender Dominance",
     yaxis_title="Salary",
-    xaxis_title="Gender Dominance",
-    width=800,
-    height=550
+    xaxis_title="Gender Dominance"
+    # width=800,
+    # height=550
 )
 fig_box.show()
-# fig_box.write_html("figures/gender_salary_boxplot.html")
 ```
 
 The boxplot shows that Male-dominated industries consistently offer higher salaries, with both a higher median and greater variation at the upper end. On the other hand, female-dominated industries display lower median salaries and a tighter distribution, suggesting fewer opportunities for better salary offers. The Mixed industries fall right in-between, with moderate median pay and some high-earning positions, though not as many as in male-dominated fields.
@@ -264,12 +264,11 @@ bubble_fig = px.scatter(
 bubble_fig.update_layout(
     title="Job Count vs. Median Salary by Gender Dominance Category",
     xaxis_title="Job Count",
-    yaxis_title="Median Salary",
-    width=850,
-    height=550
+    yaxis_title="Median Salary"
+    # width=850,
+    # height=550
 )
 bubble_fig.show()
-# bubble_fig.write_html("figures/gender_salary_bubble.html")
 ```
 
 Male-dominated industries lead in both job count and median salary, with the largest number of openings and the highest pay. Female-dominated industries have fewer positions and lower median salaries, while Mixed industries fall in between, offering moderate opportunities and pay. Overall, higher male representation in an industry is associated with more jobs and higher salaries.
@@ -292,7 +291,9 @@ male_salary_summary = (
 )
 
 # Compute industry-level job counts
-male_job_counts = (male_df.groupby("NAICS2_NAME")["SALARY"].count().reindex(male_salary_summary.index))
+male_job_counts = (male_df.groupby("NAICS2_NAME")["SALARY"]
+    .count()
+    .reindex(male_salary_summary.index))
 
 # Pastel blue for bars
 pastel_blue = "rgba(137, 176, 255, 0.8)"
@@ -301,7 +302,9 @@ fig_male.add_trace(
     go.Bar(
         x=male_salary_summary.index,
         y=male_salary_summary.values,
-        text=[f"${v:,.0f}" for v in male_salary_summary.values],
+        text=[
+            f"${v:,.0f}" for v in male_salary_summary.values
+            ],
         textposition="outside",
         marker_color=pastel_blue,
         name="Median Salary"
@@ -329,12 +332,17 @@ fig_male.update_layout(
         side="right",
     ),
     xaxis_tickangle=40,
-    width=1100,
+    # width=1100,
     height=700,
-    margin=dict(l=50, r=70, t=80, b=150)
+    margin=dict(l=50, r=70, t=80, b=150),
+    legend=dict(
+        orientation="h", 
+        yanchor="bottom", 
+        y=1.02, 
+        xanchor="right", 
+        x=1)
 )
 fig_male.show()
-# fig_male.write_html("figures/male_dom_industry.html")
 ```
 
 The plot shows that male-dominated industries tend to offer relatively high median salaries, with Information ($132,550) and Professional/Scientific/Technical Services ($130,000) leading the group. However, job availability varies widely across some high-paying sectors: Information with a comparatively modest 2166 postings, while Professional/Scientific/Technical Services offers both high pay and large availability of 8530 postings. Thus, hands-on, strongly male-dominated fields like construction, mining, and agriculture show noticeably lower median salaries compared to many other industries overall, highlighting that physically intensive sectors don’t necessarily correspond to higher earnings.
@@ -357,7 +365,9 @@ female_salary_summary = (
 )
 
 # Compute industry-level job counts
-female_job_counts = (female_df.groupby("NAICS2_NAME")["SALARY"].count().reindex(female_salary_summary.index))
+female_job_counts = (female_df.groupby("NAICS2_NAME")["SALARY"]
+    .count()
+    .reindex(female_salary_summary.index))
 
 # Pastel pink for bars
 pastel_pink = "rgba(255, 179, 207, 0.8)"
@@ -366,7 +376,9 @@ fig_female.add_trace(
     go.Bar(
         x=female_salary_summary.index,
         y=female_salary_summary.values,
-        text=[f"${v:,.0f}" for v in female_salary_summary.values],
+        text=[
+            f"${v:,.0f}" for v in female_salary_summary.values
+            ],
         textposition="outside",
         marker_color=pastel_pink,
         name="Median Salary"
@@ -394,12 +406,17 @@ fig_female.update_layout(
         side="right",
     ),
     xaxis_tickangle=40,
-    width=1100,
+    # width=1100,
     height=700,
-    margin=dict(l=50, r=70, t=80, b=150)
+    margin=dict(l=50, r=70, t=80, b=150),
+    legend=dict(
+        orientation="h", 
+        yanchor="bottom", 
+        y=1.02, 
+        xanchor="right", 
+        x=1)
 )
 fig_female.show()
-# fig_female.write_html("figures/female_dom_industry.html")
 ```
 
 Female-dominated industries show a wider salary spread, ranging from about $76k to $145k, with Accommodation and Food Services unexpectedly offering the highest median pay ($144,560) despite only 212 job counts. Finance and Insurance stands out with strong salaries ($115,239) and by far the largest employment (3567), while Health Care and Social Assistance provides mid-range pay ($95,285) with substantial job availability (1280). Other Services and Educational Services offer lower salaries ($75,919) and moderate job counts (950), reflecting more service-oriented, lower-wage career tracks within this sector.
@@ -422,7 +439,9 @@ balanced_salary_summary = (
 )
 
 # Compute industry-level job counts
-balanced_job_counts = (balanced_df.groupby("NAICS2_NAME")["SALARY"].count().reindex(balanced_salary_summary.index))
+balanced_job_counts = (balanced_df.groupby("NAICS2_NAME")["SALARY"]
+    .count()
+    .reindex(balanced_salary_summary.index))
 
 # Pastel purple for bars
 pastel_purple = "rgba(199, 168, 255, 0.8)"
@@ -431,7 +450,9 @@ fig_balanced.add_trace(
     go.Bar(
         x=balanced_salary_summary.index,
         y=balanced_salary_summary.values,
-        text=[f"${v:,.0f}" for v in balanced_salary_summary.values],
+        text=[f"${v:,.0f}" 
+            for v in balanced_salary_summary.values
+            ],
         textposition="outside",
         marker_color=pastel_purple,
         name="Median Salary"
@@ -459,12 +480,17 @@ fig_balanced.update_layout(
         side="right",
     ),
     xaxis_tickangle=40,
-    width=1100,
-    height=850,
-    margin=dict(l=50, r=70, t=80, b=150)
+    # width=1100,
+    height=800,
+    margin=dict(l=50, r=70, t=80, b=150),
+    legend=dict(
+        orientation="h", 
+        yanchor="bottom", 
+        y=1.02, 
+        xanchor="right", 
+        x=1)
 )
 fig_balanced.show()
-# fig_balanced.write_html("figures/balanced_industry.html")
 ```
 
 Mixed industries show a narrower salary range - between $80k and $120k. Retail Trade offers the highest median pay ($120,000) despite moderate job availability (755), while Administrative and Support Services has the largest job count (3584) but lower median wages ($95,800). Real Estate,  Public Administration and Arts/Entertainment maintain moderate salaries with smaller job counts, reflecting niche but steady career paths. Overall, these industries appear more stable across pay and job availability, without the sharp disparities seen in male-dominated sectors.
