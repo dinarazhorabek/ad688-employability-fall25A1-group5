@@ -5,9 +5,8 @@ bibliography: references.bib
 csl: csl/econometrica.csl
 format:
   html:
-    toc: true
     code-fold: true
-    code-tools: true
+    # code-tools: true
 ---
 
 <div class="card reveal">
@@ -29,14 +28,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import os
 
-os.makedirs("figures", exist_ok=True)
-```
-
-```{python}
-#| echo: false
-# warning: false
 lightcast_jp = pd.read_csv('data/lightcast_cleaned.csv')
-# lightcast_jp.head()
 ```
 
 </div>
@@ -227,26 +219,26 @@ fig_gap
 ```
 
 ### Radar Chart Comparison
-
 ```{python}
 skills_list = gap_df.index.tolist()
-team_values = gap_df["team_score"].tolist()
 industry_values = gap_df["industry_score"].tolist()
 
 skills_list += [skills_list[0]]
-team_values += [team_values[0]]
 industry_values += [industry_values[0]]
 
 fig = go.Figure()
+for member in df_skills.index:
+    values = df_skills.loc[member].tolist()
+    values_loop = values + [values[0]]
 
-fig.add_trace(go.Scatterpolar(
-    r=team_values,
-    theta=skills_list,
-    fill='toself',
-    name='Team Level',
-    line=dict(color='rgba(44, 127, 184, 0.9)', width=3),
-    fillcolor='rgba(44, 127, 184, 0.3)'
-))
+    fig.add_trace(go.Scatterpolar(
+        r=values_loop,
+        theta=skills_list,
+        fill='toself',
+        name=member,
+        opacity=0.3,
+        line=dict(width=1)
+    ))
 
 fig.add_trace(go.Scatterpolar(
     r=industry_values,
@@ -254,21 +246,20 @@ fig.add_trace(go.Scatterpolar(
     fill='toself',
     name='Industry Demand',
     line=dict(color='rgba(255, 127, 14, 0.9)', width=3),
-    fillcolor='rgba(255, 127, 14, 0.3)'
+    fillcolor='rgba(255, 127, 14, 0.5)'
 ))
-
 fig.update_layout(
     title="Skill Gap Analysis",
     polar=dict(radialaxis=dict(visible=True, range=[0, 5])),
     showlegend=True,
     legend=dict(orientation="h", y=-0.2)
 )
-
 fig.show()
 ```
 
 ```{python}
 #| include: false
+os.makedirs("figures", exist_ok=True)
 for member in df_skills.index:
     values = df_skills.loc[member].tolist()
     values_closed = values + [values[0]]
@@ -299,6 +290,7 @@ for member in df_skills.index:
     fig.show()
     fig.write_html(f"figures/skill_profile_{member}.html")
 ```
+
 </div>
 
 <div class="card reveal">

@@ -7,7 +7,7 @@ format:
   html:
     toc: true
     code-fold: true
-    code-tools: true
+    # code-tools: true
 ---
 
 <div class="card reveal">
@@ -44,14 +44,12 @@ import plotly.express as px
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
-import plotly.express as px
 
-# Use the cleaned dataset to stay consistent with Data Cleaning, EDA, and ML sections
 df = pd.read_csv("data/lightcast_cleaned.csv", low_memory=False)
 
 # Keep only the columns we need for NLP
 df_text = df[["TITLE_NAME", "BODY", "NAICS_2022_2_NAME", "NAICS_2022_2"]].copy()
-df_text.head()
+# df_text.head()
 ```
 
 </div>
@@ -117,12 +115,10 @@ We aggregate a global vocabulary across all postings and compute the most freque
 all_words = []
 df_text["tokens"].apply(all_words.extend)
 
-word_freq = Counter(all_words).most_common(30)
+word_freq = Counter(all_words).most_common(20)
 freq_df = pd.DataFrame(word_freq, columns=["word", "count"])
 freq_df.head()
 ```
-
-Visualization: Top Keywords in Job Descriptions
 
 The bar chart below highlights the 20 most common lexical terms appearing across job descriptions.
 
@@ -132,11 +128,8 @@ fig_freq = px.bar(
     x="count",
     y="word",
     orientation="h",
-    title="Top 30 Most Common Terms in Job Descriptions",
+    title="Most Common Terms in Job Descriptions",
     labels={"count": "Frequency", "word": "Term"}
-    # color="word",  
-    # color_discrete_sequence=px.colors.qualitative.Pastel, 
-    # height=700
 )
 fig_freq.update_layout(
     xaxis=dict(
@@ -150,7 +143,6 @@ fig_freq.update_layout(
     paper_bgcolor="white",
     showlegend=False 
 )
-
 fig_freq.show()
 ```
 
@@ -209,8 +201,7 @@ tfidf_vectorizer = TfidfVectorizer(
 
 tfidf_matrix = tfidf_vectorizer.fit_transform(df_tfidf["clean_body"])
 feature_names = np.array(tfidf_vectorizer.get_feature_names_out())
-
-tfidf_matrix.shape
+# tfidf_matrix.shape
 ```
 
 ```{python}
@@ -221,21 +212,20 @@ tfidf_df = (
     pd.DataFrame({"term": feature_names, "score": avg_tfidf})
     .sort_values("score", ascending=False)
 )
-
-tfidf_top = tfidf_df.head(25)
-tfidf_top.head()
+# tfidf_top = tfidf_df.head(25)
+tfidf_df.head(3)
 ```
 
 ```{python}
 fig_tfidf = px.bar(
-    tfidf_top.sort_values("score", ascending=True),
+    tfidf_df.head(25).sort_values("score", ascending=True),
     x="score",
     y="term",
     orientation="h",
     title="Top 25 High-Information Terms (TF–IDF)",
     labels={"score": "Average TF–IDF Score", "term": "Term"},
-    color="term",  # categorical coloring
-    color_discrete_sequence=px.colors.qualitative.Set3,  # vibrant, premium palette
+    # color="term",  # categorical coloring
+    # color_discrete_sequence=px.colors.qualitative.Set3,  # vibrant, premium palette
     # height=700
 )
 fig_tfidf.update_layout(
@@ -384,7 +374,7 @@ fig_tech = px.bar(
     x="count",
     y="term",
     orientation="h",
-    title="Technical Terms Found in Job Descriptions (Text Scan)",
+    title="Technical Terms Found in Job Descriptions",
     labels={"count": "Mentions", "term": "Term"},
     # color="count",
     # color_continuous_scale=px.colors.sequential.GnBu,
@@ -405,32 +395,30 @@ fig_tech.show()
 
 <div class="card reveal">
 
-## Interpretation & Insights:
+## Interpretation & Insights
+- Dominant Themes in Employer Language
+  - Global frequency and word clouds show recurring emphasis on experience, support, team, management, and responsibilities.  
+  - This indicates that employers value not only technical competence but also the ability to operate in collaborative, process-oriented environments.
 
-1.	Dominant Themes in Employer Language
-Global frequency and word clouds show recurring emphasis on experience, support, team, management, and responsibilities.
-This indicates that employers value not only technical competence but also the ability to operate in collaborative, process-oriented environments.
+- High-Information Terms (TF–IDF)
+  - TF–IDF surfaces more specialized vocabulary (e.g., “pipeline,” “analytics,” “visualization,” “governance”) that differentiates advanced analytics roles from generic postings.  
+  - These terms often correspond to specific project responsibilities or technical domains within data teams.
 
-2.	High-Information Terms (TF–IDF)
-TF–IDF surfaces more specialized vocabulary (e.g., “pipeline,” “analytics,” “visualization,” “governance”) that differentiates advanced analytics roles from generic postings.
-These terms often correspond to specific project responsibilities or technical domains within data teams.
+- Sector-Specific Vocabulary
+  - In Finance & Insurance, TF–IDF highlights concepts related to risk, portfolios, credit, and regulatory reporting.  
+  - In Professional, Scientific & Technical Services, terms linked to modeling, experimentation, and client delivery become more prominent.  
+  - In Information, we see emphasis on platforms, content, and digital products.  
+  - This demonstrates how sector context shapes the language of “data work.”
 
-3.	Sector-Specific Vocabulary
-- In Finance & Insurance, TF–IDF highlights concepts related to risk, portfolios, credit, and regulatory reporting.
-- In Professional, Scientific & Technical Services, terms linked to modeling, experimentation, and client delivery become more prominent.
-- In Information, we see emphasis on platforms, content, and digital products.
-This demonstrates how sector context shapes the language of “data work.”
+- Technical Signal in Text
+  - The repeated presence of terms such as SQL, Python, Excel, Tableau, Power BI, AWS, and Azure inside descriptions reinforces the structured skill patterns observed in the EDA section.  
+  - These technologies function as “linguistic anchors” that clearly distinguish analytics roles from general business positions.
 
-4.	Technical Signal in Text
-The repeated presence of terms such as SQL, Python, Excel, Tableau, Power BI, AWS, and Azure inside descriptions reinforces the structured skill patterns observed in the EDA section.
-These technologies function as “linguistic anchors” that clearly distinguish analytics roles from general business positions.
-
-5.	Implications for Job Seekers
-- Candidates aligning with these text-level signals (SQL + Python + BI + cloud) are better positioned for data-intensive roles.
-- Beyond tools, employers repeatedly emphasize concepts related to analysis, insights, decision-making, and stakeholder communication — confirming that soft skills and interpretation capabilities matter as much as raw coding ability.
-- Understanding how employers write about roles helps job seekers tailor resumes, cover letters, and LinkedIn profiles using the same vocabulary that appears in successful job descriptions.
+- Implications for Job Seekers
+  - Candidates aligning with these text-level signals (SQL + Python + BI + cloud) are better positioned for data-intensive roles.  
+  - Beyond tools, employers repeatedly emphasize concepts related to analysis, insights, decision-making, and stakeholder communication — confirming that soft skills and interpretation capabilities matter as much as raw coding ability.  
+  - Understanding how employers write about roles helps job seekers tailor resumes, cover letters, and LinkedIn profiles using the same vocabulary that appears in successful job descriptions.
 
 Taken together, the NLP results provide a qualitative, language-based complement to our structured EDA and Skill Gap Analysis, strengthening the case for a hybrid skill profile: technical depth, sector awareness, and communication skills that translate data into decisions.
 
 </div>
-

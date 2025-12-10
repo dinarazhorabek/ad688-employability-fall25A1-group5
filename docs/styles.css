@@ -65,8 +65,7 @@ h1.title,
 h1 {
   text-align: center !important;
   width: 100% !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  margin: 0 auto !important;
   display: block !important;
   animation: titleFadeIn 1s ease-out both;
 }
@@ -136,7 +135,7 @@ h1::after {
 }
 
 /* Top accent bar */
-.card::before, .hero::before {
+/* .card::before, .hero::before {
   content: "";
   position: absolute;
   top: 0; left: 18px; right: 18px;
@@ -144,7 +143,7 @@ h1::after {
   border-radius: 999px;
   background-image: var(--leo-accent-gradient);
   opacity: 0.75;
-}
+} */
 
 /* Hover rise */
 .card:hover {

@@ -40,7 +40,7 @@ format:
       dark: quartz
     css: styles.css
     toc: true
-    toc-depth: 4
+    toc-depth: 3
     toc-location: right
     number-sections: false
     smooth-scroll: true
