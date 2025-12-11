@@ -11,6 +11,12 @@ format:
 
 <div class="card reveal">
 
+## Objective
+This section aims to clean and prepare the Lightcast job postings dataset, focusing on industries with clearly defined classifications. It then categorizes industries by gender dominance and analyzes job postings, median salaries, and distributions across male-, female-, and mixed-dominated sectors. The visualizations provide insights into how gender dominance correlates with job availability and compensation patterns.
+</div>
+
+<div class="card reveal">
+
 ### Load the Cleaned Dataset
 ```{python}
 import pandas as pd
@@ -494,6 +500,10 @@ fig_balanced.show()
 ```
 
 Mixed industries show a narrower salary range - between $80k and $120k. Retail Trade offers the highest median pay ($120,000) despite moderate job availability (755), while Administrative and Support Services has the largest job count (3584) but lower median wages ($95,800). Real Estate,  Public Administration and Arts/Entertainment maintain moderate salaries with smaller job counts, reflecting niche but steady career paths. Overall, these industries appear more stable across pay and job availability, without the sharp disparities seen in male-dominated sectors.
+
+### Conclusion
+
+The analysis shows that male-dominated industries have the highest number of job postings and median salaries, while female-dominated industries generally offer fewer positions and lower median pay, with some exceptions in high-paying sectors like Finance and Accommodation. Mixed industries display moderate job counts and salaries, suggesting more balanced opportunities. Overall, gender dominance in an industry is strongly associated with both job availability and compensation patterns, highlighting structural differences across sectors.
 
 </div>
 
