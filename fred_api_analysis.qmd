@@ -307,7 +307,7 @@ fig_stem.update_layout(
     xaxis_tickangle=30,
     width=700,
     height=500,
-    margin=dict(t=150),
+    margin=dict(t=100),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics (BLS) via FRED",
@@ -358,7 +358,7 @@ fig_nonstem.update_layout(
     xaxis_tickangle=30,
     width=700,
     height=500,
-    margin=dict(t=150),
+    margin=dict(t=100),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics (BLS) via FRED",
