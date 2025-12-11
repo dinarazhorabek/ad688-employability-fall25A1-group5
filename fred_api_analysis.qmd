@@ -151,11 +151,14 @@ fig_unemp.update_layout(
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics via FRED",
-            xref="paper", yref="paper",
-            x=1, y=-0.15,
+            xref="paper",
+            yref="paper",
+            x=1,
+            y=-0.05,
             showarrow=False,
             font=dict(size=10, color="gray"),
-            xanchor="right"
+            xanchor="right",
+            yanchor="top"
         )
     ]
 )
@@ -197,11 +200,14 @@ fig_part.update_layout(
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics via FRED",
-            xref="paper", yref="paper",
-            x=1, y=-0.15,
+            xref="paper",
+            yref="paper",
+            x=1,
+            y=-0.05,
             showarrow=False,
             font=dict(size=10, color="gray"),
-            xanchor="right"
+            xanchor="right",
+            yanchor="top"
         )
     ]
 )
@@ -301,6 +307,7 @@ fig_stem.update_layout(
     xaxis_tickangle=30,
     width=700,
     height=500,
+    margin=dict(t=150),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics (BLS) via FRED",
@@ -351,6 +358,7 @@ fig_nonstem.update_layout(
     xaxis_tickangle=30,
     width=700,
     height=500,
+    margin=dict(t=150),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics (BLS) via FRED",
