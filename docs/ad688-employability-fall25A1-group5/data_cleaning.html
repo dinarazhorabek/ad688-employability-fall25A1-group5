@@ -257,7 +257,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 <hr>
 <section id="initial-dataset-overview" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="initial-dataset-overview">Initial Dataset Overview</h3>
-<div id="ed1db0de" class="cell" data-execution_count="1">
+<div id="e3c7ff07" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -279,7 +279,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 <section id="dropping-redundant-or-outdated-columns" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="dropping-redundant-or-outdated-columns">Dropping Redundant or Outdated Columns</h3>
 <p>Lightcast contains multiple versions of NAICS/SOC classifications, plus metadata fields (tracking URLs, flags, timestamps). We remove clearly redundant metadata and older classification versions while keeping the 2022 NAICS codes and 2021 SOC codes.</p>
-<div id="9d3b978d" class="cell" data-execution_count="2">
+<div id="50b4e6c7" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [</span>
@@ -304,7 +304,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 <p>Many Lightcast columns store lists as text such as:</p>
 <p>[“Job Board”] [“disabledperson.com”, “dejobs.org”]</p>
 <p>So, we convert these into clean comma-separated strings.</p>
-<div id="ff6af7a5" class="cell" data-execution_count="3">
+<div id="abc6a5f0" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_list(x):</span>
@@ -349,7 +349,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 •   strip currency symbols, commas, and non-numeric characters from numeric fields,
 •   create a standardized PAY_PERIOD,
 •   convert everything to an annualized ANNUAL_SALARY field suitable for EDA and modeling.</code></pre>
-<div id="7cf6394b" class="cell" data-execution_count="4">
+<div id="9dca3397" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Key salary-related columns we want to preserve</span></span>
@@ -540,7 +540,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 •   location fields,
 •   duration.</code></pre>
 <p>We drop extremely sparse columns (more than 50% missing) but never drop salary-related fields, even if they exceed this threshold.</p>
-<div id="51f1a80c" class="cell" data-execution_count="5">
+<div id="5bbbacea" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the most-missing columns</span></span>
@@ -548,7 +548,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># display(missing_summary)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="875f5f8c" class="cell" data-execution_count="6">
+<div id="b76fbb1a" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Critical columns that must be preserved</span></span>
@@ -599,7 +599,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 <section id="standardizing-the-posted-date-and-creating-a-month-column" class="level3 card reveal">
 <h3 class="anchored" data-anchor-id="standardizing-the-posted-date-and-creating-a-month-column">Standardizing the POSTED Date and Creating a Month Column</h3>
 <p>Datetime consistency is essential for trend analysis and for joining with FRED macroeconomic indicators.</p>
-<div id="c93bbbe6" class="cell" data-execution_count="7">
+<div id="1eb050a2" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df["POSTED"] = pd.to_datetime(df["POSTED"], errors="coerce")</span></span>
@@ -668,7 +668,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 </li>
 <li>original posting date</li>
 </ul>
-<div id="baad116e" class="cell" data-execution_count="8">
+<div id="0d52895e" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>subset_cols <span class="op">=</span> [</span>
@@ -705,7 +705,7 @@ Following the AD688 project requirements, our goals for this section are:</p>
 •   ML Methods,
 •   NLP Methods.</code></pre>
 <p>Exporting ensures team alignment and prevents inconsistent results.</p>
-<div id="eafabce7" class="cell" data-execution_count="9">
+<div id="8a94c4f5" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"data/lightcast_cleaned.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
