@@ -91,6 +91,7 @@ I want to keep improving my coding habits through regular practice in both Pytho
 
 *Professional Presence & Branding*
 I’ll enhance my professional presence by sharing dashboards, code, and summaries on GitHub, LinkedIn, and my personal website. Bringing together my coursework, macro insights, and analytics projects in one place will help present a cohesive view of my development.
+
 </div>
 
 ---

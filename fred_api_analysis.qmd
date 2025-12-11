@@ -147,6 +147,7 @@ fig_unemp.update_layout(
     legend_title="Group",
     width=700,
     height=500,
+    margin=dict(b=100),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics via FRED",
@@ -192,6 +193,7 @@ fig_part.update_layout(
     legend_title="Group",
     width=700,
     height=500,
+    margin=dict(b=100),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics via FRED",
