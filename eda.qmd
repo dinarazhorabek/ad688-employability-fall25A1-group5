@@ -180,8 +180,11 @@ fig.update_layout(
 )
 fig.show()
 ```
-**Insight:**
 
+**Insight:**
+The chart shows a clear seasonal pattern in the job market. Job postings stay fairly strong from May through September, although there is a small dip in July before demand rises again in late summer. However, advertised salaries move very differently. They drop steadily from May to July and reach their lowest point mid-summer. Then, in September, salaries jump sharply to the highest level in the entire period.
+
+This contrast suggests that early summer is dominated by lower-paying or junior roles, while late summer and early fall bring a return of higher-value positions. The most important takeaway is that September offers both strong hiring volume and significantly higher salaries, making it a particularly favorable time for job seekers aiming for better-paid opportunities.
 
 </div>
 
