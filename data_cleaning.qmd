@@ -5,7 +5,7 @@ bibliography: references.bib
 csl: csl/econometrica.csl
 format:
   html:
-    toc: true
+    # toc: true
     code-fold: true
     code-tools: true
 ---
@@ -15,7 +15,7 @@ format:
 ## Objective
 
 Data cleaning is the most critical phase in any analytics workflow.  
-Following the AD688 project requirements, our goals for this section are to:
+Following the AD688 project requirements, our goals for this section are:
 
 - inspect the raw dataset structure,  
 - identify and remove redundant or outdated columns,  
@@ -64,13 +64,17 @@ We remove clearly redundant metadata and older classification versions while kee
 
 ```{python}
 columns_to_drop = [
-    "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
-    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
+    "ID", "URL", "ACTIVE_URLS", 
+    "DUPLICATES", "LAST_UPDATED_TIMESTAMP", "NAICS2", 
+    "NAICS3", "NAICS4", "NAICS5", "NAICS6",
     "SOC_2", "SOC_3", "SOC_5"
 ]
 
-df.drop(columns=columns_to_drop, inplace=True, errors="ignore")
-
+df.drop(
+    columns=columns_to_drop, 
+    inplace=True, 
+    errors="ignore"
+    )
 # df.head()
 ```
 
@@ -119,7 +123,7 @@ for col in list_cols:
     if col in df.columns:
         df[col] = df[col].apply(clean_list)
 
-display(df.head(3))
+# display(df.head(3))
 ```
 
 </div>
@@ -128,7 +132,7 @@ display(df.head(3))
 
 <div class="card reveal">
 
-Salary Fields: Cleaning and Preservation
+### Salary Fields: Cleaning and Preservation
 
 Salary information is central to our job-market analysis, so we explicitly clean and preserve all salary-related fields, even when they are sparsely populated.
 
@@ -142,7 +146,12 @@ We:
 
 ```{python}
 # Key salary-related columns we want to preserve
-salary_cols = ["SALARY_FROM", "SALARY_TO", "SALARY", "ORIGINAL_PAY_PERIOD"]
+salary_cols = [
+    "SALARY_FROM", 
+    "SALARY_TO", 
+    "SALARY", 
+    "ORIGINAL_PAY_PERIOD"
+    ]
 
 # Ensure the columns exist
 for col in salary_cols:
@@ -186,7 +195,9 @@ def clean_salary_range(x):
         return np.nan
 
 # Clean numeric salary fields (FROM, TO, SALARY)
-numeric_salary_fields = ["SALARY_FROM", "SALARY_TO", "SALARY"]
+numeric_salary_fields = [
+    "SALARY_FROM", "SALARY_TO", "SALARY"
+    ]
 
 for col in numeric_salary_fields:
     df[col] = df[col].apply(clean_salary_range)
@@ -258,10 +269,17 @@ df.loc[df["ANNUAL_SALARY"] > 700000, "ANNUAL_SALARY"] = np.nan
 
 df["ANNUAL_SALARY"] = df["ANNUAL_SALARY"].astype(float)
 
-display(df[["SALARY_FROM", "SALARY_TO", "SALARY", "PAY_PERIOD", "ANNUAL_SALARY"]].head(3))
+df[["SALARY_FROM", 
+    "SALARY_TO", 
+    "SALARY", 
+    "PAY_PERIOD",
+    "ANNUAL_SALARY"]
+    ].head(3)
 ```
 
 </div>
+
+---
 
 <div class="card reveal">
 
@@ -281,14 +299,20 @@ We drop extremely sparse columns (more than 50% missing) but never drop salary-r
 ```{python}
 # Inspect the most-missing columns
 missing_summary = df.isna().mean().sort_values(ascending=False).head(15)
-missing_summary
+# display(missing_summary)
 ```
 
 ```{python}
 # Critical columns that must be preserved
 critical_cols = [
-    c for c in (["SALARY_FROM", "SALARY_TO", "SALARY", "ORIGINAL_PAY_PERIOD",
-                 "ANNUAL_SALARY", "PAY_PERIOD"])
+    c for c in ([
+        "SALARY_FROM", 
+        "SALARY_TO", 
+        "SALARY",
+        "ORIGINAL_PAY_PERIOD",
+        "ANNUAL_SALARY", 
+        "PAY_PERIOD"
+        ])
     if c in df.columns
 ]
 
@@ -316,7 +340,7 @@ cat_cols = df.select_dtypes(include="object").columns
 df[cat_cols] = df[cat_cols].fillna("Unknown")
 
 print("Shape after missing-value handling:", df.shape)
-df.info()
+# df.info()
 ```
 
 </div>
@@ -330,10 +354,13 @@ df.info()
 Datetime consistency is essential for trend analysis and for joining with FRED macroeconomic indicators.
 
 ```{python}
-df["POSTED"] = pd.to_datetime(df["POSTED"], errors="coerce")
-df["month"] = df["POSTED"].dt.to_period("M").astype(str)
-
-df[["POSTED", "month"]].head()
+# df["POSTED"] = pd.to_datetime(df["POSTED"], errors="coerce")
+# df["month"] = df["POSTED"].dt.to_period("M").astype(str)
+df = df.assign(
+    POSTED = pd.to_datetime(df["POSTED"], errors="coerce"),
+    month = lambda x: x["POSTED"].dt.to_period("M").astype(str)
+)
+display(df[["POSTED", "month"]].head())
 ```
 
 </div>
@@ -353,8 +380,13 @@ We remove duplicates based on:
 - original posting date  
 
 ```{python}
-subset_cols = [c for c in ["TITLE_NAME", "COMPANY_NAME", "LOCATION", "POSTED"]
-               if c in df.columns]
+subset_cols = [
+    c for c in [
+        "TITLE_NAME", 
+        "COMPANY_NAME", 
+        "LOCATION", 
+        "POSTED"]
+        if c in df.columns]
 
 if subset_cols:
     before = df.shape[0]
@@ -364,7 +396,7 @@ if subset_cols:
 else:
     print("Duplicate removal skipped: key columns missing.")
 
-df.shape
+print(df.shape)
 ```
 
 </div>
@@ -388,8 +420,8 @@ Exporting ensures team alignment and prevents inconsistent results.
 
 ```{python}
 df.to_csv("data/lightcast_cleaned.csv", index=False)
-
-# df.head(), df.shape
+# df.head()
+print(df.shape)
 ```
 
 </div>

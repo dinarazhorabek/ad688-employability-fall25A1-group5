@@ -32,7 +32,7 @@ import pandas as pd
 import plotly.express as px
 import os
 
-os.makedirs("figures", exist_ok=True)
+# os.makedirs("figures", exist_ok=True)
 
 # Load API key from .env
 load_dotenv()
@@ -159,7 +159,6 @@ fig_unemp.update_layout(
     ]
 )
 fig_unemp.show()
-fig_unemp.write_html("figures/unemp_rate.html")
 ```
 
 The line chart shows that men have consistently experienced slightly lower unemployment rates than women across most of modern U.S. economic history, with both groups following the same business-cycle peaks and troughs. The significant spike around 2020–2022 reflects the pandemic lockdown, though, surprisingly, women seem to recover more quickly, suggesting a faster re-entry into the labor market. Overall, despite short-term divergences, the long-run patterns show tightly linked movements between the two groups.
@@ -205,7 +204,6 @@ fig_part.update_layout(
     ]
 )
 fig_part.show()
-fig_part.write_html("figures/labor_force_participation.html")
 ```
 
 From the 1950s through about 1990, the labor force was clearly male-dominated, with men’s participation consistently above 80% while women’s hovered near 33 - 45%, reflecting the era’s social norms in which men were expected to be the primary breadwinners. As societal attitudes shifted and educational and professional opportunities expanded, women’s participation rose steadily - climbing from roughly 32% in 1950 to nearly 60% by 2000. Today, the gap has narrowed significantly, indicating a more balanced workforce compared to historical patterns.
@@ -252,7 +250,6 @@ fig_wage.update_layout(
     ]
 )
 fig_wage.show()
-fig_wage.write_html("figures/gender_wage_gap.html")
 ```
 
 The chart highlights the long-run narrowing of the gender earnings gap: around 1950s - 1980s, men earned around $380–$400 per week while women earned closer to $240–$260, meaning men made roughly double at the time. Since then, women’s median weekly earnings have risen steadily, from about $250 in 1980 to over $330 today, showing positive progress in workforce representation and pay equity. However, despite this catch-up, men continue to earn more on average, indicating that the earnings gap, while smaller, remains noticeable.
@@ -314,7 +311,6 @@ fig_stem.update_layout(
     ]
 )
 fig_stem.show()
-fig_stem.write_html("figures/stem_women_share.html")
 ```
 
 The STEM bar chart highlights that women remain underrepresented in most technical fields, with their highest shares in Professional/Scientific/Tech (45%) and Information/Tech (40%). Participation drops sharply in more traditional industrial sectors like Manufacturing (29%), Utilities (26%), and especially Construction and Mining, where women make up only about 14%. This pattern suggests that while women have made meaningful intakes into knowledge-based and tech-oriented STEM roles, the more physically intensive or legacy STEM industries still lag far behind.
@@ -365,7 +361,6 @@ fig_nonstem.update_layout(
     ]
 )
 fig_nonstem.show()
-fig_nonstem.write_html("figures/nonstem_women_share.html")
 ```
 
 In contrast, the non-STEM chart shows a very different landscape: women hold the majority of jobs across all major non-STEM sectors. They dominate Education & Health at over 76%, and maintain strong majorities in Government (59%), Financial Activities (55%), and other service-oriented industries. Even in Retail Trade, the most balanced sector, women still represent nearly half of the workforce. 
@@ -461,7 +456,6 @@ fig_female.update_layout(
     height=500
 )
 fig_female.show()
-fig_female.write_html("figures/female_share_state.html")
 ```
 
 The chart shows that the women’s share of the total population is consistently higher in blue states across 2021–2023, with a narrow but stable margin. In 2024, however, the pattern briefly reverses, with red states showing a slightly higher women’s share. Overall, the gap is small, but the data suggests blue states generally maintain a modestly larger female population share over most of the period.
@@ -505,7 +499,6 @@ fig_red.update_layout(
     height=500
 )
 fig_red.show()
-fig_red.write_html("figures/gender_state_red.html")
 ```
 
 In red states, the gender balance stays remarkably steady, with women consistently making up about one-quarter of the population. The small bump in 2024 suggests a slight shift, but not significant change the overall picture. Men continue to represent the clear majority, holding roughly three-quarters of the population each year.
@@ -542,7 +535,6 @@ fig_blue.update_layout(
     height=500
 )
 fig_blue.show()
-fig_blue.write_html("figures/gender_state_blue.html")
 ```
 
 Blue states show a similarly stable pattern, with women holding a slightly larger share than in red states, usually around 26 to 27%. Although there’s a minor dip in 2022 and 2023, the female share rebounds in 2024, keeping the overall trend fairly consistent. Compared to red states, blue states continue to lean just a bit more female across the full period.
@@ -646,7 +638,6 @@ fig.update_layout(
 )
 
 fig.show()
-fig.write_html(f"figures/us_female_state_map.html")
 ```
 
 The 2024 map shows that several red states have some of the largest bubbles, indicating higher female employment shares, particularly Mississippi (36%), Arkansas (34%), Louisiana (32.1%), and Wyoming (31.7%). The highest-share blue area is the District of Columbia at 35.6%. Together, these values line up with the earlier observation that in 2024, the women’s share happens to be slightly higher in red states than in blue states.

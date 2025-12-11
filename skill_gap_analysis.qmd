@@ -90,7 +90,7 @@ fig_heat
 
 ## Market Alignment Analysis
 
-### Extracting Industry Demand
+**Extracting Industry Demand**
 
 We filter job postings to focus exclusively on data-centric roles within data-heavy industries (NAICS sectors: Information, Finance & Insurance, and Professional Services).
 
@@ -124,7 +124,7 @@ df_filtered = df_data_industry[
 ]
 ```
 
-### Software Skills Extraction
+**Software Skills Extraction**
 
 Lightcast provides skill data as comma-separated text fields.
 
@@ -154,7 +154,7 @@ industry_skill_counts = (
 industry_skill_counts.head()
 ```
 
-### Gap Calculation
+**Gap Calculation**
 
 To quantify alignment between our team and the market, we compare:
 
@@ -190,8 +190,7 @@ gap_df
 
 ## Skill Gap Visualizations
 
-### Bar Chart Comparison
-
+**Bar Chart Comparison**
 ```{python}
 gap_long = (
     gap_df[["team_score", "industry_score"]]
@@ -218,7 +217,7 @@ fig_gap.update_layout(
 fig_gap
 ```
 
-### Radar Chart Comparison
+**Radar Chart Comparison**
 ```{python}
 skills_list = gap_df.index.tolist()
 industry_values = gap_df["industry_score"].tolist()
