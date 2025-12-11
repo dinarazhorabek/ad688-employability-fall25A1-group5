@@ -146,19 +146,16 @@ fig_unemp.update_layout(
     yaxis_title="Rate (%)",
     legend_title="Group",
     width=700,
-    height=500,
+    height=600,
     margin=dict(b=100),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics via FRED",
-            xref="paper",
-            yref="paper",
-            x=1,
-            y=-0.05,
+            xref="paper", yref="paper",
+            x=1, y=-0.15,
             showarrow=False,
             font=dict(size=10, color="gray"),
-            xanchor="right",
-            yanchor="top"
+            xanchor="right"
         )
     ]
 )
@@ -195,19 +192,16 @@ fig_part.update_layout(
     yaxis_title="Percent (%)",
     legend_title="Group",
     width=700,
-    height=500,
+    height=600,
     margin=dict(b=100),
     annotations=[
         dict(
             text="Source: U.S. Bureau of Labor Statistics via FRED",
-            xref="paper",
-            yref="paper",
-            x=1,
-            y=-0.05,
+            xref="paper", yref="paper",
+            x=1, y=-0.15,
             showarrow=False,
             font=dict(size=10, color="gray"),
-            xanchor="right",
-            yanchor="top"
+            xanchor="right"
         )
     ]
 )
@@ -244,7 +238,7 @@ fig_wage.update_layout(
     yaxis_title="USD",
     legend_title="Group",
     width=700,
-    height=500,
+    height=600,
     margin=dict(b=100),
     annotations=[
         dict(
