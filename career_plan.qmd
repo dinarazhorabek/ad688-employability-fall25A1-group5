@@ -62,7 +62,7 @@ Strengthen the portfolio through project-based learning: data pipelines, SQL ana
 Maintain steady practice in core programming skills through SQL challenges, exploratory notebooks, and small automation scripts. Emphasis on clean code, reproducibility, and clarity.
 
 *Professional Branding*
-       
+
 Enhance visibility through consistent GitHub activity, project write-ups, and LinkedIn updates. Integrate learning progress and completed dashboards into the website to show growth over time.
 
 </div>
@@ -83,18 +83,23 @@ Enhance visibility through consistent GitHub activity, project write-ups, and Li
 ### Interpretation & Career Strategy 
 
 *Cloud & Data Engineering Readiness*
+
 I plan to extend my cloud skills by moving into services that support analytics workflows, including S3 for storage, IAM for access management, and Lambda for automation. Applying these tools to a small pipeline inspired by the data work I’ve done before will help solidify the concepts. Clear diagrams and documentation will reinforce the design.
 
 *Visualization & Analytical Storytelling*
+
 To strengthen how I communicate insights, I’ll continue developing dashboards that turn complex datasets into clear visual narratives. Rebuilding analyses in Tableau or Power BI and adding concise explanations of the methods and findings will help sharpen both structure and storytelling.
 
 *Business Analytics Portfolio Growth*
+
 I plan to expand my portfolio through projects that reflect my background in macro analysis and data-driven interpretation. Creating well-documented mini-studies on topics like inflation signals, labor patterns, or pricing behavior will highlight both technical ability and business reasoning. Each will include reproducible code and clear takeaways.
 
 *Python & SQL Development*
+
 I want to keep improving my coding habits through regular practice in both Python and SQL. Writing more organized scripts, refining queries, and automating small tasks related to my coursework or past analytics work will strengthen consistency and technical depth.
 
 *Professional Presence & Branding*
+
 I’ll enhance my professional presence by sharing dashboards, code, and summaries on GitHub, LinkedIn, and my personal website. Bringing together my coursework, macro insights, and analytics projects in one place will help present a cohesive view of my development.
 
 </div>
@@ -132,6 +137,7 @@ Overall, this project helped me recognize not only the skills I already have, bu
 :::
 
 </div>
+
 ---
 
 <div class="card reveal">

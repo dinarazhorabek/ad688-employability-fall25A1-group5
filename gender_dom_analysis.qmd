@@ -12,7 +12,9 @@ format:
 <div class="card reveal">
 
 ## Objective
+
 This section aims to clean and prepare the Lightcast job postings dataset, focusing on industries with clearly defined classifications. It then categorizes industries by gender dominance and analyzes job postings, median salaries, and distributions across male-, female-, and mixed-dominated sectors. The visualizations provide insights into how gender dominance correlates with job availability and compensation patterns.
+
 </div>
 
 <div class="card reveal">

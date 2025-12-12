@@ -70,7 +70,8 @@ These questions connect quantitative job-posting data with research on labor ine
 
 This website synthesizes findings across several analytical components:
 
-- **Research Background**  
+- **Research Background**
+    
   Academic perspectives on gender disparities, labor dynamics, and political influences.
 
 - **Analysis**
@@ -92,7 +93,7 @@ This website synthesizes findings across several analytical components:
 - **Career Strategy**
 
 - **About Us**
-
+  
 Collectively, these analyses provide a comprehensive, data-driven picture of the 2024 job market and inform actionable career strategies.
 
 </div>

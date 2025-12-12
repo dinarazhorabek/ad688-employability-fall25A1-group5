@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Job Market Analysis 2024"
+  title: "Gender Disparities in Labor Force Analysis (2024)"
   search: true
   navbar:
     pinned: true
