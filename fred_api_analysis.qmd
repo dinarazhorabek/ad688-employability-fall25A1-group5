@@ -12,6 +12,7 @@ format:
 <div class="card reveal">
 
 ## Objective
+
 In this section, we pull labor market data directly from the FRED API and organize it into two broad categories: STEM and non-STEM sectors. This structure allows us to compare gender representation across industries in a consistent, data-driven way. By separating technical fields from service-oriented ones, we can clearly highlight where women are underrepresented and where they hold a stronger labor market presence.
 
 </div>
@@ -370,6 +371,7 @@ fig_nonstem.show()
 In contrast, the non-STEM chart shows a very different landscape: women hold the majority of jobs across all major non-STEM sectors. They dominate Education & Health at over 76%, and maintain strong majorities in Government (59%), Financial Activities (55%), and other service-oriented industries. Even in Retail Trade, the most balanced sector, women still represent nearly half of the workforce. 
 
 ### Conclusion
+
 Together, the two charts highlight a clear divide: women are well-represented and often leading in service-based, caregiving, and administrative sectors, but continue to face barriers to entry and advancement in many STEM and industrial occupations.
 
 </div>
@@ -379,6 +381,7 @@ Together, the two charts highlight a clear divide: women are well-represented an
 <div class="card reveal">
 
 ### Overview
+
 This section compares gender representation in the workforce between red and blue states to see whether political alignment corresponds with different gender patterns. In U.S. politics, “red states” represent Republican, while “blue states” lean Democratic - two ideologies that often diverge on social policies, labor protections, childcare support, and broader economic priorities. These differences can indirectly shape workforce participation by influencing factors such as family leave access, childcare affordability, or employment conditions. 
 
 By examining population shares from 2021 to 2024, the charts highlight how gender patterns evolve over time and reveal where notable differences appear between red and blue states.

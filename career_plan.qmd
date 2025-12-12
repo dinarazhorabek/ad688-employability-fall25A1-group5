@@ -45,19 +45,24 @@ By comparing industry demand vs. team proficiency, we identified skill strengths
 
 <div class="card reveal">
 
-*AWS Skills* <br>
+*AWS Skills*
+
 Focus on expanding cloud fundamentals beyond EC2, next steps include S3, IAM, Lambda, and RDS. The goal is to build a small end-to-end pipeline on AWS and publish it with diagrams and documentation.
 
-*Visualization Tools (Tableau & Power BI)* <br>  
+*Visualization Tools (Tableau & Power BI)* 
+
 Increase hands-on experience with dashboard tools by recreating datasets into visual stories. Dashboards will be shared on Tableau Public and Power BI, with short summaries of insights and methodology.
 
-*Portfolio Development* <br>    
+*Portfolio Development*
+
 Strengthen the portfolio through project-based learning: data pipelines, SQL analyses, interactive dashboards, and business analytics mini-projects. Each project will be fully documented on GitHub and added to the website.
 
-*Python & SQL Consistency* <br>   
+*Python & SQL Consistency*
+
 Maintain steady practice in core programming skills through SQL challenges, exploratory notebooks, and small automation scripts. Emphasis on clean code, reproducibility, and clarity.
 
-*Professional Branding* <br>       
+*Professional Branding*
+       
 Enhance visibility through consistent GitHub activity, project write-ups, and LinkedIn updates. Integrate learning progress and completed dashboards into the website to show growth over time.
 
 </div>
