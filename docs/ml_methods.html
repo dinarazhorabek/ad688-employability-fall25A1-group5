@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>This encoding allows the gender composition of industries to be used directly as a structured feature inside regression and machine learning models.</p>
 <p>By examining salary differences across these groups—while controlling for experience requirements, employment type, remote status, staffing-company involvement, and geographic factors—we evaluate whether certain industry gender compositions correspond to systematically higher or lower advertised wages within the professional and technical job postings present in our dataset.</p>
-<div id="36b103a3" class="cell" data-execution_count="1">
+<div id="10fe2e1c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>State</li>
 <li>NAICS code</li>
 </ul>
-<div id="cfaf7e57" class="cell" data-execution_count="2">
+<div id="320e93f1" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [</span>
@@ -308,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After preparing the dataset and encoding categorical features, we trained a linear regression model using an 80/20 train–test split.<br>
 The coefficient for GENDER_DOMINANCE represents the expected change in salary when moving from one dominance group to the next (male → mixed → female).</p>
 <p><strong>Model Training</strong></p>
-<div id="378c1157" class="cell" data-execution_count="3">
+<div id="3c847c88" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -335,7 +335,7 @@ The coefficient for GENDER_DOMINANCE represents the expected change in salary wh
 Moving from mixed to female-dominated shows an additional decrease of roughly the same magnitude.</p>
 <p><strong>Model Performance Evaluation</strong></p>
 <p>To assess the performance of the linear regression model, we compute the R² score using the test dataset. Our model explains approximately 24.3% of the variation in advertised salaries. Meaning that the model captures some underlying structure—especially differences driven by experience, industry, and location—but much of the salary variation remains unexplained under a linear framework.</p>
-<div id="0aca142a" class="cell" data-execution_count="4">
+<div id="494695b6" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score, mean_squared_error</span>
@@ -353,7 +353,7 @@ RMSE: 39206.1659</code></pre>
 </div>
 <p><strong>Predicted Salary by Dominance Group</strong></p>
 <p>Using the average job posting profile in our dataset, we generated predicted salaries for each gender dominance category. The results show a <strong>downward trend in salary as industries become more female-dominated</strong>, even after controlling for experience, employment type, remote status, staffing firm involvement, and state-level differences. In other words, job postings in male-dominated industries are associated with higher advertised salaries, while female-dominated sectors tend to offer lower salaries for otherwise comparable postings in our dataset.</p>
-<div id="c651e2f8" class="cell" data-execution_count="5">
+<div id="9937fd2b" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> X_train.mean().copy()</span>
@@ -387,7 +387,7 @@ RMSE: 39206.1659</code></pre>
 <p><strong>Model Training</strong></p>
 <p>We specify the number of trees, allow trees to grow to full depth, and set a random seed to ensure reproducible results. Using multiple decision trees makes the model more robust and reduces overfitting.</p>
 <p>During training, the forest collectively learns how salary varies with experience level, industry code, employment type, remote type, and other factors.</p>
-<div id="a02f29e7" class="cell" data-execution_count="6">
+<div id="a4957c81" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
@@ -410,7 +410,7 @@ RMSE: 39206.1659</code></pre>
 <li><strong>RMSE:</strong> Measures average prediction error in dollar terms.</li>
 </ul>
 <p>The model achieves an R² of approximately 0.44, indicating moderate predictive power given the complexity and noise typical of job posting salary data.</p>
-<div id="4f47d6cf" class="cell" data-execution_count="7">
+<div id="a788928f" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rf_r2 <span class="op">=</span> r2_score(y_test, y_pred_rf)</span>
@@ -426,7 +426,7 @@ RMSE: 33,779.5752</code></pre>
 </div>
 <p><strong>Feature Importance Analysis</strong></p>
 <p>Random Forest provides an estimate of each feature’s importance based on how much it reduces prediction error across the forest of trees. In our results, experience and industry code are the strongest predictors, while gender dominance plays a smaller but measurable role.</p>
-<div id="c67c2c1c" class="cell" data-execution_count="8">
+<div id="84613fbd" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rf_importances <span class="op">=</span> (</span>
@@ -451,7 +451,7 @@ dtype: float64</code></pre>
 </div>
 <p><strong>Predicted Salary by Dominance Group</strong></p>
 <p>The Random Forest model shows substantial salary differences across gender-dominance categories. These predictions suggest that male-dominated industries carry a significant salary premium, with advertised salaries nearly $56,000 higher than those in mixed or female-dominated industries. In contrast, the salaries for mixed and female-dominated sectors are almost identical.</p>
-<div id="e4f160c2" class="cell" data-execution_count="9">
+<div id="f1590a8e" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>base_rf <span class="op">=</span> X_train.mean().copy()</span>
