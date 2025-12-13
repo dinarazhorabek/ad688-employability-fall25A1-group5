@@ -1,8 +1,5 @@
 ---
 title: "Career Strategy Plan"
-format:
-  html:
-    toc: true
 ---
 
 <div class="card reveal">

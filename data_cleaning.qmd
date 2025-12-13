@@ -5,7 +5,6 @@ bibliography: references.bib
 csl: csl/econometrica.csl
 format:
   html:
-    # toc: true
     code-fold: true
     code-tools: true
 ---

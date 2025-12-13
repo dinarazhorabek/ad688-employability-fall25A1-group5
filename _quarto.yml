@@ -37,7 +37,6 @@ format:
   html:
     theme:
       light: flatly
-      dark: quartz
     css: styles.css
     toc: true
     toc-depth: 3

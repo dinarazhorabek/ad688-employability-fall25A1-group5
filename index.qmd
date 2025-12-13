@@ -1,9 +1,5 @@
 ---
 title: "Home"
-format:
-  html:
-    toc: true
-    toc-depth: 3
 ---
 
 <div class="card reveal">
@@ -22,7 +18,7 @@ The analysis integrates quantitative data (job postings, salaries, geographic di
 
 Our project leverages two primary sources:
 
-### **Lightcast Job Postings (2024)**
+**Lightcast Job Postings (2024)**
 
 This dataset includes thousands of job postings across the United States, containing information on:
 
@@ -35,7 +31,7 @@ This dataset includes thousands of job postings across the United States, contai
 
 After cleaning and standardization, this dataset serves as the backbone of our empirical analysis, allowing exploration of hiring demand, wage patterns, and regional variations.
 
-### **FRED Macroeconomic Indicators**
+**FRED Macroeconomic Indicators**
 
 To contextualize shifts in hiring, we incorporate macroeconomic time series from the Federal Reserve, including:
 
@@ -75,23 +71,14 @@ This website synthesizes findings across several analytical components:
   Academic perspectives on gender disparities, labor dynamics, and political influences.
 
 - **Analysis**
-
-  - **Gender Dispartities Overview** : 
-
+  - **Gender Dispartities Overview**
   - **Data Cleaning & Preparation**  : Standardizing, restructuring, and validating Lightcast job postings.
-
   - **Exploratory Data Analysis (EDA)**  : Hiring patterns, salary distributions, geographic variation, and skills demand.
-
   - **Gender Dominance in Job Postings** : 
-
   - **Machine Learning Models**  : Clustering and predictive modeling of job-market patterns.
-
   - **NLP Analysis**  : Extracting insights from job descriptions, including skills and thematic patterns.
-
   - **Skill Gap Analysis**  : Comparison between team skill sets and market expectations.
-
 - **Career Strategy**
-
 - **About Us**
   
 Collectively, these analyses provide a comprehensive, data-driven picture of the 2024 job market and inform actionable career strategies.

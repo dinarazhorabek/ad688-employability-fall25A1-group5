@@ -1,0 +1,33 @@
+---
+title: "Evaluating Personal Job Market Prospects in 2024"
+subtitle: "Final Report"
+author:
+  - name: Dinara Zhorabek
+    affiliations: [bu]
+  - name: Hung Nguyen
+    affiliations: [bu]
+  - name: Nhat Tran
+    affiliations: [bu]
+affiliations:
+  - id: bu
+    name: Boston University
+    city: Boston
+    state: MA
+date: today
+date-modified: today
+date-format: long
+format:
+  docx: default
+---
+
+{{< include index.qmd >}}
+{{< include research_background.qmd >}}
+{{< include fred_api_analysis.qmd >}} -->
+{{< include data_cleaning.qmd >}}
+{{< include eda.qmd >}}
+{{< include gender_dom_analysis.qmd >}}
+{{< include ml_methods.qmd >}}
+{{< include nlp_methods.qmd >}}
+{{< include skill_gap_analysis.qmd >}}
+{{< include career_plan.qmd >}}
+{{< include about.qmd >}}

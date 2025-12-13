@@ -5,10 +5,10 @@ bibliography: references.bib
 csl: csl/econometrica.csl
 format:
   html:
-    toc: true
     code-fold: true
     code-tools: true
 ---
+
 <div class="card reveal">
 
 ## Objective
@@ -19,7 +19,7 @@ In this section, we pull labor market data directly from the FRED API and organi
 
 <div class="card reveal">
 
-### Import Fred APIs
+## Import Fred APIs
 
 We imported data from the FRED API using a predefined set of series IDs covering unemployment, participation, earnings, and industry-level employment. We then grouped these series into STEM and non-STEM sectors so we could analyze gender ratios and compare patterns across industries.
 
@@ -115,11 +115,13 @@ data = {label: fred.get_series(sid) for label, sid in series_map.items()}
 
 </div>
 
+---
+
 <div class="card reveal">
 
 ## Gender Employment Overview
 
-### Chart 1: Unemployment Rate (Men vs Women)
+**Chart 1: Unemployment Rate (Men vs Women)**
 
 ```{python}
 fig_unemp = go.Figure()
@@ -165,7 +167,7 @@ fig_unemp.show()
 
 The line chart shows that men have consistently experienced slightly lower unemployment rates than women across most of modern U.S. economic history, with both groups following the same business-cycle peaks and troughs. The significant spike around 2020–2022 reflects the pandemic lockdown, though, surprisingly, women seem to recover more quickly, suggesting a faster re-entry into the labor market. Overall, despite short-term divergences, the long-run patterns show tightly linked movements between the two groups.
 
-### Chart 2: Labor Force Participation - Men vs Women (Monthly, SA)
+**Chart 2: Labor Force Participation - Men vs Women (Monthly, SA)**
 
 ```{python}
 fig_part = go.Figure()
@@ -211,7 +213,7 @@ fig_part.show()
 
 From the 1950s through about 1990, the labor force was clearly male-dominated, with men’s participation consistently above 80% while women’s hovered near 33 - 45%, reflecting the era’s social norms in which men were expected to be the primary breadwinners. As societal attitudes shifted and educational and professional opportunities expanded, women’s participation rose steadily - climbing from roughly 32% in 1950 to nearly 60% by 2000. Today, the gap has narrowed significantly, indicating a more balanced workforce compared to historical patterns.
 
-### Chart 3: Gender Wage Gap Over Time (Median Weekly Earnings)
+**Chart 3: Gender Wage Gap Over Time (Median Weekly Earnings)**
 
 ```{python}
 fig_wage = go.Figure()
@@ -259,11 +261,13 @@ The chart highlights the long-run narrowing of the gender earnings gap: around 1
 
 </div>
 
-# Women Share Across Sectors
+---
 
 <div class="card reveal">
 
-### Chart 1: STEM SECTORS – Women Ratio Bar Chart
+## Women Share Across Sectors
+
+**Chart 1: STEM SECTORS – Women Ratio Bar Chart**
 
 ```{python}
 # Get the latest information available from Fred
@@ -319,7 +323,7 @@ fig_stem.show()
 
 The STEM bar chart highlights that women remain underrepresented in most technical fields, with their highest shares in Professional/Scientific/Tech (45%) and Information/Tech (40%). Participation drops sharply in more traditional industrial sectors like Manufacturing (29%), Utilities (26%), and especially Construction and Mining, where women make up only about 14%. This pattern suggests that while women have made meaningful intakes into knowledge-based and tech-oriented STEM roles, the more physically intensive or legacy STEM industries still lag far behind.
 
-### Chart 2: NON-STEM SECTORS – Women Ratio Bar Chart
+**Chart 2: NON-STEM SECTORS – Women Ratio Bar Chart**
 
 ```{python}
 nonstem_ratio_vars = {
@@ -376,19 +380,17 @@ Together, the two charts highlight a clear divide: women are well-represented an
 
 </div>
 
-# Gender Dominace by Red vs. Blue States
+---
 
 <div class="card reveal">
+
+## Gender Dominace by Red vs. Blue States
 
 ### Overview
 
 This section compares gender representation in the workforce between red and blue states to see whether political alignment corresponds with different gender patterns. In U.S. politics, “red states” represent Republican, while “blue states” lean Democratic - two ideologies that often diverge on social policies, labor protections, childcare support, and broader economic priorities. These differences can indirectly shape workforce participation by influencing factors such as family leave access, childcare affordability, or employment conditions. 
 
 By examining population shares from 2021 to 2024, the charts highlight how gender patterns evolve over time and reveal where notable differences appear between red and blue states.
-
-</div>
-
-<div class="card reveal">
 
 ### Prepare the Dataset
 ```{python}
@@ -427,13 +429,9 @@ state_agg = (df_state.groupby(["year","alignment"])[["female_pct","male_pct"]].m
 display(state_agg) 
 ```
 
-</div>
+### Gender Share Across Red vs. Blue States
 
-<div class="card reveal">
-
-## Gender Share Across Red vs. Blue States
-
-### Chart 1: Women Share in Blue vs Red States (2021–2024)
+**Chart 1: Women Share in Blue vs Red States (2021–2024)**
 
 ```{python}
 color_map = {
@@ -467,7 +465,7 @@ fig_female.show()
 
 The chart shows that the women’s share of the total population is consistently higher in blue states across 2021–2023, with a narrow but stable margin. In 2024, however, the pattern briefly reverses, with red states showing a slightly higher women’s share. Overall, the gap is small, but the data suggests blue states generally maintain a modestly larger female population share over most of the period.
 
-### Chart 2: Women vs. Men Share in Red States (2021-2024)
+**Chart 2: Women vs. Men Share in Red States (2021-2024)**
 
 ```{python}
 stacked_data = state_agg.melt(
@@ -510,7 +508,7 @@ fig_red.show()
 
 In red states, the gender balance stays remarkably steady, with women consistently making up about one-quarter of the population. The small bump in 2024 suggests a slight shift, but not significant change the overall picture. Men continue to represent the clear majority, holding roughly three-quarters of the population each year.
 
-### Chart 3: Women vs. Men Share in Blue States (2021-2024)
+**Chart 3: Women vs. Men Share in Blue States (2021-2024)**
 
 ```{python}
 # Blue States Stacked Bar Chart
@@ -546,7 +544,7 @@ fig_blue.show()
 
 Blue states show a similarly stable pattern, with women holding a slightly larger share than in red states, usually around 26 to 27%. Although there’s a minor dip in 2022 and 2023, the female share rebounds in 2024, keeping the overall trend fairly consistent. Compared to red states, blue states continue to lean just a bit more female across the full period.
 
-### Chart 4: US Women Share by State (2024)
+**Chart 4: US Women Share by State (2024)**
 
 ```{python}
 state_to_abbrev = {

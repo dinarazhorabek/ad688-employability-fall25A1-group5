@@ -5,8 +5,6 @@ bibliography: references.bib
 csl: csl/econometrica.csl
 format:
   html:
-    toc: true
-    toc-depth: 3
     code-fold: true
     code-tools: true
 ---
